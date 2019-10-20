@@ -1,8 +1,8 @@
 import React from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 const Index = (props) => {
-  const {placeNames} = props;
+  const {placeNames, onPlaceNameClick} = props;
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -125,7 +125,7 @@ const Index = (props) => {
                       </div>
                     </div>
                     <h2 className="place-card__name">
-                      <a href="#">{name}</a>
+                      <a className="js-place-name" href="#" onClick={onPlaceNameClick}>{name}</a>
                     </h2>
                     <p className="place-card__type">Apartment</p>
                   </div>
@@ -144,6 +144,7 @@ const Index = (props) => {
 
 Index.propTypes = {
   placeNames: PropTypes.arrayOf(PropTypes.string),
+  onPlaceNameClick: PropTypes.func,
 };
 
 export default Index;
