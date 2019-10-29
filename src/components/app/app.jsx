@@ -1,19 +1,13 @@
 import React from "react";
-import Index from "../index";
-import PropTypes from "prop-types";
+import Main from "../main/main";
+import {placeList} from "../../common/global-prop-types";
 
 const App = (props) => {
-  const {placeNames} = props;
-  const onPlaceNameClick = () => {};
+  const {offers} = props;
 
-  return <Index
-    placeNames={placeNames}
-    onPlaceNameClick={onPlaceNameClick}
-  />;
+  return <Main offers={offers}/>;
 };
 
-App.propTypes = {
-  placeNames: PropTypes.arrayOf(PropTypes.string),
-};
+App.propTypes = {offers: placeList};
 
 export default App;

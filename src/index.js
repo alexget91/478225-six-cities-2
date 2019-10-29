@@ -1,15 +1,13 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import App from "./components/app/app";
+import offers from "./mocks/offers";
 
-const init = () => {
-  const placeNames = [`Beautiful & luxurious apartment at great location`, `Wood and stone place`,
-    `Canal View Prinsengracht`, `Nice, cozy, warm big bed apartment`];
-
+const init = (placeList) => {
   ReactDOM.render(
-      <App placeNames={placeNames}/>,
+      <App offers={placeList}/>,
       document.querySelector(`#root`)
   );
 };
 
-init();
+init(offers);

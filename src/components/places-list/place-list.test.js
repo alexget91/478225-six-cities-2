@@ -1,10 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app";
+import PlacesList from "./places-list";
 
-it(`App correctly renders after relaunch`, () => {
+it(`Place list correctly renders after relaunch`, () => {
   const tree = renderer
-    .create(<App offers={[{
+    .create(<PlacesList offers={[{
       id: 0,
       priceByNight: 0,
       name: ``,

@@ -1,10 +1,10 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app";
+import Main from "./main";
 
-it(`App correctly renders after relaunch`, () => {
+it(`Main page correctly renders after relaunch`, () => {
   const tree = renderer
-    .create(<App offers={[{
+    .create(<Main offers={[{
       id: 0,
       priceByNight: 0,
       name: ``,
