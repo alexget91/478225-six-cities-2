@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Index correctly renders after relaunch 1`] = `
+exports[`Main page correctly renders after relaunch 1`] = `
 <div
   className="page page--gray page--main"
 >
