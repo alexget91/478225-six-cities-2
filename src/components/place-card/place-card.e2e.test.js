@@ -13,10 +13,10 @@ const placeCard = shallow(<PlaceCard
   id={0}
   isPremium={false}
   isFavorite={false}
-  imageSrc={``}
+  previewImage={``}
   priceByNight={0}
   rating={0}
-  name={``}
+  title={``}
   type={`apartment`}
   onPlaceNameClick={clickHandler}
   onMouseHover={mouseHoverHandler}
@@ -30,10 +30,10 @@ describe(`Mouse hover handler gets the correct information`, () => {
       id: 0,
       isPremium: false,
       isFavorite: false,
-      imageSrc: ``,
+      previewImage: ``,
       priceByNight: 0,
       rating: 0,
-      name: ``,
+      title: ``,
       type: `apartment`,
     });
   });

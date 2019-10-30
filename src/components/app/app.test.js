@@ -7,7 +7,7 @@ it(`App correctly renders after relaunch`, () => {
     .create(<App offers={[{
       id: 0,
       priceByNight: 0,
-      name: ``,
+      title: ``,
       type: `apartment`,
     }]}/>)
     .toJSON();

@@ -7,7 +7,7 @@ it(`Place list correctly renders after relaunch`, () => {
     .create(<PlacesList offers={[{
       id: 0,
       priceByNight: 0,
-      name: ``,
+      title: ``,
       type: `apartment`,
     }]}/>)
     .toJSON();

@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PlaceCard from "../place-card/place-card";
 import {placeList} from "../../common/global-prop-types";
+import URLS from "../../common/urls";
 
 class PlacesList extends PureComponent {
   constructor(props) {
@@ -23,12 +24,12 @@ class PlacesList extends PureComponent {
           id={place.id}
           isPremium={place.isPremium}
           isFavorite={place.isFavorite}
-          imageSrc={place.imageSrc}
+          previewImage={place.previewImage}
           priceByNight={place.priceByNight}
           rating={place.rating}
-          name={place.name}
+          title={place.title}
           type={place.type}
-          onPlaceNameClick={() => {}}
+          onPlaceNameClick={this._placeNameClickHandler}
           onMouseHover={this._mouseHoverHandler}
         />;
       })}
@@ -39,6 +40,11 @@ class PlacesList extends PureComponent {
     this.setState(() => {
       return {activePlace: data ? data : null};
     });
+  }
+
+  _placeNameClickHandler(evt) {
+    evt.preventDefault();
+    window.location.assign(URLS.offer);
   }
 }
 

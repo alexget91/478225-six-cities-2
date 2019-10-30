@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {placeCard} from "../../common/global-prop-types";
+import {getRatingPercent} from "../../common/utils";
 
-const STARS_COUNT = 5;
 const TYPE_NAMES = {
   apartment: `Apartment`,
   room: `Private room`,
@@ -10,13 +10,11 @@ const TYPE_NAMES = {
   hotel: `Hotel`,
 };
 
-const getRatingPercent = (rating) => rating ? rating / STARS_COUNT * 100 : 0;
-
 const PlaceCard = (props) => {
-  const {id, isPremium, isFavorite, imageSrc, priceByNight, rating, name, type, onPlaceNameClick, onMouseHover} = props;
+  const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type, onPlaceNameClick, onMouseHover} = props;
 
   return <article key={id} data-id={id} className="cities__place-card place-card"
-    onMouseEnter={() => onMouseHover({id, isPremium, isFavorite, imageSrc, priceByNight, rating, name, type})}
+    onMouseEnter={() => onMouseHover({id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type})}
     onMouseLeave={() => onMouseHover()}
   >
     {isPremium ? <div className="place-card__mark">
@@ -24,7 +22,7 @@ const PlaceCard = (props) => {
     </div> : ``}
     <div className="cities__image-wrapper place-card__image-wrapper">
       <a href="#">
-        <img className="place-card__image" src={imageSrc} width="260" height="200" alt="Place image"/>
+        <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
       </a>
     </div>
     <div className="place-card__info">
@@ -48,7 +46,7 @@ const PlaceCard = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a className="js-place-name" href="#" onClick={onPlaceNameClick}>{name}</a>
+        <a className="js-place-name" href="#" onClick={onPlaceNameClick}>{title}</a>
       </h2>
       <p className="place-card__type">{TYPE_NAMES[type]}</p>
     </div>

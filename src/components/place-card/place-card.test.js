@@ -9,10 +9,10 @@ it(`Place card correctly renders after relaunch`, () => {
       id={0}
       isPremium={true}
       isFavorite={false}
-      imageSrc={``}
+      previewImage={``}
       priceByNight={0}
       rating={0}
-      name={``}
+      title={``}
       type={`apartment`}
     />)
     .toJSON();
