@@ -1,42 +1,52 @@
 const offers = [
   {
     id: 1,
+    previewImage: `img/apartment-01.jpg`,
+    images: [`img/room.jpg`, `img/apartment-01.jpg`, `img/apartment-02.jpg`, `img/apartment-03.jpg`, `img/studio-01.jpg`, `img/apartment-01.jpg`],
+    title: `Beautiful & luxurious apartment at great location`,
     isPremium: true,
     isFavorite: false,
-    imageSrc: `img/apartment-01.jpg`,
-    priceByNight: 120,
     rating: 4.6,
-    name: `Beautiful & luxurious apartment at great location`,
-    type: `apartment`
+    type: `apartment`,
+    bedrooms: 3,
+    maxAdults: 4,
+    priceByNight: 120,
+    goods: [`Heating`, `Kitchen`, `Cable TV`, `Washing machine`, `Coffee machine`, `Dishwasher`],
+    host: {
+      isPro: true,
+      name: `Angelina`,
+      avatarUrl: `img/avatar-angelina.jpg`
+    },
+    description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
   },
   {
     id: 2,
     isPremium: false,
     isFavorite: true,
-    imageSrc: `img/room.jpg`,
+    previewImage: `img/room.jpg`,
     priceByNight: 80,
     rating: 4,
-    name: `Wood and stone place`,
+    title: `Wood and stone place`,
     type: `room`
   },
   {
     id: 3,
     isPremium: false,
     isFavorite: false,
-    imageSrc: `img/apartment-02.jpg`,
+    previewImage: `img/apartment-02.jpg`,
     priceByNight: 132,
     rating: 4,
-    name: `Canal View Prinsengracht`,
+    title: `Canal View Prinsengracht`,
     type: `apartment`
   },
   {
     id: 4,
     isPremium: true,
     isFavorite: false,
-    imageSrc: `img/apartment-03.jpg`,
+    previewImage: `img/apartment-03.jpg`,
     priceByNight: 180,
     rating: 5,
-    name: `Nice, cozy, warm big bed apartment`,
+    title: `Nice, cozy, warm big bed apartment`,
     type: `apartment`
   },
 ];

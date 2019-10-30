@@ -7,7 +7,7 @@ it(`Main page correctly renders after relaunch`, () => {
     .create(<Main offers={[{
       id: 0,
       priceByNight: 0,
-      name: ``,
+      title: ``,
       type: `apartment`,
     }]}/>)
     .toJSON();
