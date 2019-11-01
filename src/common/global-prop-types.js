@@ -19,6 +19,10 @@ const placeCard = {
     avatarUrl: PropTypes.string
   }),
   description: PropTypes.string,
+  location: PropTypes.exact({
+    latitude: PropTypes.number,
+    longitude: PropTypes.number,
+  })
 };
 
 const placeList = PropTypes.arrayOf(PropTypes.exact(placeCard));

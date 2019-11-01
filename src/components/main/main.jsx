@@ -1,9 +1,15 @@
 import React from "react";
 import PlacesList from "../places-list/places-list";
 import {placeList} from "../../common/global-prop-types";
+import Map from "../map/map";
 
 const Main = (props) => {
   const {offers} = props;
+  const offersCoords = [];
+
+  offers.map((offer) => {
+    offersCoords.push([offer.location.latitude, offer.location.longitude]);
+  });
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -98,7 +104,7 @@ const Main = (props) => {
             <PlacesList offers={offers}/>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <Map offerCords={offersCoords}/>
           </div>
         </div>
       </div>

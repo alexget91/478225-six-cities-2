@@ -18,6 +18,10 @@ const offers = [
       avatarUrl: `img/avatar-angelina.jpg`
     },
     description: `A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
+    }
   },
   {
     id: 2,
@@ -27,7 +31,11 @@ const offers = [
     priceByNight: 80,
     rating: 4,
     title: `Wood and stone place`,
-    type: `room`
+    type: `room`,
+    location: {
+      latitude: 52.369553943508,
+      longitude: 4.85309666406198,
+    }
   },
   {
     id: 3,
@@ -37,7 +45,11 @@ const offers = [
     priceByNight: 132,
     rating: 4,
     title: `Canal View Prinsengracht`,
-    type: `apartment`
+    type: `apartment`,
+    location: {
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
+    }
   },
   {
     id: 4,
@@ -47,7 +59,11 @@ const offers = [
     priceByNight: 180,
     rating: 5,
     title: `Nice, cozy, warm big bed apartment`,
-    type: `apartment`
+    type: `apartment`,
+    location: {
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
+    }
   },
 ];
 
