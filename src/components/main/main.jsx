@@ -2,14 +2,10 @@ import React from "react";
 import PlacesList from "../places-list/places-list";
 import {placeList} from "../../common/global-prop-types";
 import Map from "../map/map";
+import {getCoordsArray} from "../../common/utils";
 
 const Main = (props) => {
   const {offers} = props;
-  const offersCoords = [];
-
-  offers.map((offer) => {
-    offersCoords.push([offer.location.latitude, offer.location.longitude]);
-  });
 
   return <div className="page page--gray page--main">
     <header className="header">
@@ -101,10 +97,10 @@ const Main = (props) => {
               </select>
               */}
             </form>
-            <PlacesList offers={offers}/>
+            <PlacesList offers={offers} listType={`list`}/>
           </section>
           <div className="cities__right-section">
-            <Map offerCords={offersCoords}/>
+            <Map offerCords={getCoordsArray(offers)} mapType={`list`}/>
           </div>
         </div>
       </div>

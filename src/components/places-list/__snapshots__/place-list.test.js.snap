@@ -2,7 +2,7 @@
 
 exports[`Place list correctly renders after relaunch 1`] = `
 <div
-  className="cities__places-list places__list tabs__content"
+  className="cities__places-list tabs__content places__list"
 >
   <article
     className="cities__place-card place-card"

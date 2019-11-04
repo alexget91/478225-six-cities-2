@@ -3,6 +3,7 @@ import Main from "../main/main";
 import Offer from "../offer/offer";
 import {placeList} from "../../common/global-prop-types";
 import URLS from "../../common/urls";
+import reviews from "../../mocks/reviews";
 
 const getPageScreen = (props) => {
   const {offers} = props;
@@ -11,7 +12,7 @@ const getPageScreen = (props) => {
     case URLS.main:
       return <Main offers={offers}/>;
     case URLS.offer:
-      return <Offer offer={offers[0]}/>;
+      return <Offer offer={offers[0]} reviews={reviews} neighbourhood={[offers[1], offers[2], offers[3]]}/>;
   }
 
   return null;
