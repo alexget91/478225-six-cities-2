@@ -18,6 +18,7 @@ const placeCard = shallow(<PlaceCard
   rating={0}
   title={``}
   type={`apartment`}
+  cardType={`list`}
   onPlaceNameClick={clickHandler}
   onMouseHover={mouseHoverHandler}
 />);

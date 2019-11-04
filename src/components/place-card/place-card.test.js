@@ -14,6 +14,7 @@ it(`Place card correctly renders after relaunch`, () => {
       rating={0}
       title={``}
       type={`apartment`}
+      cardType={`list`}
     />)
     .toJSON();
 

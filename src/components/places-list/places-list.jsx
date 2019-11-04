@@ -1,7 +1,12 @@
 import React, {PureComponent} from "react";
 import PlaceCard from "../place-card/place-card";
-import {placeList} from "../../common/global-prop-types";
+import {displayType, placeList} from "../../common/global-prop-types";
 import URLS from "../../common/urls";
+
+const LIST_CLASS = {
+  offer: `near-places__list`,
+  list: `cities__places-list tabs__content`,
+};
 
 class PlacesList extends PureComponent {
   constructor(props) {
@@ -15,9 +20,9 @@ class PlacesList extends PureComponent {
   }
 
   render() {
-    const {offers} = this.props;
+    const {offers, listType} = this.props;
 
-    return <div className="cities__places-list places__list tabs__content">
+    return <div className={`${LIST_CLASS[listType]} places__list`}>
       {offers.map((place) => {
         return <PlaceCard
           key={place.id}
@@ -29,6 +34,7 @@ class PlacesList extends PureComponent {
           rating={place.rating}
           title={place.title}
           type={place.type}
+          cardType={listType}
           onPlaceNameClick={this._placeNameClickHandler}
           onMouseHover={this._mouseHoverHandler}
         />;
@@ -48,6 +54,9 @@ class PlacesList extends PureComponent {
   }
 }
 
-PlacesList.propTypes = {offers: placeList};
+PlacesList.propTypes = {
+  offers: placeList,
+  listType: displayType,
+};
 
 export default PlacesList;

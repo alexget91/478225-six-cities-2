@@ -7,7 +7,7 @@ it(`Map correctly renders after relaunch`, () => {
   createMapBlock();
 
   const tree = renderer
-    .create(<Map offerCords={[]}/>)
+    .create(<Map offerCords={[]} mapType={`list`}/>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

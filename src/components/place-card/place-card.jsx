@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {placeCard} from "../../common/global-prop-types";
+import {displayType, placeCard} from "../../common/global-prop-types";
 import {getRatingPercent} from "../../common/utils";
 
 const TYPE_NAMES = {
@@ -10,17 +10,28 @@ const TYPE_NAMES = {
   hotel: `Hotel`,
 };
 
-const PlaceCard = (props) => {
-  const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type, onPlaceNameClick, onMouseHover} = props;
+const CARD_CLASS = {
+  offer: `near-places__card`,
+  list: `cities__place-card`,
+};
 
-  return <article key={id} data-id={id} className="cities__place-card place-card"
+const IMAGE_CLASS = {
+  offer: `near-places__image-wrapper`,
+  list: `cities__image-wrapper`,
+};
+
+const PlaceCard = (props) => {
+  const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type, cardType,
+    onPlaceNameClick, onMouseHover} = props;
+
+  return <article key={id} data-id={id} className={`${CARD_CLASS[cardType]} place-card`}
     onMouseEnter={() => onMouseHover({id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type})}
     onMouseLeave={() => onMouseHover()}
   >
     {isPremium ? <div className="place-card__mark">
       <span>Premium</span>
     </div> : ``}
-    <div className="cities__image-wrapper place-card__image-wrapper">
+    <div className={`${IMAGE_CLASS[cardType]} place-card__image-wrapper`}>
       <a href="#">
         <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
       </a>
@@ -55,6 +66,7 @@ const PlaceCard = (props) => {
 
 PlaceCard.propTypes = {
   ...placeCard,
+  cardType: displayType,
   onPlaceNameClick: PropTypes.func,
   onMouseHover: PropTypes.func,
 };
