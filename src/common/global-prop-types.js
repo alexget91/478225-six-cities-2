@@ -1,7 +1,17 @@
 import PropTypes from "prop-types";
 
+const cityData = {
+  name: PropTypes.string.isRequired,
+  location: PropTypes.exact({
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+    zoom: PropTypes.number
+  }).isRequired
+};
+
 const placeCard = {
   id: PropTypes.number.isRequired,
+  city: PropTypes.exact(cityData),
   previewImage: PropTypes.string,
   images: PropTypes.arrayOf(PropTypes.string),
   title: PropTypes.string.isRequired,
@@ -41,4 +51,4 @@ const reviewItem = {
 
 const displayType = PropTypes.oneOf([`offer`, `list`]).isRequired;
 
-export {placeCard, placeList, reviewItem, displayType};
+export {placeCard, placeList, reviewItem, displayType, cityData};

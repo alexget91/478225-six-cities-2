@@ -7,7 +7,13 @@ it(`Map correctly renders after relaunch`, () => {
   createMapBlock();
 
   const tree = renderer
-    .create(<Map offerCords={[]} mapType={`list`}/>)
+    .create(<Map offerCords={[]} mapType={`list`} city={{
+      name: ``,
+      location: {
+        latitude: 0,
+        longitude: 0,
+      }
+    }}/>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

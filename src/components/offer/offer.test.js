@@ -10,6 +10,13 @@ it(`Offer page correctly renders after relaunch`, () => {
     .create(<Offer
       offer={{
         id: 0,
+        city: {
+          name: ``,
+          location: {
+            latitude: 0,
+            longitude: 0,
+          }
+        },
         previewImage: ``,
         images: [``],
         title: ``,

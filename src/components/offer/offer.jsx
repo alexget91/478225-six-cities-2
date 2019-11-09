@@ -113,7 +113,7 @@ const Offer = (props) => {
             <Reviews reviews={reviews}/>
           </div>
         </div>
-        <Map offerCords={getCoordsArray(neighbourhood)} mapType={`offer`}/>
+        <Map offerCords={getCoordsArray(neighbourhood)} mapType={`offer`} city={offer.city}/>
       </section>
       {neighbourhood.length ? <div className="container">
         <section className="near-places places">
