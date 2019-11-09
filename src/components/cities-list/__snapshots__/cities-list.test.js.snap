@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Cities list correctly renders after relaunch 1`] = `
+<div
+  className="tabs"
+>
+  <section
+    className="locations container"
+  >
+    <ul
+      className="locations__list tabs__list"
+    >
+      <li
+        className="locations__item"
+      >
+        <a
+          className="locations__item-link tabs__item tabs__item--active js-city-item"
+          href="#"
+          onClick={[Function]}
+        >
+          <span>
+            1
+          </span>
+        </a>
+      </li>
+      <li
+        className="locations__item"
+      >
+        <a
+          className="locations__item-link tabs__item js-city-item"
+          href="#"
+          onClick={[Function]}
+        >
+          <span>
+            2
+          </span>
+        </a>
+      </li>
+    </ul>
+  </section>
+</div>
+`;
