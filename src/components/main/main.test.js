@@ -33,3 +33,128 @@ it(`Main page correctly renders after relaunch`, () => {
 
   expect(tree).toMatchSnapshot();
 });
+
+describe(`Offers is sorted correctly`, () => {
+  const mockOffers = [
+    {
+      id: 1,
+      rating: 4.6,
+      priceByNight: 120,
+    },
+    {
+      id: 2,
+      priceByNight: 80,
+      rating: 4,
+    },
+    {
+      id: 3,
+      priceByNight: 132,
+      rating: 4,
+    },
+    {
+      id: 4,
+      priceByNight: 180,
+      rating: 5,
+    },
+  ];
+
+  it(`Popular`, () => {
+    expect(Main.getSortedOffers(`popular`, mockOffers)).toEqual([
+      {
+        id: 1,
+        rating: 4.6,
+        priceByNight: 120,
+      },
+      {
+        id: 2,
+        priceByNight: 80,
+        rating: 4,
+      },
+      {
+        id: 3,
+        priceByNight: 132,
+        rating: 4,
+      },
+      {
+        id: 4,
+        priceByNight: 180,
+        rating: 5,
+      },
+    ]);
+  });
+
+  it(`Price: low to high`, () => {
+    expect(Main.getSortedOffers(`to-high`, mockOffers)).toEqual([
+      {
+        id: 2,
+        priceByNight: 80,
+        rating: 4,
+      },
+      {
+        id: 1,
+        rating: 4.6,
+        priceByNight: 120,
+      },
+      {
+        id: 3,
+        priceByNight: 132,
+        rating: 4,
+      },
+      {
+        id: 4,
+        priceByNight: 180,
+        rating: 5,
+      },
+    ]);
+  });
+
+  it(`Price: high to low`, () => {
+    expect(Main.getSortedOffers(`to-low`, mockOffers)).toEqual([
+      {
+        id: 4,
+        priceByNight: 180,
+        rating: 5,
+      },
+      {
+        id: 3,
+        priceByNight: 132,
+        rating: 4,
+      },
+      {
+        id: 1,
+        rating: 4.6,
+        priceByNight: 120,
+      },
+      {
+        id: 2,
+        priceByNight: 80,
+        rating: 4,
+      },
+    ]);
+  });
+
+  it(`Top rated first`, () => {
+    expect(Main.getSortedOffers(`top-rated`, mockOffers)).toEqual([
+      {
+        id: 4,
+        priceByNight: 180,
+        rating: 5,
+      },
+      {
+        id: 1,
+        rating: 4.6,
+        priceByNight: 120,
+      },
+      {
+        id: 2,
+        priceByNight: 80,
+        rating: 4,
+      },
+      {
+        id: 3,
+        priceByNight: 132,
+        rating: 4,
+      },
+    ]);
+  });
+});
