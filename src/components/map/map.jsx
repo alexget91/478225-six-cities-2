@@ -19,6 +19,11 @@ class Map extends React.PureComponent {
       iconUrl: `img/pin.svg`,
       iconSize: [27, 39]
     });
+    this.iconActive = leaflet.icon({
+      iconUrl: `img/pin-active.svg`,
+      iconSize: [27, 39]
+    });
+    this.layerGroup = null;
   }
 
   render() {
@@ -52,6 +57,8 @@ class Map extends React.PureComponent {
       marker: true
     });
 
+    this.layerGroup = leaflet.layerGroup().addTo(this.map);
+
     leaflet
       .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
         attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
@@ -60,24 +67,25 @@ class Map extends React.PureComponent {
   }
 
   _showMapForCity() {
-    const icon = this.icon;
-    const {offerCords} = this.props;
+    const {offerPins} = this.props;
 
     this.map.setView(this.cityCoords, this.zoom);
+    this.layerGroup.clearLayers();
 
-    offerCords.map((pin) => {
+    offerPins.map((pin) => {
       leaflet
-        .marker(pin, {icon})
-        .addTo(this.map);
+        .marker(pin.coords, {icon: pin.isActive ? this.iconActive : this.icon})
+        .addTo(this.layerGroup);
     });
   }
 }
 
 Map.propTypes = {
   city: PropTypes.exact(cityData).isRequired,
-  offerCords: PropTypes.arrayOf(
-      PropTypes.arrayOf(PropTypes.number)
-  ).isRequired,
+  offerPins: PropTypes.arrayOf(PropTypes.exact({
+    coords: PropTypes.arrayOf(PropTypes.number).isRequired,
+    isActive: PropTypes.bool,
+  })).isRequired,
   mapType: displayType
 };
 
