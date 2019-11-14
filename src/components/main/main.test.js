@@ -27,7 +27,9 @@ it(`Main page correctly renders after relaunch`, () => {
           longitude: 0,
         }
       }]}
+      sort={`popular`}
       onCityClick={jest.fn()}
+      onSortChange={jest.fn()}
     />)
     .toJSON();
 

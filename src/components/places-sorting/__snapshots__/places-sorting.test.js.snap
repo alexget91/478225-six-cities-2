@@ -14,7 +14,7 @@ exports[`Places sorting correctly renders after relaunch 1`] = `
    
   <span
     className="places__sorting-type"
-    onClick={[Function]}
+    onClick={[MockFunction]}
     tabIndex="0"
   >
     Popular

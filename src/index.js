@@ -15,7 +15,10 @@ const getCitiesList = (placeList) => Object.keys(
 
 const init = (placeList) => {
   ReactDOM.render(
-      <Provider store={createStore(reducer)}>
+      <Provider store={createStore(
+          reducer,
+          window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+      )}>
         <App cities={getCitiesList(placeList)} allOffers={placeList}/>
       </Provider>,
       document.querySelector(`#root`)
