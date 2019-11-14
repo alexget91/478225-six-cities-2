@@ -1,11 +1,14 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import PlacesList from "../places-list/places-list";
-import {placeList} from "../../common/global-prop-types";
+import {placeCard, placeList} from "../../common/global-prop-types";
 import Map from "../map/map";
 import {getPinsForMap} from "../../common/utils";
 import CitiesList from "../cities-list/cities-list";
 import PlacesSorting from "../places-sorting/places-sorting";
+import withOpenable from "../../hocs/with-openable/with-openable";
+
+const PlacesSortingWrapped = withOpenable(PlacesSorting);
 
 class Main extends PureComponent {
   static getSortedOffers(sort, offers) {
@@ -21,21 +24,8 @@ class Main extends PureComponent {
     return offers;
   }
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      sort: `popular`,
-      activePlace: null,
-    };
-
-    this._sortChangeHandler = this._sortChangeHandler.bind(this);
-    this._placeHoverHandler = this._placeHoverHandler.bind(this);
-  }
-
   render() {
-    const {cities, activeCity, offers, onCityClick} = this.props;
-    const {sort, activePlace} = this.state;
+    const {cities, activeCity, offers, activeOffer, sort, onCityClick, onActiveOfferChange, onSortChange} = this.props;
 
     return <div className="page page--gray page--main">
       <header className="header">
@@ -69,11 +59,11 @@ class Main extends PureComponent {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{offers.length} places to stay in {activeCity}</b>
-              <PlacesSorting sort={sort} onSortChange={this._sortChangeHandler}/>
-              <PlacesList offers={Main.getSortedOffers(sort, offers)} onPlaceHover={this._placeHoverHandler} listType={`list`}/>
+              <PlacesSortingWrapped sort={sort} onSortChange={onSortChange}/>
+              <PlacesList offers={Main.getSortedOffers(sort, offers)} onPlaceHover={onActiveOfferChange} listType={`list`}/>
             </section>
             <div className="cities__right-section">
-              <Map offerPins={getPinsForMap(offers, activePlace ? activePlace.id : null)}
+              <Map offerPins={getPinsForMap(offers, activeOffer ? activeOffer.id : null)}
                 mapType={`list`} city={offers[0].city}/>
             </div>
           </div>
@@ -81,21 +71,17 @@ class Main extends PureComponent {
       </main>
     </div>;
   }
-
-  _sortChangeHandler(sort) {
-    this.setState({sort});
-  }
-
-  _placeHoverHandler(data) {
-    this.setState({activePlace: data ? data : null});
-  }
 }
 
 Main.propTypes = {
   cities: PropTypes.arrayOf(PropTypes.string).isRequired,
   activeCity: PropTypes.string,
+  activeOffer: PropTypes.exact(placeCard),
   offers: placeList,
-  onCityClick: PropTypes.func.isRequired
+  sort: PropTypes.string,
+  onCityClick: PropTypes.func.isRequired,
+  onActiveOfferChange: PropTypes.func,
+  onSortChange: PropTypes.func.isRequired,
 };
 
 export default Main;

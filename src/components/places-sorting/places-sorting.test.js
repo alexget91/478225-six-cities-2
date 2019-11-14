@@ -4,7 +4,11 @@ import PlacesSorting from "./places-sorting";
 
 it(`Places sorting correctly renders after relaunch`, () => {
   const tree = renderer
-    .create(<PlacesSorting sort={`popular`} onSortChange={jest.fn()}/>)
+    .create(<PlacesSorting
+      sort={`popular`}
+      onSortChange={jest.fn()}
+      onVisibilityChange={jest.fn()}
+    />)
     .toJSON();
 
   expect(tree).toMatchSnapshot();
