@@ -1,6 +1,4 @@
-import {ActionCreator, ActionTypes, getOffersByCities, Operation, reducer, transformOfferData} from "./reducer";
-import configureAPI from "./api";
-import MockAdapter from "axios-mock-adapter";
+import {AppActionCreator, AppActionTypes, appReducer, getOffersByCities, transformOfferData} from "./app-reducer";
 
 const mockOffers = [
   {
@@ -108,49 +106,26 @@ describe(`Offers list transformation works correctly`, () => {
   });
 });
 
-describe(`Action creators works correctly`, () => {
-  it(`Action creator for set the city returns correct action`, () => {
-    expect(ActionCreator.setCity(`Paris`)).toEqual({
-      type: ActionTypes.SET_CITY,
-      payload: `Paris`
-    });
-  });
-
-  it(`Action creator for set offers returns correct action`, () => {
-    expect(ActionCreator.setOffers(mockOffers)).toEqual({
-      type: ActionTypes.SET_OFFERS,
+describe(`App action creators works correctly`, () => {
+  it(`App action creator for set offers returns correct action`, () => {
+    expect(AppActionCreator.setOffers(mockOffers)).toEqual({
+      type: AppActionTypes.SET_OFFERS,
       payload: mockOffersTransformed,
     });
   });
 });
 
-describe(`Reducer works correctly`, () => {
-  it(`Reducer without action should return current state`, () => {
-    expect(reducer({
-      city: `Hamburg`,
+describe(`App reducer works correctly`, () => {
+  it(`App reducer without action should return current state`, () => {
+    expect(appReducer({
       offers: mockOffersTransformed,
     }, {})).toEqual({
-      city: `Hamburg`,
       offers: mockOffersTransformed,
     });
   });
 
-  it(`Reducer should set given value as city`, () => {
-    expect(reducer({
-      city: `Hamburg`,
-      offers: mockOffersTransformed,
-    }, {
-      type: ActionTypes.SET_CITY,
-      payload: `Paris`
-    })).toEqual({
-      city: `Paris`,
-      offers: mockOffersTransformed,
-    });
-  });
-
-  it(`Reducer should set given value as offers`, () => {
-    expect(reducer({
-      city: `Hamburg`,
+  it(`App reducer should set given value as offers`, () => {
+    expect(appReducer({
       offers: {
         Paris: {
           city: {
@@ -164,35 +139,10 @@ describe(`Reducer works correctly`, () => {
         },
       },
     }, {
-      type: ActionTypes.SET_OFFERS,
+      type: AppActionTypes.SET_OFFERS,
       payload: mockOffersTransformed
     })).toEqual({
-      city: `Hamburg`,
       offers: mockOffersTransformed,
     });
-  });
-
-  it(`Should make a correct API call to /hotels`, () => {
-    const api = configureAPI();
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
-    const offersLoader = Operation.loadOffers();
-
-    apiMock
-      .onGet(`/hotels`)
-      .reply(200, mockOffers);
-
-    return offersLoader(dispatch, null, api)
-      .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
-        expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionTypes.SET_CITY,
-          payload: `Amsterdam`,
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: ActionTypes.SET_OFFERS,
-          payload: mockOffersTransformed,
-        });
-      });
   });
 });

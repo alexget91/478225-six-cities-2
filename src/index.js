@@ -4,7 +4,8 @@ import App from "./components/app/app";
 import {Provider} from "react-redux";
 import {createStore, applyMiddleware, compose} from "redux";
 import thunk from "redux-thunk";
-import {reducer, Operation} from "./reducer";
+import reducer from "./reducer/reducer";
+import Operation from "./reducer/operation/operation";
 import configureAPI from "./api";
 
 const init = () => {

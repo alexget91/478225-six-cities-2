@@ -1,5 +1,4 @@
-const ActionTypes = {
-  SET_CITY: `SET_CITY`,
+const AppActionTypes = {
   SET_OFFERS: `SET_OFFERS`,
 };
 
@@ -40,31 +39,20 @@ const getOffersByCities = (data) => data.reduce((result, offer) => {
   return result;
 }, {});
 
-
 const initialState = {
-  city: null,
   offers: [],
 };
 
-const ActionCreator = {
-  setCity: (city) => ({
-    type: ActionTypes.SET_CITY,
-    payload: city
-  }),
-
+const AppActionCreator = {
   setOffers: (allOffers) => ({
-    type: ActionTypes.SET_OFFERS,
+    type: AppActionTypes.SET_OFFERS,
     payload: getOffersByCities(allOffers),
   }),
 };
 
-const reducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.SET_CITY:
-      return Object.assign({}, state, {
-        city: action.payload
-      });
-    case ActionTypes.SET_OFFERS:
+    case AppActionTypes.SET_OFFERS:
       return Object.assign({}, state, {
         offers: action.payload
       });
@@ -73,14 +61,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-const Operation = {
-  loadOffers: () => (dispatch, _, api) => {
-    return api.get(`/hotels`)
-      .then((response) => {
-        dispatch(ActionCreator.setCity(response.data[0].city.name));
-        dispatch(ActionCreator.setOffers(response.data));
-      });
-  }
-};
-
-export {ActionTypes, ActionCreator, reducer, Operation, transformOfferData, getOffersByCities};
+export {appReducer, AppActionCreator, AppActionTypes, transformOfferData, getOffersByCities};

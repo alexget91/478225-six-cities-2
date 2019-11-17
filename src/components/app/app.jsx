@@ -6,7 +6,7 @@ import {placeList} from "../../common/global-prop-types";
 import URLS from "../../common/urls";
 import reviews from "../../mocks/reviews";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer";
+import {UserActionCreator} from "../../reducer/user-reducer/user-reducer";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
 import {compose} from "redux";
@@ -57,10 +57,10 @@ const getPageScreen = (props) => {
       />;
     case URLS.offer:
       return <OfferWrapped
-        offer={offers[`Amsterdam`].offers[0]}
+        offer={offers[`Dusseldorf`].offers[0]}
         city={offers[activeCity].city}
         reviews={reviews}
-        neighbourhood={[offers[`Amsterdam`].offers[1]]}
+        neighbourhood={[offers[`Dusseldorf`].offers[1]]}
       />;
   }
 
@@ -79,12 +79,12 @@ const App = (props) => {
 
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  activeCity: state.city,
-  offers: state.offers,
+  activeCity: state.userReducer.city,
+  offers: state.appReducer.offers,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onCityClick: (city) => dispatch(ActionCreator.setCity(city)),
+  onCityClick: (city) => dispatch(UserActionCreator.setCity(city)),
 });
 
 export {App};

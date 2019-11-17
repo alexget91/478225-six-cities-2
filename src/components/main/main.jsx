@@ -11,8 +11,7 @@ import {createSelector} from "reselect";
 
 const getSort = (data) => data.sort;
 const getOffers = (data) => data.offers;
-
-const getSortedOffers = createSelector(getSort, getOffers, (sort, offers) => {
+const getSortedOffers = (sort, offers) => {
   switch (sort) {
     case `to-high`:
       return offers.slice().sort((a, b) => a.priceByNight - b.priceByNight);
@@ -23,8 +22,9 @@ const getSortedOffers = createSelector(getSort, getOffers, (sort, offers) => {
   }
 
   return offers;
-});
+};
 
+const getSortedOffersSelector = createSelector(getSort, getOffers, getSortedOffers);
 const PlacesSortingWrapped = withOpenable(PlacesSorting);
 
 const Main = (props) => {
@@ -63,7 +63,7 @@ const Main = (props) => {
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{offers.length} places to stay in {activeCity.name}</b>
             <PlacesSortingWrapped sort={sort} onSortChange={onSortChange}/>
-            <PlacesList offers={getSortedOffers({sort, offers})} onPlaceHover={onActiveOfferChange} listType={`list`}/>
+            <PlacesList offers={getSortedOffersSelector({sort, offers})} onPlaceHover={onActiveOfferChange} listType={`list`}/>
           </section>
           <div className="cities__right-section">
             <Map offerPins={getPinsForMap(offers, activeOffer ? activeOffer.id : null)}
@@ -86,4 +86,5 @@ Main.propTypes = {
   onSortChange: PropTypes.func.isRequired,
 };
 
+export {getSortedOffers};
 export default Main;
