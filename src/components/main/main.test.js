@@ -9,16 +9,15 @@ it(`Main page correctly renders after relaunch`, () => {
   const tree = renderer
     .create(<Main
       cities={[`1`, `2`]}
-      activeCity={`1`}
+      activeCity={{
+        name: `1`,
+        location: {
+          latitude: 0,
+          longitude: 0,
+        }
+      }}
       offers={[{
         id: 0,
-        city: {
-          name: ``,
-          location: {
-            latitude: 0,
-            longitude: 0,
-          }
-        },
         priceByNight: 0,
         title: ``,
         type: `apartment`,

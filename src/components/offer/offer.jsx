@@ -1,5 +1,5 @@
 import React from "react";
-import {placeCard, reviewItem} from "../../common/global-prop-types";
+import {cityData, placeCard, reviewItem} from "../../common/global-prop-types";
 import PropTypes from "prop-types";
 import {getPinsForMap, getRatingPercent} from "../../common/utils";
 import Reviews from "../reviews/reviews";
@@ -7,7 +7,7 @@ import Map from "../map/map";
 import PlacesList from "../places-list/places-list";
 
 const Offer = (props) => {
-  const {offer, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange} = props;
+  const {offer, city, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange} = props;
 
   return <div className="page">
     <header className="header">
@@ -114,7 +114,7 @@ const Offer = (props) => {
           </div>
         </div>
         <Map offerPins={getPinsForMap(neighbourhood, activeNearPlace ? activeNearPlace.id : null)}
-          mapType={`offer`} city={offer.city}/>
+          mapType={`offer`} city={city}/>
       </section>
       {neighbourhood.length ? <div className="container">
         <section className="near-places places">
@@ -128,6 +128,7 @@ const Offer = (props) => {
 
 Offer.propTypes = {
   offer: PropTypes.exact(placeCard),
+  city: PropTypes.exact(cityData).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact(reviewItem)).isRequired,
   neighbourhood: PropTypes.arrayOf(PropTypes.exact(placeCard)),
   activeNearPlace: PropTypes.exact(placeCard),

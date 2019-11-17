@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import PlacesList from "../places-list/places-list";
-import {placeCard, placeList} from "../../common/global-prop-types";
+import {cityData, placeCard, placeList} from "../../common/global-prop-types";
 import Map from "../map/map";
 import {getPinsForMap} from "../../common/utils";
 import CitiesList from "../cities-list/cities-list";
@@ -53,18 +53,18 @@ class Main extends PureComponent {
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CitiesList cities={cities} activeCity={activeCity} onCityClick={onCityClick}/>
+        <CitiesList cities={cities} activeCity={activeCity.name} onCityClick={onCityClick}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {activeCity}</b>
+              <b className="places__found">{offers.length} places to stay in {activeCity.name}</b>
               <PlacesSortingWrapped sort={sort} onSortChange={onSortChange}/>
               <PlacesList offers={Main.getSortedOffers(sort, offers)} onPlaceHover={onActiveOfferChange} listType={`list`}/>
             </section>
             <div className="cities__right-section">
               <Map offerPins={getPinsForMap(offers, activeOffer ? activeOffer.id : null)}
-                mapType={`list`} city={offers[0].city}/>
+                mapType={`list`} city={activeCity}/>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@ class Main extends PureComponent {
 
 Main.propTypes = {
   cities: PropTypes.arrayOf(PropTypes.string).isRequired,
-  activeCity: PropTypes.string,
+  activeCity: PropTypes.exact(cityData),
   activeOffer: PropTypes.exact(placeCard),
   offers: placeList,
   sort: PropTypes.string,

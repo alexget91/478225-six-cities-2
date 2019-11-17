@@ -39,25 +39,37 @@ const OfferWrapped = withActiveItem(withTransformProps(
 )(Offer));
 
 const getPageScreen = (props) => {
-  const {cities, activeCity, offers, allOffers, onCityClick} = props;
+  const {activeCity, offers, onCityClick} = props;
+
+  const cities = Object.keys(offers);
+
+  if (!cities.length) {
+    return `Loading...`;
+  }
 
   switch (location.pathname) {
     case URLS.main:
-      return <MainWrapped cities={cities} activeCity={activeCity} offers={offers} onCityClick={(city) => {
-        onCityClick(city, allOffers);
-      }}/>;
+      return <MainWrapped
+        cities={cities}
+        activeCity={offers[activeCity].city}
+        offers={offers[activeCity].offers}
+        onCityClick={onCityClick}
+      />;
     case URLS.offer:
-      return <OfferWrapped offer={offers[0]} reviews={reviews} neighbourhood={[offers[1]]}/>;
+      return <OfferWrapped
+        offer={offers[`Amsterdam`].offers[0]}
+        city={offers[activeCity].city}
+        reviews={reviews}
+        neighbourhood={[offers[`Amsterdam`].offers[1]]}
+      />;
   }
 
   return null;
 };
 
 getPageScreen.propTypes = {
-  cities: PropTypes.arrayOf(PropTypes.string).isRequired,
   activeCity: PropTypes.string,
   offers: placeList,
-  allOffers: placeList,
   onCityClick: PropTypes.func.isRequired
 };
 
@@ -72,10 +84,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onCityClick: (city, allOffers) => {
-    dispatch(ActionCreator.setCity(city));
-    dispatch(ActionCreator.setOffers(city, allOffers));
-  },
+  onCityClick: (city) => dispatch(ActionCreator.setCity(city)),
 });
 
 export {App};
