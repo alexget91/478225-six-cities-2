@@ -2,11 +2,12 @@ import ReactDOM from "react-dom";
 import React from "react";
 import App from "./components/app/app";
 import {Provider} from "react-redux";
-import {createStore, applyMiddleware, compose} from "redux";
+import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import reducer from "./reducer/reducer";
 import Operation from "./reducer/operation/operation";
 import configureAPI from "./api";
+import {compose} from "recompose";
 
 const init = () => {
   const api = configureAPI((...args) => store.dispatch(...args));
