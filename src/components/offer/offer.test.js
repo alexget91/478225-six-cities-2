@@ -10,13 +10,6 @@ it(`Offer page correctly renders after relaunch`, () => {
     .create(<Offer
       offer={{
         id: 0,
-        city: {
-          name: ``,
-          location: {
-            latitude: 0,
-            longitude: 0,
-          }
-        },
         previewImage: ``,
         images: [``],
         title: ``,
@@ -34,6 +27,13 @@ it(`Offer page correctly renders after relaunch`, () => {
           avatarUrl: ``
         },
         description: ` `,
+      }}
+      city={{
+        name: ``,
+        location: {
+          latitude: 0,
+          longitude: 0,
+        }
       }}
       reviews={[{
         id: 0,

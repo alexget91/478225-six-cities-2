@@ -1,28 +1,32 @@
 import ReactDOM from "react-dom";
 import React from "react";
 import App from "./components/app/app";
-import offers from "./mocks/offers";
 import {Provider} from "react-redux";
-import {createStore} from "redux";
-import {reducer} from "./reducer";
+import {createStore, applyMiddleware} from "redux";
+import thunk from "redux-thunk";
+import reducer from "./reducer/reducer";
+import Operation from "./reducer/operation/operation";
+import configureAPI from "./api";
+import {compose} from "recompose";
 
-const getCitiesList = (placeList) => Object.keys(
-    placeList.reduce((result, offer) => {
-      result[offer.city.name] = true;
-      return result;
-    }, {})
-);
-
-const init = (placeList) => {
-  ReactDOM.render(
-      <Provider store={createStore(
-          reducer,
+const init = () => {
+  const api = configureAPI((...args) => store.dispatch(...args));
+  const store = createStore(
+      reducer,
+      compose(
+          applyMiddleware(thunk.withExtraArgument(api)),
           window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
-      )}>
-        <App cities={getCitiesList(placeList)} allOffers={placeList}/>
+      )
+  );
+
+  store.dispatch(Operation.loadOffers());
+
+  ReactDOM.render(
+      <Provider store={store}>
+        <App/>
       </Provider>,
       document.querySelector(`#root`)
   );
 };
 
-init(offers);
+init();

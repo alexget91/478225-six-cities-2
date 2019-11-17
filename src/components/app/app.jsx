@@ -6,7 +6,7 @@ import {placeList} from "../../common/global-prop-types";
 import URLS from "../../common/urls";
 import reviews from "../../mocks/reviews";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../reducer";
+import {UserActionCreator} from "../../reducer/user-reducer/user-reducer";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
 import {compose} from "redux";
@@ -39,25 +39,37 @@ const OfferWrapped = withActiveItem(withTransformProps(
 )(Offer));
 
 const getPageScreen = (props) => {
-  const {cities, activeCity, offers, allOffers, onCityClick} = props;
+  const {activeCity, offers, onCityClick} = props;
+
+  const cities = Object.keys(offers);
+
+  if (!cities.length) {
+    return `Loading...`;
+  }
 
   switch (location.pathname) {
     case URLS.main:
-      return <MainWrapped cities={cities} activeCity={activeCity} offers={offers} onCityClick={(city) => {
-        onCityClick(city, allOffers);
-      }}/>;
+      return <MainWrapped
+        cities={cities}
+        activeCity={offers[activeCity].city}
+        offers={offers[activeCity].offers}
+        onCityClick={onCityClick}
+      />;
     case URLS.offer:
-      return <OfferWrapped offer={offers[0]} reviews={reviews} neighbourhood={[offers[1]]}/>;
+      return <OfferWrapped
+        offer={offers[`Dusseldorf`].offers[0]}
+        city={offers[activeCity].city}
+        reviews={reviews}
+        neighbourhood={[offers[`Dusseldorf`].offers[1]]}
+      />;
   }
 
   return null;
 };
 
 getPageScreen.propTypes = {
-  cities: PropTypes.arrayOf(PropTypes.string).isRequired,
   activeCity: PropTypes.string,
   offers: placeList,
-  allOffers: placeList,
   onCityClick: PropTypes.func.isRequired
 };
 
@@ -67,15 +79,12 @@ const App = (props) => {
 
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  activeCity: state.city,
-  offers: state.offers,
+  activeCity: state.userReducer.city,
+  offers: state.appReducer.offers,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onCityClick: (city, allOffers) => {
-    dispatch(ActionCreator.setCity(city));
-    dispatch(ActionCreator.setOffers(city, allOffers));
-  },
+  onCityClick: (city) => dispatch(UserActionCreator.setCity(city)),
 });
 
 export {App};
