@@ -7,4 +7,11 @@ const pageTypes = {
   OFFER: `OFFER`,
 };
 
-export {pageTypes};
+const sortingOptions = {
+  popular: `popular`,
+  toHigh: `to-high`,
+  toLow: `to-low`,
+  topRated: `top-rated`,
+};
+
+export {pageTypes, sortingOptions};

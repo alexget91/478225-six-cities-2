@@ -11,10 +11,12 @@ import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
 import {compose} from "redux";
 import Page from "../page/page";
-import {pageTypes} from "../../common/constants";
+import {pageTypes, sortingOptions} from "../../common/constants";
 import Header from "../header/header";
+import MainContent from "../main-content/main-content";
+import MainEmpty from "../main-empty/main-empty";
 
-const DEFAULT_SORT = `popular`;
+const DEFAULT_SORT = sortingOptions.popular;
 
 const transformPropNames = (newItem, newCallback, props) => {
   const newProps = Object.assign({}, props, {
@@ -35,7 +37,7 @@ const getComponentWithSort = (Component) => withActiveItem(withTransformProps(
 )(Component), DEFAULT_SORT);
 
 
-const MainWrapped = compose(getComponentWithOffer, getComponentWithSort)(Main);
+const MainContentWrapped = compose(getComponentWithOffer, getComponentWithSort)(MainContent);
 
 const OfferWrapped = withActiveItem(withTransformProps(
     (props) => transformPropNames(`activeNearPlace`, `onActiveNearPlaceChange`, props)
@@ -46,14 +48,21 @@ const getPageData = (props, cities) => {
 
   switch (location.pathname) {
     case URLS.main:
+      const isEmpty = !offers[activeCity].offers.length;
+
       return {
-        content: <MainWrapped
+        content: <Main
           cities={cities}
           activeCity={offers[activeCity].city}
-          offers={offers[activeCity].offers}
+          isEmpty={isEmpty}
           onCityClick={onCityClick}
-        />,
-        type: pageTypes.MAIN,
+        >
+          {isEmpty ? <MainEmpty cityName={activeCity}/> : <MainContentWrapped
+            activeCity={offers[activeCity].city}
+            offers={offers[activeCity].offers}
+          />}
+        </Main>,
+        type: isEmpty ? pageTypes.MAIN_EMPTY : pageTypes.MAIN,
       };
     case URLS.offer:
       return {
