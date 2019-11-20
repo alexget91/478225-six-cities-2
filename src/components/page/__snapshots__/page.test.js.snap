@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Page component correctly renders after relaunch With type FAVORITES 1`] = `
+<div
+  className="page"
+>
+  <div
+    className="header"
+  />
+  <main
+    className="page__main page__main--favorites"
+  >
+    <div
+      className="content"
+    />
+  </main>
+</div>
+`;
+
+exports[`Page component correctly renders after relaunch With type FAVORITES_EMPTY 1`] = `
+<div
+  className="page page--favorites-empty"
+>
+  <div
+    className="header"
+  />
+  <main
+    className="page__main page__main--favorites page__main--favorites-empty"
+  >
+    <div
+      className="content"
+    />
+  </main>
+</div>
+`;
+
+exports[`Page component correctly renders after relaunch With type LOGIN 1`] = `
+<div
+  className="page page--gray page--login"
+>
+  <div
+    className="header"
+  />
+  <main
+    className="page__main page__main--login"
+  >
+    <div
+      className="content"
+    />
+  </main>
+</div>
+`;
+
+exports[`Page component correctly renders after relaunch With type MAIN 1`] = `
+<div
+  className="page page--gray page--main"
+>
+  <div
+    className="header"
+  />
+  <main
+    className="page__main page__main--index"
+  >
+    <div
+      className="content"
+    />
+  </main>
+</div>
+`;
+
+exports[`Page component correctly renders after relaunch With type MAIN_EMPTY 1`] = `
+<div
+  className="page page--gray page--main"
+>
+  <div
+    className="header"
+  />
+  <main
+    className="page__main page__main--index page__main--index-empty"
+  >
+    <div
+      className="content"
+    />
+  </main>
+</div>
+`;
+
+exports[`Page component correctly renders after relaunch With type OFFER 1`] = `
+<div
+  className="page"
+>
+  <div
+    className="header"
+  />
+  <main
+    className="page__main page__main--property"
+  >
+    <div
+      className="content"
+    />
+  </main>
+</div>
+`;
+
+exports[`Page component correctly renders after relaunch Without data 1`] = `
+<div
+  className="page"
+>
+  <main
+    className="page__main"
+  />
+</div>
+`;
+
+exports[`Page component correctly renders after relaunch Without type 1`] = `
+<div
+  className="page"
+>
+  <div
+    className="header"
+  />
+  <main
+    className="page__main"
+  >
+    <div
+      className="content"
+    />
+  </main>
+</div>
+`;

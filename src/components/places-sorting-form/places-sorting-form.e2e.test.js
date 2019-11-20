@@ -1,14 +1,13 @@
 import React from "react";
 import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import PlacesSorting from "./places-sorting";
+import PlacesSortingForm from "./places-sorting-form";
 
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Clicking on a sorting option pass sorting id to callback`, () => {
   const clickHandler = jest.fn();
-  const placesSorting = shallow(<PlacesSorting
-    sort={`popular`}
+  const placesSorting = shallow(<PlacesSortingForm
     onSortChange={clickHandler}
     onVisibilityChange={jest.fn()}
   />);

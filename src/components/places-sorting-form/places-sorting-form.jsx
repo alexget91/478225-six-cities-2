@@ -1,14 +1,15 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {sortingOptions} from "../../common/constants";
 
 const OPTIONS = {
-  "popular": `Popular`,
-  "to-high": `Price: low to high`,
-  "to-low": `Price: high to low`,
-  "top-rated": `Top rated first`,
+  [sortingOptions.popular]: `Popular`,
+  [sortingOptions.toHigh]: `Price: low to high`,
+  [sortingOptions.toLow]: `Price: high to low`,
+  [sortingOptions.topRated]: `Top rated first`,
 };
 
-class PlacesSorting extends PureComponent {
+class PlacesSortingForm extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -16,7 +17,10 @@ class PlacesSorting extends PureComponent {
   }
 
   render() {
-    const {sort, isVisible, onVisibilityChange} = this.props;
+    const {isVisible, onVisibilityChange} = this.props;
+
+    const sortKeys = Object.keys(OPTIONS);
+    const sort = this.props.sort || sortKeys[0];
 
     return <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>&nbsp;
@@ -27,7 +31,7 @@ class PlacesSorting extends PureComponent {
         </svg>
       </span>
       <ul className={`places__options places__options--custom${isVisible ? ` places__options--opened` : ``}`}>
-        {Object.keys(OPTIONS).map((key, i) => <li key={i} tabIndex="0" data-sort={key}
+        {sortKeys.map((key, i) => <li key={i} tabIndex="0" data-sort={key}
           className={`places__option${key === sort ? ` places__option--active` : ``} js-sorting-option`}
           onClick={this._sortItemClickHandler}>
           {OPTIONS[key]}
@@ -41,11 +45,16 @@ class PlacesSorting extends PureComponent {
   }
 }
 
-PlacesSorting.propTypes = {
-  sort: PropTypes.oneOf([`popular`, `to-high`, `to-low`, `top-rated`]),
+PlacesSortingForm.propTypes = {
+  sort: PropTypes.oneOf([
+    sortingOptions.popular,
+    sortingOptions.toHigh,
+    sortingOptions.toLow,
+    sortingOptions.popular,
+  ]),
   isVisible: PropTypes.bool,
   onSortChange: PropTypes.func.isRequired,
   onVisibilityChange: PropTypes.func.isRequired,
 };
 
-export default PlacesSorting;
+export default PlacesSortingForm;

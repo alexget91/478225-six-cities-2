@@ -39,6 +39,11 @@ const placeCard = {
 
 const placeList = PropTypes.arrayOf(PropTypes.exact(placeCard));
 
+const placeListByCity = PropTypes.objectOf(PropTypes.exact({
+  city: PropTypes.exact(cityData),
+  offers: PropTypes.arrayOf(PropTypes.exact(placeCard)),
+}));
+
 const reviewItem = {
   id: PropTypes.number.isRequired,
   user: PropTypes.exact({
@@ -53,4 +58,4 @@ const reviewItem = {
 
 const displayType = PropTypes.oneOf([`offer`, `list`]).isRequired;
 
-export {placeCard, placeList, reviewItem, displayType, cityData};
+export {placeCard, placeList, reviewItem, displayType, cityData, placeListByCity};

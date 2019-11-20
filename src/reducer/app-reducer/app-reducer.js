@@ -40,7 +40,7 @@ const getOffersByCities = (data) => data.reduce((result, offer) => {
 }, {});
 
 const initialState = {
-  offers: [],
+  offers: {},
 };
 
 const AppActionCreator = {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Places sorting correctly renders after relaunch 1`] = `
+exports[`Places sorting form correctly renders after relaunch 1`] = `
 <form
   action="#"
   className="places__sorting"
