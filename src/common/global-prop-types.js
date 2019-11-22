@@ -9,6 +9,14 @@ const cityData = {
   }).isRequired
 };
 
+const userData = {
+  id: PropTypes.number.isRequired,
+  email: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  avatarUrl: PropTypes.string,
+  isPro: PropTypes.bool,
+};
+
 const placeCard = {
   id: PropTypes.number.isRequired,
   city: PropTypes.exact(cityData),
@@ -58,4 +66,4 @@ const reviewItem = {
 
 const displayType = PropTypes.oneOf([`offer`, `list`]).isRequired;
 
-export {placeCard, placeList, reviewItem, displayType, cityData, placeListByCity};
+export {placeCard, placeList, reviewItem, displayType, cityData, userData, placeListByCity};
