@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Main from "../main/main";
 import Offer from "../offer/offer";
-import {placeListByCity} from "../../common/global-prop-types";
+import {placeListByCity, userData} from "../../common/global-prop-types";
 import URLS from "../../common/urls";
 import reviews from "../../mocks/reviews";
 import {connect} from "react-redux";
@@ -15,6 +15,8 @@ import {pageTypes, sortingOptions} from "../../common/constants";
 import Header from "../header/header";
 import MainContent from "../main-content/main-content";
 import MainEmpty from "../main-empty/main-empty";
+import SignIn from "../sign-in/sign-in";
+import Operation from "../../reducer/operation/operation";
 
 const DEFAULT_SORT = sortingOptions.popular;
 
@@ -44,7 +46,16 @@ const OfferWrapped = withActiveItem(withTransformProps(
 )(Offer));
 
 const getPageData = (props, cities) => {
-  const {activeCity, offers, onCityClick} = props;
+  const {activeCity, offers, isAuthorizationRequired, onCityClick, onSignIn} = props;
+
+  if (isAuthorizationRequired) {
+    return {
+      content: <SignIn
+        onFormSubmit={onSignIn}
+      />,
+      type: pageTypes.LOGIN,
+    };
+  }
 
   switch (location.pathname) {
     case URLS.main:
@@ -82,11 +93,13 @@ const getPageData = (props, cities) => {
 getPageData.propTypes = {
   activeCity: PropTypes.string,
   offers: placeListByCity,
-  onCityClick: PropTypes.func.isRequired
+  isAuthorizationRequired: PropTypes.bool,
+  onCityClick: PropTypes.func.isRequired,
+  onSignIn: PropTypes.func.isRequired,
 };
 
 const App = (props) => {
-  const {offers} = props;
+  const {offers, user} = props;
   const cities = Object.keys(offers);
 
   if (!cities.length) {
@@ -96,7 +109,7 @@ const App = (props) => {
   const pageData = getPageData(props, cities);
 
   return <Page
-    header={<Header/>}
+    header={<Header email={user ? user.email : null}/>}
     content={pageData.content}
     type={pageData.type}
   />;
@@ -104,16 +117,20 @@ const App = (props) => {
 
 App.propTypes = {
   offers: placeListByCity,
+  user: PropTypes.exact(userData),
 };
 
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   activeCity: state.userReducer.city,
   offers: state.appReducer.offers,
+  isAuthorizationRequired: state.userReducer.isAuthorizationRequired,
+  user: state.userReducer.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCityClick: (city) => dispatch(UserActionCreator.setCity(city)),
+  onSignIn: (email, password) => dispatch(Operation.signIn(email, password)),
 });
 
 export {App};
