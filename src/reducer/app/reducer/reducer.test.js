@@ -1,4 +1,4 @@
-import {AppActionCreator, AppActionTypes, appReducer, getOffersByCities, transformOfferData} from "./app-reducer";
+import {ActionCreator, ActionTypes, reducer, getOffersByCities, transformOfferData} from "./reducer";
 
 const mockOffers = [
   {
@@ -108,8 +108,8 @@ describe(`Offers list transformation works correctly`, () => {
 
 describe(`App action creators works correctly`, () => {
   it(`App action creator for set offers returns correct action`, () => {
-    expect(AppActionCreator.setOffers(mockOffers)).toEqual({
-      type: AppActionTypes.SET_OFFERS,
+    expect(ActionCreator.setOffers(mockOffers)).toEqual({
+      type: ActionTypes.SET_OFFERS,
       payload: mockOffersTransformed,
     });
   });
@@ -117,7 +117,7 @@ describe(`App action creators works correctly`, () => {
 
 describe(`App reducer works correctly`, () => {
   it(`App reducer without action should return current state`, () => {
-    expect(appReducer({
+    expect(reducer({
       offers: mockOffersTransformed,
     }, {})).toEqual({
       offers: mockOffersTransformed,
@@ -125,7 +125,7 @@ describe(`App reducer works correctly`, () => {
   });
 
   it(`App reducer should set given value as offers`, () => {
-    expect(appReducer({
+    expect(reducer({
       offers: {
         Paris: {
           city: {
@@ -139,7 +139,7 @@ describe(`App reducer works correctly`, () => {
         },
       },
     }, {
-      type: AppActionTypes.SET_OFFERS,
+      type: ActionTypes.SET_OFFERS,
       payload: mockOffersTransformed
     })).toEqual({
       offers: mockOffersTransformed,

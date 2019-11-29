@@ -5,7 +5,7 @@ import {Provider} from "react-redux";
 import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import reducer from "./reducer/reducer";
-import Operation from "./reducer/operation/operation";
+import Operation from "./reducer/app/operation/operation";
 import configureAPI from "./api";
 import {compose} from "recompose";
 import {BrowserRouter} from "react-router-dom";

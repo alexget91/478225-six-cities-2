@@ -1,5 +1,5 @@
 import axios from "axios";
-import {UserActionCreator} from "./reducer/user-reducer/user-reducer";
+import {ActionCreator} from "./reducer/user/reducer/reducer";
 
 const configureAPI = (dispatch) => {
   const api = axios.create({
@@ -15,7 +15,7 @@ const configureAPI = (dispatch) => {
       case 400:
         throw new Error(err.response.data.error);
       case 403:
-        dispatch(UserActionCreator.setAuthorizationRequired(true));
+        dispatch(ActionCreator.setAuthorizationRequired(true));
         break;
     }
 

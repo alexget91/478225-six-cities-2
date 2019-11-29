@@ -1,4 +1,8 @@
-const AppActionTypes = {
+const initialState = {
+  offers: {},
+};
+
+const ActionTypes = {
   SET_OFFERS: `SET_OFFERS`,
 };
 
@@ -39,20 +43,16 @@ const getOffersByCities = (data) => data.reduce((result, offer) => {
   return result;
 }, {});
 
-const initialState = {
-  offers: {},
-};
-
-const AppActionCreator = {
+const ActionCreator = {
   setOffers: (allOffers) => ({
-    type: AppActionTypes.SET_OFFERS,
+    type: ActionTypes.SET_OFFERS,
     payload: getOffersByCities(allOffers),
   }),
 };
 
-const appReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case AppActionTypes.SET_OFFERS:
+    case ActionTypes.SET_OFFERS:
       return Object.assign({}, state, {
         offers: action.payload
       });
@@ -61,4 +61,4 @@ const appReducer = (state = initialState, action) => {
   return state;
 };
 
-export {appReducer, AppActionCreator, AppActionTypes, transformOfferData, getOffersByCities};
+export {reducer, ActionCreator, ActionTypes, transformOfferData, getOffersByCities};

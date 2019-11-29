@@ -1,10 +1,10 @@
 import {combineReducers} from "redux";
-import {appReducer} from "./app-reducer/app-reducer";
-import {userReducer} from "./user-reducer/user-reducer";
+import {reducer as appReducer} from "./app/reducer/reducer";
+import {reducer as userReducer} from "./user/reducer/reducer";
 
 const reducer = combineReducers({
-  appReducer,
-  userReducer,
+  app: appReducer,
+  user: userReducer,
 });
 
 export default reducer;

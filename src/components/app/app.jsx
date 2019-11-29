@@ -5,13 +5,13 @@ import Offer from "../offer/offer";
 import {placeListByCity, userData} from "../../common/global-prop-types";
 import reviews from "../../mocks/reviews";
 import {connect} from "react-redux";
-import {UserActionCreator} from "../../reducer/user-reducer/user-reducer";
+import {ActionCreator} from "../../reducer/user/reducer/reducer";
 import withActiveItem, {transformPropNames} from "../../hocs/with-active-item/with-active-item";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
 import Page from "../page/page";
 import {pageTypes} from "../../common/constants";
 import SignIn from "../sign-in/sign-in";
-import Operation from "../../reducer/operation/operation";
+import Operation from "../../reducer/user/operation/operation";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Path from "../../common/path";
 import Header from "../header/header";
@@ -79,14 +79,14 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  activeCity: state.userReducer.city,
-  offers: state.appReducer.offers,
-  isAuthorizationRequired: state.userReducer.isAuthorizationRequired,
-  user: state.userReducer.user,
+  activeCity: state.user.city,
+  offers: state.app.offers,
+  isAuthorizationRequired: state.user.isAuthorizationRequired,
+  user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onCityClick: (city) => dispatch(UserActionCreator.setCity(city)),
+  onCityClick: (city) => dispatch(ActionCreator.setCity(city)),
   onSignIn: (email, password) => dispatch(Operation.signIn(email, password)),
 });
 
