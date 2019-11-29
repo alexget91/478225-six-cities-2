@@ -15,6 +15,8 @@ import Operation from "../../reducer/user/operation/operation";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Path from "../../common/path";
 import Header from "../header/header";
+import {getOffers} from "../../reducer/app/selectors/selectors";
+import {getAuthorizationRequired, getCity, getUser} from "../../reducer/user/selectors/selectors";
 
 const OfferWrapped = withActiveItem(withTransformProps(
     (props) => transformPropNames(`activeNearPlace`, `onActiveNearPlaceChange`, props)
@@ -79,10 +81,10 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  activeCity: state.user.city,
-  offers: state.app.offers,
-  isAuthorizationRequired: state.user.isAuthorizationRequired,
-  user: state.user.user,
+  activeCity: getCity(state),
+  offers: getOffers(state),
+  isAuthorizationRequired: getAuthorizationRequired(state),
+  user: getUser(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
