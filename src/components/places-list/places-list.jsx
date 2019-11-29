@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PlaceCard from "../place-card/place-card";
 import {displayType, placeList} from "../../common/global-prop-types";
-import URLS from "../../common/urls";
+import Path from "../../common/path";
 
 const LIST_CLASS = {
   offer: `near-places__list`,
@@ -34,7 +34,7 @@ const PlacesList = (props) => {
 
 const placeNameClickHandler = (evt) => {
   evt.preventDefault();
-  window.location.assign(URLS.offer);
+  window.location.assign(Path.OFFER);
 };
 
 PlacesList.propTypes = {
