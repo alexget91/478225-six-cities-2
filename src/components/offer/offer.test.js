@@ -2,38 +2,42 @@ import renderer from "react-test-renderer";
 import React from "react";
 import Offer from "./offer";
 import {createMapBlock} from "../../common/test-stubs";
+import {MemoryRouter} from "react-router-dom";
 
 it(`Offer page correctly renders after relaunch`, () => {
   createMapBlock();
 
   const tree = renderer
-    .create(<Offer
-      offer={{
-        id: 0,
-        previewImage: ``,
-        images: [``],
-        title: ``,
-        isPremium: true,
-        isFavorite: false,
-        rating: 1,
-        type: `apartment`,
-        bedrooms: 1,
-        maxAdults: 1,
-        priceByNight: 1,
-        goods: [``],
-        host: {
-          isPro: true,
-          name: ``,
-          avatarUrl: ``
+    .create(<MemoryRouter><Offer
+      match={{params: {id: `0`}}}
+      offers={{
+        0: {
+          id: 0,
+          city: {
+            name: ``,
+            location: {
+              latitude: 0,
+              longitude: 0,
+            }
+          },
+          previewImage: ``,
+          images: [``],
+          title: ``,
+          isPremium: true,
+          isFavorite: false,
+          rating: 1,
+          type: `apartment`,
+          bedrooms: 1,
+          maxAdults: 1,
+          priceByNight: 1,
+          goods: [``],
+          host: {
+            isPro: true,
+            name: ``,
+            avatarUrl: ``
+          },
+          description: ` `,
         },
-        description: ` `,
-      }}
-      city={{
-        name: ``,
-        location: {
-          latitude: 0,
-          longitude: 0,
-        }
       }}
       reviews={[{
         id: 0,
@@ -54,7 +58,7 @@ it(`Offer page correctly renders after relaunch`, () => {
           longitude: 0,
         }
       }]}
-    />)
+    /></MemoryRouter>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

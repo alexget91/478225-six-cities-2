@@ -454,7 +454,9 @@ Array [
             className="near-places__image-wrapper place-card__image-wrapper"
           >
             <a
-              href="#"
+              className="js-detail-link"
+              href="/offer/0"
+              onClick={[Function]}
             >
               <img
                 alt="Place image"
@@ -529,8 +531,8 @@ Array [
               className="place-card__name"
             >
               <a
-                className="js-place-name"
-                href="#"
+                className="js-detail-link"
+                href="/offer/0"
                 onClick={[Function]}
               >
                 

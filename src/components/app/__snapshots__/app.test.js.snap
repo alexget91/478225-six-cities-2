@@ -85,7 +85,7 @@ exports[`App correctly renders after relaunch 1`] = `
               onClick={[Function]}
             >
               <span>
-                1
+                city1
               </span>
             </a>
           </li>
@@ -98,7 +98,7 @@ exports[`App correctly renders after relaunch 1`] = `
               onClick={[Function]}
             >
               <span>
-                2
+                city2
               </span>
             </a>
           </li>
@@ -124,7 +124,7 @@ exports[`App correctly renders after relaunch 1`] = `
           >
             1
              places to stay in 
-            1
+            city1
           </b>
           <form
             action="#"
@@ -195,7 +195,7 @@ exports[`App correctly renders after relaunch 1`] = `
           >
             <article
               className="cities__place-card place-card"
-              data-id={0}
+              data-id={1}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
             >
@@ -204,7 +204,9 @@ exports[`App correctly renders after relaunch 1`] = `
                 className="cities__image-wrapper place-card__image-wrapper"
               >
                 <a
-                  href="#"
+                  className="js-detail-link"
+                  href="/offer/1"
+                  onClick={[Function]}
                 >
                   <img
                     alt="Place image"
@@ -279,11 +281,11 @@ exports[`App correctly renders after relaunch 1`] = `
                   className="place-card__name"
                 >
                   <a
-                    className="js-place-name"
-                    href="#"
+                    className="js-detail-link"
+                    href="/offer/1"
                     onClick={[Function]}
                   >
-                    
+                    Title1
                   </a>
                 </h2>
                 <p

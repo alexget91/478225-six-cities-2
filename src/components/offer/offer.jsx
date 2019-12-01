@@ -1,13 +1,22 @@
 import React from "react";
-import {cityData, placeCard, reviewItem} from "../../common/global-prop-types";
+import {placeCard, placeList, placeListByID, reviewItem} from "../../common/global-prop-types";
 import PropTypes from "prop-types";
 import {getPinsForMap, getRatingPercent} from "../../common/utils";
 import Reviews from "../reviews/reviews";
 import Map from "../map/map";
 import PlacesList from "../places-list/places-list";
+import {Redirect} from "react-router-dom";
+import Path from "../../common/path";
 
 const Offer = (props) => {
-  const {offer, city, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange} = props;
+  const {match, offers, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange} = props;
+  const offer = offers[match.params.id];
+
+  if (!offer) {
+    return <Redirect to={Path.INDEX}/>;
+  }
+
+  const city = offer.city;
 
   return <React.Fragment>
     <section className="property">
@@ -102,10 +111,14 @@ const Offer = (props) => {
 };
 
 Offer.propTypes = {
-  offer: PropTypes.exact(placeCard),
-  city: PropTypes.exact(cityData).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    })
+  }),
+  offers: placeListByID,
   reviews: PropTypes.arrayOf(PropTypes.exact(reviewItem)).isRequired,
-  neighbourhood: PropTypes.arrayOf(PropTypes.exact(placeCard)),
+  neighbourhood: placeList,
   activeNearPlace: PropTypes.exact(placeCard),
   onActiveNearPlaceChange: PropTypes.func,
 };

@@ -7,6 +7,7 @@ const Operation = {
       .then((response) => {
         dispatch(UserActionCreator.setCity(response.data[0].city.name));
         dispatch(AppActionCreator.setOffers(response.data));
+        dispatch(AppActionCreator.setCities());
       });
   },
 };

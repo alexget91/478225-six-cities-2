@@ -1,9 +1,11 @@
 const initialState = {
   offers: {},
+  cities: [],
 };
 
 const ActionTypes = {
   SET_OFFERS: `SET_OFFERS`,
+  SET_CITIES: `SET_CITIES`,
 };
 
 const transformOfferData = (data) => {
@@ -19,7 +21,6 @@ const transformOfferData = (data) => {
     })
   });
 
-  delete newData.city;
   delete newData.preview_image;
   delete newData.is_favorite;
   delete newData.is_premium;
@@ -31,22 +32,29 @@ const transformOfferData = (data) => {
   return newData;
 };
 
-const getOffersByCities = (data) => data.reduce((result, offer) => {
-  if (!result[offer.city.name]) {
-    result[offer.city.name] = {
-      city: offer.city,
-      offers: [],
-    };
+const transformOffersList = (data) => data.reduce((result, offer) => {
+  if (!result.offersByCities[offer.city.name]) {
+    result.offersByCities[offer.city.name] = [];
   }
-  result[offer.city.name][`offers`].push(transformOfferData(offer));
+
+  const transformedOffer = transformOfferData(offer);
+  result.allOffers[offer.id] = transformedOffer;
+  result.offersByCities[offer.city.name].push(transformedOffer);
 
   return result;
-}, {});
+}, {
+  allOffers: {},
+  offersByCities: {},
+});
 
 const ActionCreator = {
-  setOffers: (allOffers) => ({
+  setOffers: (offers) => ({
     type: ActionTypes.SET_OFFERS,
-    payload: getOffersByCities(allOffers),
+    payload: transformOffersList(offers),
+  }),
+
+  setCities: () => ({
+    type: ActionTypes.SET_CITIES,
   }),
 };
 
@@ -56,9 +64,13 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         offers: action.payload
       });
+    case ActionTypes.SET_CITIES:
+      return Object.assign({}, state, {
+        cities: Object.keys(state.offers.offersByCities)
+      });
   }
 
   return state;
 };
 
-export {reducer, ActionCreator, ActionTypes, transformOfferData, getOffersByCities};
+export {reducer, ActionCreator, ActionTypes, transformOfferData, transformOffersList};

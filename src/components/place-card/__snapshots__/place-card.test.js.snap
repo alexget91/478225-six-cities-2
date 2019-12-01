@@ -18,7 +18,9 @@ exports[`Place card correctly renders after relaunch 1`] = `
     className="cities__image-wrapper place-card__image-wrapper"
   >
     <a
-      href="#"
+      className="js-detail-link"
+      href="/offer/0"
+      onClick={[Function]}
     >
       <img
         alt="Place image"
@@ -94,8 +96,9 @@ exports[`Place card correctly renders after relaunch 1`] = `
       className="place-card__name"
     >
       <a
-        className="js-place-name"
-        href="#"
+        className="js-detail-link"
+        href="/offer/0"
+        onClick={[Function]}
       >
         
       </a>

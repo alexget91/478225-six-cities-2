@@ -2,12 +2,13 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {createMapBlock} from "../../common/test-stubs";
 import MainContent from "./main-content";
+import {MemoryRouter} from "react-router-dom";
 
 it(`Main content correctly renders after relaunch`, () => {
   createMapBlock();
 
   const tree = renderer
-    .create(<MainContent
+    .create(<MemoryRouter><MainContent
       activeCity={{
         name: `1`,
         location: {
@@ -26,7 +27,7 @@ it(`Main content correctly renders after relaunch`, () => {
         }
       }]}
       onSortChange={jest.fn()}
-    />)
+    /></MemoryRouter>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

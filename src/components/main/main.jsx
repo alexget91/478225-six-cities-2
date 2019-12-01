@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {placeListByCity} from "../../common/global-prop-types";
+import {placeList} from "../../common/global-prop-types";
 import CitiesList from "../cities-list/cities-list";
 import MainEmpty from "../main-empty/main-empty";
 import {compose} from "recompose";
@@ -20,16 +20,16 @@ const getComponentWithSort = (Component) => withActiveItem(withTransformProps(
 const MainContentWrapped = compose(getComponentWithOffer, getComponentWithSort)(MainContent);
 
 const Main = (props) => {
-  const {offers, cities, activeCity, isEmpty, onCityClick} = props;
+  const {offers, cities, activeCity, onCityClick} = props;
 
   return <React.Fragment>
     <h1 className="visually-hidden">Cities</h1>
     <CitiesList cities={cities} activeCity={activeCity} onCityClick={onCityClick}/>
     <div className="cities">
-      <div className={`cities__places-container${isEmpty ? ` cities__places-container--empty` : ``} container`}>
-        {isEmpty ? <MainEmpty cityName={activeCity}/> : <MainContentWrapped
-          activeCity={offers[activeCity].city}
-          offers={offers[activeCity].offers}
+      <div className={`cities__places-container${!offers.length ? ` cities__places-container--empty` : ``} container`}>
+        {!offers.length ? <MainEmpty cityName={activeCity}/> : <MainContentWrapped
+          activeCity={offers[0].city}
+          offers={offers}
         />}
       </div>
     </div>
@@ -37,10 +37,9 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  offers: placeListByCity,
+  offers: placeList.isRequired,
   cities: PropTypes.arrayOf(PropTypes.string).isRequired,
   activeCity: PropTypes.string,
-  isEmpty: PropTypes.bool,
   onCityClick: PropTypes.func.isRequired,
 };
 

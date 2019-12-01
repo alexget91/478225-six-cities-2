@@ -25,7 +25,7 @@ Array [
             onClick={[Function]}
           >
             <span>
-              1
+              city1
             </span>
           </a>
         </li>
@@ -38,7 +38,7 @@ Array [
             onClick={[Function]}
           >
             <span>
-              2
+              city2
             </span>
           </a>
         </li>
@@ -64,7 +64,7 @@ Array [
         >
           2
            places to stay in 
-          1
+          city1
         </b>
         <form
           action="#"
@@ -144,7 +144,9 @@ Array [
               className="cities__image-wrapper place-card__image-wrapper"
             >
               <a
-                href="#"
+                className="js-detail-link"
+                href="/offer/1"
+                onClick={[Function]}
               >
                 <img
                   alt="Place image"
@@ -219,11 +221,11 @@ Array [
                 className="place-card__name"
               >
                 <a
-                  className="js-place-name"
-                  href="#"
+                  className="js-detail-link"
+                  href="/offer/1"
                   onClick={[Function]}
                 >
-                  Title
+                  Title1
                 </a>
               </h2>
               <p
@@ -244,7 +246,9 @@ Array [
               className="cities__image-wrapper place-card__image-wrapper"
             >
               <a
-                href="#"
+                className="js-detail-link"
+                href="/offer/2"
+                onClick={[Function]}
               >
                 <img
                   alt="Place image"
@@ -319,11 +323,11 @@ Array [
                 className="place-card__name"
               >
                 <a
-                  className="js-place-name"
-                  href="#"
+                  className="js-detail-link"
+                  href="/offer/2"
                   onClick={[Function]}
                 >
-                  Title
+                  Title2
                 </a>
               </h2>
               <p

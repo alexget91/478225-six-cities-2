@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {displayType, placeCard} from "../../common/global-prop-types";
 import {getRatingPercent} from "../../common/utils";
+import {Link} from "react-router-dom";
+import Path from "../../common/path";
 
 const TYPE_NAMES = {
   apartment: `Apartment`,
@@ -21,8 +23,8 @@ const IMAGE_CLASS = {
 };
 
 const PlaceCard = (props) => {
-  const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type, cardType,
-    onPlaceNameClick, onMouseHover} = props;
+  const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type, cardType, onMouseHover} = props;
+  const detailURL = `${Path.OFFER}/${id}`;
 
   return <article key={id} data-id={id} className={`${CARD_CLASS[cardType]} place-card`}
     onMouseEnter={() => onMouseHover({id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type})}
@@ -32,9 +34,9 @@ const PlaceCard = (props) => {
       <span>Premium</span>
     </div> : ``}
     <div className={`${IMAGE_CLASS[cardType]} place-card__image-wrapper`}>
-      <a href="#">
+      <Link className="js-detail-link" to={detailURL}>
         <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
-      </a>
+      </Link>
     </div>
     <div className="place-card__info">
       <div className="place-card__price-wrapper">
@@ -57,7 +59,7 @@ const PlaceCard = (props) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a className="js-place-name" href="#" onClick={onPlaceNameClick}>{title}</a>
+        <Link className="js-detail-link" to={detailURL}>{title}</Link>
       </h2>
       <p className="place-card__type">{TYPE_NAMES[type]}</p>
     </div>
@@ -67,7 +69,6 @@ const PlaceCard = (props) => {
 PlaceCard.propTypes = {
   ...placeCard,
   cardType: displayType,
-  onPlaceNameClick: PropTypes.func,
   onMouseHover: PropTypes.func,
 };
 

@@ -38,13 +38,45 @@ const mockOffers = [
 ];
 
 const mockOffersTransformed = {
-  Amsterdam: {
-    city: {
-      name: `Amsterdam`,
+  allOffers: {
+    1: {
+      id: 1,
+      city: {
+        name: `Amsterdam`,
+      },
+      host: {
+        isPro: false,
+        avatarUrl: ``,
+      },
     },
-    offers: [
+    2: {
+      id: 2,
+      city: {
+        name: `Amsterdam`,
+      },
+      host: {
+        isPro: false,
+        avatarUrl: ``,
+      },
+    },
+    3: {
+      id: 3,
+      city: {
+        name: `Hamburg`,
+      },
+      host: {
+        isPro: false,
+        avatarUrl: ``,
+      },
+    },
+  },
+  offersByCities: {
+    Amsterdam: [
       {
         id: 1,
+        city: {
+          name: `Amsterdam`,
+        },
         host: {
           isPro: false,
           avatarUrl: ``,
@@ -52,20 +84,21 @@ const mockOffersTransformed = {
       },
       {
         id: 2,
+        city: {
+          name: `Amsterdam`,
+        },
         host: {
           isPro: false,
           avatarUrl: ``,
         },
       },
     ],
-  },
-  Hamburg: {
-    city: {
-      name: `Hamburg`,
-    },
-    offers: [
+    Hamburg: [
       {
         id: 3,
+        city: {
+          name: `Hamburg`,
+        },
         host: {
           isPro: false,
           avatarUrl: ``,
@@ -88,7 +121,7 @@ it(`Should make a correct API call to /hotels`, () => {
 
   return loader(dispatch, null, api)
     .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch).toHaveBeenNthCalledWith(1, {
         type: UserActionTypes.SET_CITY,
         payload: `Amsterdam`,
@@ -96,6 +129,9 @@ it(`Should make a correct API call to /hotels`, () => {
       expect(dispatch).toHaveBeenNthCalledWith(2, {
         type: AppActionTypes.SET_OFFERS,
         payload: mockOffersTransformed,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(3, {
+        type: AppActionTypes.SET_CITIES,
       });
     });
 });

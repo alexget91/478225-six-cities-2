@@ -4,4 +4,24 @@ const createMapBlock = () => {
   global.document.body.appendChild(div);
 };
 
-export {createMapBlock};
+const getMockOffer = (id, cityName) => {
+  return {
+    id,
+    city: {
+      name: cityName,
+      location: {
+        latitude: 0,
+        longitude: 0,
+      }
+    },
+    priceByNight: 0,
+    title: `Title${id}`,
+    type: `apartment`,
+    location: {
+      latitude: 0,
+      longitude: 0,
+    }
+  };
+};
+
+export {createMapBlock, getMockOffer};
