@@ -1,4 +1,5 @@
-import {ActionCreator, ActionTypes, reducer, transformOfferData, transformOffersList} from "./reducer";
+import {ActionCreator, ActionTypes, reducer, transformOfferData, transformOffersList, updateOffer} from "./reducer";
+import {getMockOfferFields, getMockOfferFieldsTransformed} from "../../../common/test-stubs";
 
 const mockOffers = [
   {
@@ -33,111 +34,53 @@ const mockOffers = [
   }
 ];
 
-const mockOffersTransformed = {
-  allOffers: {
-    1: {
-      id: 1,
-      city: {
-        name: `Amsterdam`,
-      },
-      host: {
-        isPro: false,
-        avatarUrl: ``,
-      },
+const mockOffersTransformed = [
+  {
+    id: 1,
+    city: {
+      name: `Amsterdam`,
     },
-    2: {
-      id: 2,
-      city: {
-        name: `Amsterdam`,
-      },
-      host: {
-        isPro: false,
-        avatarUrl: ``,
-      },
-    },
-    3: {
-      id: 3,
-      city: {
-        name: `Hamburg`,
-      },
-      host: {
-        isPro: false,
-        avatarUrl: ``,
-      },
+    host: {
+      "isPro": false,
+      "avatarUrl": ``,
     },
   },
-  offersByCities: {
-    Amsterdam: [
-      {
-        id: 1,
-        city: {
-          name: `Amsterdam`,
-        },
-        host: {
-          isPro: false,
-          avatarUrl: ``,
-        },
-      },
-      {
-        id: 2,
-        city: {
-          name: `Amsterdam`,
-        },
-        host: {
-          isPro: false,
-          avatarUrl: ``,
-        },
-      },
-    ],
-    Hamburg: [
-      {
-        id: 3,
-        city: {
-          name: `Hamburg`,
-        },
-        host: {
-          isPro: false,
-          avatarUrl: ``,
-        },
-      },
-    ],
+  {
+    id: 2,
+    city: {
+      name: `Amsterdam`,
+    },
+    host: {
+      "isPro": false,
+      "avatarUrl": ``,
+    },
   },
-};
+  {
+    id: 3,
+    city: {
+      name: `Hamburg`,
+    },
+    host: {
+      "isPro": false,
+      "avatarUrl": ``,
+    },
+  }
+];
 
+const mockOffer = getMockOfferFields(1, `city`);
+const mockOfferTransformed = getMockOfferFieldsTransformed(1, `city`);
 
 describe(`Offers list transformation works correctly`, () => {
   it(`Offer data transformation works correctly`, () => {
-    expect(transformOfferData({
-      "city": `city`,
-      "preview_image": `preview_image`,
-      "is_favorite": `is_favorite`,
-      "is_premium": `is_premium`,
-      "max_adults": `max_adults`,
-      "price": `price`,
-      "host": {
-        "is_pro": `is_pro`,
-        "avatar_url": `avatar_url`,
-        "foo": `bar`,
-      },
-      "foo": `bar`,
-    })).toEqual({
-      city: `city`,
-      previewImage: `preview_image`,
-      isFavorite: `is_favorite`,
-      isPremium: `is_premium`,
-      maxAdults: `max_adults`,
-      priceByNight: `price`,
-      host: {
-        isPro: `is_pro`,
-        avatarUrl: `avatar_url`,
-        foo: `bar`,
-      },
-      foo: `bar`,
-    });
+    expect(transformOfferData(mockOffer)).toEqual(mockOfferTransformed);
   });
 
   it(`Offer list transformation works correctly`, () => {
     expect(transformOffersList(mockOffers)).toEqual(mockOffersTransformed);
+  });
+
+  it(`Update offer in list works correctly`, () => {
+    expect(updateOffer([{id: 1}, {id: 2}], mockOffer)).toEqual([mockOfferTransformed, {id: 2}]);
   });
 });
 
@@ -149,17 +92,34 @@ describe(`App action creators works correctly`, () => {
     });
   });
 
-  it(`App action creator for set cities returns correct action`, () => {
-    expect(ActionCreator.setCities()).toEqual({
-      type: ActionTypes.SET_CITIES,
+  it(`App action creator for set "offers is loaded" returns correct action`, () => {
+    expect(ActionCreator.setOffersLoaded(true)).toEqual({
+      type: ActionTypes.SET_OFFERS_LOADED,
+      payload: true,
+    });
+  });
+
+  it(`App action creator for update offer returns correct action`, () => {
+    expect(ActionCreator.updateOffer({foo: `bar`})).toEqual({
+      type: ActionTypes.UPDATE_OFFER,
+      payload: {foo: `bar`},
     });
   });
 });
 
 describe(`App reducer works correctly`, () => {
   const mockInitialState = {
-    offers: {},
-    cities: [],
+    offers: [
+      {
+        id: 1,
+        isFavorite: false,
+      },
+      {
+        id: 2,
+        isFavorite: false,
+      },
+    ],
+    isOffersLoaded: false,
   };
 
   it(`App reducer without action should return current state`, () => {
@@ -175,24 +135,33 @@ describe(`App reducer works correctly`, () => {
     }));
   });
 
-  it(`App reducer should set cities correctly`, () => {
-    const mockState = {
-      offers: {
-        allOffers: {
-          1: {foo: `bar`}
-        },
-        offersByCities: {
-          city1: [{foo: `bar`}],
-          city2: []
-        },
-      },
-      cities: [],
-    };
+  it(`App reducer should set "offers is loaded" correctly`, () => {
+    expect(reducer(mockInitialState, {
+      type: ActionTypes.SET_OFFERS_LOADED,
+      payload: true,
+    })).toEqual(Object.assign({}, mockInitialState, {
+      isOffersLoaded: true,
+    }));
+  });
 
-    expect(reducer(mockState, {
-      type: ActionTypes.SET_CITIES,
-    })).toEqual(Object.assign({}, mockState, {
-      cities: [`city1`, `city2`],
+  it(`App reducer should update offer correctly`, () => {
+    expect(reducer(mockInitialState, {
+      type: ActionTypes.UPDATE_OFFER,
+      payload: Object.assign({}, mockOffer, {
+        "id": 2,
+        "is_favorite": true,
+      }),
+    })).toEqual(Object.assign({}, mockInitialState, {
+      offers: [
+        {
+          id: 1,
+          isFavorite: false,
+        },
+        Object.assign({}, mockOfferTransformed, {
+          id: 2,
+          isFavorite: true,
+        }),
+      ],
     }));
   });
 });

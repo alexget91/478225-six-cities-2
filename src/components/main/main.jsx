@@ -20,7 +20,7 @@ const getComponentWithSort = (Component) => withActiveItem(withTransformProps(
 const MainContentWrapped = compose(getComponentWithOffer, getComponentWithSort)(MainContent);
 
 const Main = (props) => {
-  const {offers, cities, activeCity, onCityClick} = props;
+  const {offers, cities, activeCity, onCityClick, onFavoritesClick} = props;
 
   return <React.Fragment>
     <h1 className="visually-hidden">Cities</h1>
@@ -30,6 +30,7 @@ const Main = (props) => {
         {!offers.length ? <MainEmpty cityName={activeCity}/> : <MainContentWrapped
           activeCity={offers[0].city}
           offers={offers}
+          onFavoritesClick={onFavoritesClick}
         />}
       </div>
     </div>
@@ -41,6 +42,7 @@ Main.propTypes = {
   cities: PropTypes.arrayOf(PropTypes.string).isRequired,
   activeCity: PropTypes.string,
   onCityClick: PropTypes.func.isRequired,
+  onFavoritesClick: PropTypes.func,
 };
 
 export default Main;

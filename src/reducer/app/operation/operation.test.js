@@ -3,115 +3,24 @@ import configureAPI from "../../../api";
 import Operation from "./operation";
 import {ActionTypes as UserActionTypes} from "../../user/reducer/reducer";
 import {ActionTypes as AppActionTypes} from "../reducer/reducer";
+import {getMockOfferFields, getMockOfferFieldsTransformed} from "../../../common/test-stubs";
 
 const mockOffers = [
-  {
-    id: 1,
-    city: {
-      name: `Amsterdam`,
-    },
-    host: {
-      "is_pro": false,
-      "avatar_url": ``,
-    },
-  },
-  {
-    id: 2,
-    city: {
-      name: `Amsterdam`,
-    },
-    host: {
-      "is_pro": false,
-      "avatar_url": ``,
-    },
-  },
-  {
-    id: 3,
-    city: {
-      name: `Hamburg`,
-    },
-    host: {
-      "is_pro": false,
-      "avatar_url": ``,
-    },
-  }
+  getMockOfferFields(1, `Amsterdam`),
+  getMockOfferFields(2, `Amsterdam`),
+  getMockOfferFields(3, `Hamburg`),
 ];
 
-const mockOffersTransformed = {
-  allOffers: {
-    1: {
-      id: 1,
-      city: {
-        name: `Amsterdam`,
-      },
-      host: {
-        isPro: false,
-        avatarUrl: ``,
-      },
-    },
-    2: {
-      id: 2,
-      city: {
-        name: `Amsterdam`,
-      },
-      host: {
-        isPro: false,
-        avatarUrl: ``,
-      },
-    },
-    3: {
-      id: 3,
-      city: {
-        name: `Hamburg`,
-      },
-      host: {
-        isPro: false,
-        avatarUrl: ``,
-      },
-    },
-  },
-  offersByCities: {
-    Amsterdam: [
-      {
-        id: 1,
-        city: {
-          name: `Amsterdam`,
-        },
-        host: {
-          isPro: false,
-          avatarUrl: ``,
-        },
-      },
-      {
-        id: 2,
-        city: {
-          name: `Amsterdam`,
-        },
-        host: {
-          isPro: false,
-          avatarUrl: ``,
-        },
-      },
-    ],
-    Hamburg: [
-      {
-        id: 3,
-        city: {
-          name: `Hamburg`,
-        },
-        host: {
-          isPro: false,
-          avatarUrl: ``,
-        },
-      },
-    ],
-  },
-};
+const mockOffersTransformed = [
+  getMockOfferFieldsTransformed(1, `Amsterdam`),
+  getMockOfferFieldsTransformed(2, `Amsterdam`),
+  getMockOfferFieldsTransformed(3, `Hamburg`),
+];
 
 const api = configureAPI();
 const apiMock = new MockAdapter(api);
 
-it(`Should make a correct API call to /hotels`, () => {
+it(`Should make a correct API call to get hotels`, () => {
   const dispatch = jest.fn();
   const loader = Operation.loadOffers();
 
@@ -131,7 +40,37 @@ it(`Should make a correct API call to /hotels`, () => {
         payload: mockOffersTransformed,
       });
       expect(dispatch).toHaveBeenNthCalledWith(3, {
-        type: AppActionTypes.SET_CITIES,
+        type: AppActionTypes.SET_OFFERS_LOADED,
+        payload: true,
       });
     });
+});
+
+describe(`Should make a correct API call to toggle favorite status`, () => {
+  const dispatch = jest.fn();
+  const offerID = 1;
+  const setFavorite = Operation.toggleFavorite(offerID, false);
+  const removeFavorite = Operation.toggleFavorite(offerID, true);
+
+  apiMock
+    .onPost(`/favorite/${offerID}/1`).reply(200, {id: offerID, isFavorite: true})
+    .onPost(`/favorite/${offerID}/0`).reply(200, {id: offerID, isFavorite: false});
+
+  it(`On favorite set`, () => setFavorite(dispatch, null, api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: AppActionTypes.UPDATE_OFFER,
+        payload: {id: offerID, isFavorite: true},
+      });
+    }));
+
+  it(`On favorite remove`, () => removeFavorite(dispatch, null, api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: AppActionTypes.UPDATE_OFFER,
+        payload: {id: offerID, isFavorite: false},
+      });
+    }));
 });

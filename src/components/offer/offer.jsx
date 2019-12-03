@@ -1,22 +1,17 @@
 import React from "react";
-import {placeCard, placeList, placeListByID, reviewItem} from "../../common/global-prop-types";
+import {placeCard, placeList, reviewItem} from "../../common/global-prop-types";
 import PropTypes from "prop-types";
 import {getPinsForMap, getRatingPercent} from "../../common/utils";
 import Reviews from "../reviews/reviews";
 import Map from "../map/map";
 import PlacesList from "../places-list/places-list";
-import {Redirect} from "react-router-dom";
-import Path from "../../common/path";
 
 const Offer = (props) => {
-  const {match, offers, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange} = props;
-  const offer = offers[match.params.id];
+  const {offer, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange, onFavoritesClick} = props;
 
   if (!offer) {
-    return <Redirect to={Path.INDEX}/>;
+    return null;
   }
-
-  const city = offer.city;
 
   return <React.Fragment>
     <section className="property">
@@ -37,7 +32,8 @@ const Offer = (props) => {
           <div className="property__name-wrapper">
             <h1 className="property__name">{offer.title}</h1>
             <button type="button"
-              className={`property__bookmark-button${offer.isFavorite ? ` property__bookmark-button--active` : ``} button`}
+              className={`property__bookmark-button${offer.isFavorite ? ` property__bookmark-button--active` : ``} button js-favorites-link`}
+              onClick={onFavoritesClick}
             >
               <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
@@ -99,7 +95,7 @@ const Offer = (props) => {
         </div>
       </div>
       <Map offerPins={getPinsForMap(neighbourhood, activeNearPlace ? activeNearPlace.id : null)}
-        mapType={`offer`} city={city}/>
+        mapType={`offer`} city={offer.city}/>
     </section>
     {neighbourhood.length ? <div className="container">
       <section className="near-places places">
@@ -111,16 +107,12 @@ const Offer = (props) => {
 };
 
 Offer.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    })
-  }),
-  offers: placeListByID,
+  offer: PropTypes.exact(placeCard),
   reviews: PropTypes.arrayOf(PropTypes.exact(reviewItem)).isRequired,
   neighbourhood: placeList,
   activeNearPlace: PropTypes.exact(placeCard),
   onActiveNearPlaceChange: PropTypes.func,
+  onFavoritesClick: PropTypes.func,
 };
 
 export default Offer;

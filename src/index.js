@@ -8,10 +8,12 @@ import reducer from "./reducer/reducer";
 import Operation from "./reducer/app/operation/operation";
 import configureAPI from "./api";
 import {compose} from "recompose";
-import {BrowserRouter} from "react-router-dom";
+import {Router} from "react-router-dom";
+import history from "./history";
+import Path from "./common/path";
 
 const init = () => {
-  const api = configureAPI((...args) => store.dispatch(...args));
+  const api = configureAPI(() => history.push(Path.LOGIN));
   const store = createStore(
       reducer,
       compose(
@@ -24,9 +26,9 @@ const init = () => {
 
   ReactDOM.render(
       <Provider store={store}>
-        <BrowserRouter>
+        <Router history={history}>
           <App/>
-        </BrowserRouter>
+        </Router>
       </Provider>,
       document.querySelector(`#root`)
   );

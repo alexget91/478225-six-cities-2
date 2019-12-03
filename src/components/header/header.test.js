@@ -7,7 +7,7 @@ describe(`Header correctly renders after relaunch`, () => {
   it(`When user is not authorized`, () => {
     const tree = renderer
       .create(<MemoryRouter>
-        <Header/>
+        <Header isAuthorizationRequired={true}/>
       </MemoryRouter>)
       .toJSON();
 

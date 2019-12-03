@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import Path from "../../common/path";
 
 const Header = (props) => {
-  const {email} = props;
+  const {email, isAuthorizationRequired} = props;
 
   return <header className="header">
     <div className="container">
@@ -17,12 +17,13 @@ const Header = (props) => {
         <nav className="header__nav">
           <ul className="header__nav-list">
             <li className="header__nav-item user">
-              <Link className="header__nav-link header__nav-link--profile" to={Path.LOGIN}>
+              <Link className="header__nav-link header__nav-link--profile"
+                to={isAuthorizationRequired ? Path.LOGIN : Path.FAVORITES}>
                 <div className="header__avatar-wrapper user__avatar-wrapper">
                 </div>
-                {email
-                  ? <span className="header__user-name user__name">{email}</span>
-                  : <span className="header__login">Sign in</span>}
+                {isAuthorizationRequired
+                  ? <span className="header__login">Sign in</span>
+                  : <span className="header__user-name user__name">{email}</span>}
               </Link>
             </li>
           </ul>
@@ -34,6 +35,7 @@ const Header = (props) => {
 
 Header.propTypes = {
   email: PropTypes.string,
+  isAuthorizationRequired: PropTypes.bool,
 };
 
 export default Header;

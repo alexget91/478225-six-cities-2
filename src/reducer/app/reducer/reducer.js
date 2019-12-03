@@ -1,11 +1,12 @@
 const initialState = {
-  offers: {},
-  cities: [],
+  offers: [],
+  isOffersLoaded: false,
 };
 
 const ActionTypes = {
   SET_OFFERS: `SET_OFFERS`,
-  SET_CITIES: `SET_CITIES`,
+  SET_OFFERS_LOADED: `SET_OFFERS_LOADED`,
+  UPDATE_OFFER: `UPDATE_OFFER`,
 };
 
 const transformOfferData = (data) => {
@@ -32,20 +33,14 @@ const transformOfferData = (data) => {
   return newData;
 };
 
-const transformOffersList = (data) => data.reduce((result, offer) => {
-  if (!result.offersByCities[offer.city.name]) {
-    result.offersByCities[offer.city.name] = [];
-  }
+const transformOffersList = (offers) => offers.map((offer) => transformOfferData(offer));
 
-  const transformedOffer = transformOfferData(offer);
-  result.allOffers[offer.id] = transformedOffer;
-  result.offersByCities[offer.city.name].push(transformedOffer);
+const updateOffer = (offers, newOffer) => {
+  const index = offers.findIndex((offer) => offer.id === newOffer.id);
+  offers.splice(index, 1, transformOfferData(newOffer));
 
-  return result;
-}, {
-  allOffers: {},
-  offersByCities: {},
-});
+  return offers.slice();
+};
 
 const ActionCreator = {
   setOffers: (offers) => ({
@@ -53,8 +48,14 @@ const ActionCreator = {
     payload: transformOffersList(offers),
   }),
 
-  setCities: () => ({
-    type: ActionTypes.SET_CITIES,
+  setOffersLoaded: (status) => ({
+    type: ActionTypes.SET_OFFERS_LOADED,
+    payload: status,
+  }),
+
+  updateOffer: (offer) => ({
+    type: ActionTypes.UPDATE_OFFER,
+    payload: offer,
   }),
 };
 
@@ -64,13 +65,17 @@ const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         offers: action.payload
       });
-    case ActionTypes.SET_CITIES:
+    case ActionTypes.SET_OFFERS_LOADED:
       return Object.assign({}, state, {
-        cities: Object.keys(state.offers.offersByCities)
+        isOffersLoaded: action.payload
+      });
+    case ActionTypes.UPDATE_OFFER:
+      return Object.assign({}, state, {
+        offers: updateOffer(state.offers, action.payload)
       });
   }
 
   return state;
 };
 
-export {reducer, ActionCreator, ActionTypes, transformOfferData, transformOffersList};
+export {reducer, ActionCreator, ActionTypes, transformOfferData, transformOffersList, updateOffer};

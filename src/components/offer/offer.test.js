@@ -10,34 +10,32 @@ it(`Offer page correctly renders after relaunch`, () => {
   const tree = renderer
     .create(<MemoryRouter><Offer
       match={{params: {id: `0`}}}
-      offers={{
-        0: {
-          id: 0,
-          city: {
-            name: ``,
-            location: {
-              latitude: 0,
-              longitude: 0,
-            }
-          },
-          previewImage: ``,
-          images: [``],
-          title: ``,
-          isPremium: true,
-          isFavorite: false,
-          rating: 1,
-          type: `apartment`,
-          bedrooms: 1,
-          maxAdults: 1,
-          priceByNight: 1,
-          goods: [``],
-          host: {
-            isPro: true,
-            name: ``,
-            avatarUrl: ``
-          },
-          description: ` `,
+      offer={{
+        id: 0,
+        city: {
+          name: ``,
+          location: {
+            latitude: 0,
+            longitude: 0,
+          }
         },
+        previewImage: ``,
+        images: [``],
+        title: ``,
+        isPremium: true,
+        isFavorite: false,
+        rating: 1,
+        type: `apartment`,
+        bedrooms: 1,
+        maxAdults: 1,
+        priceByNight: 1,
+        goods: [``],
+        host: {
+          isPro: true,
+          name: ``,
+          avatarUrl: ``
+        },
+        description: ` `,
       }}
       reviews={[{
         id: 0,

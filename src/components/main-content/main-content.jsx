@@ -11,14 +11,19 @@ import {getSortedOffersSelector} from "../places-sorting/places-sorting";
 const PlacesSortingWrapped = withOpenable(PlacesSortingForm);
 
 const MainContent = (props) => {
-  const {activeCity, offers, activeOffer, sort, onActiveOfferChange, onSortChange} = props;
+  const {activeCity, offers, activeOffer, sort, onActiveOfferChange, onSortChange, onFavoritesClick} = props;
 
   return <React.Fragment>
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">{offers.length} places to stay in {activeCity.name}</b>
       <PlacesSortingWrapped sort={sort} onSortChange={onSortChange}/>
-      <PlacesList offers={getSortedOffersSelector({sort, offers})} onPlaceHover={onActiveOfferChange} listType={`list`}/>
+      <PlacesList
+        listType={`list`}
+        offers={getSortedOffersSelector({sort, offers})}
+        onPlaceHover={onActiveOfferChange}
+        onFavoritesClick={onFavoritesClick}
+      />
     </section>
     <div className="cities__right-section">
       <Map offerPins={getPinsForMap(offers, activeOffer ? activeOffer.id : null)}
@@ -34,6 +39,7 @@ MainContent.propTypes = {
   sort: PropTypes.string,
   onActiveOfferChange: PropTypes.func,
   onSortChange: PropTypes.func.isRequired,
+  onFavoritesClick: PropTypes.func,
 };
 
 export default MainContent;

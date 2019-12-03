@@ -38,7 +38,7 @@ exports[`Header correctly renders after relaunch When user is authorized 1`] = `
           >
             <a
               className="header__nav-link header__nav-link--profile"
-              href="/login"
+              href="/favorites"
               onClick={[Function]}
             >
               <div

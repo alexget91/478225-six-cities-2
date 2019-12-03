@@ -44,7 +44,7 @@ Array [
             
           </h1>
           <button
-            className="property__bookmark-button button"
+            className="property__bookmark-button button js-favorites-link"
             type="button"
           >
             <svg
@@ -488,7 +488,8 @@ Array [
                 </span>
               </div>
               <button
-                className="place-card__bookmark-button button"
+                className="place-card__bookmark-button button js-favorites-link"
+                onClick={[Function]}
                 type="button"
               >
                 <svg

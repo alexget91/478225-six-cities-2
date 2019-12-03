@@ -1,31 +1,37 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import {App} from "./app";
-import {createMapBlock, getMockOffer} from "../../common/test-stubs";
+import {createMapBlock, getMockOfferTransformed} from "../../common/test-stubs";
 import {MemoryRouter} from "react-router-dom";
 
-const mockOffer = getMockOffer(1, `city1`);
+describe(`App correctly renders after relaunch`, () => {
+  it(`When offers not loaded`, () => {
+    const tree = renderer
+      .create(<MemoryRouter><App
+        cities={[`city1`, `city2`]}
+        onCityClick={jest.fn()}
+        onSignIn={jest.fn()}
+      /></MemoryRouter>)
+      .toJSON();
 
-it(`App correctly renders after relaunch`, () => {
-  createMapBlock();
+    expect(tree).toMatchSnapshot();
+  });
 
-  const tree = renderer
-    .create(<MemoryRouter><App
-      activeCity={`city1`}
-      offers={{
-        allOffers: {
-          1: mockOffer
-        },
-        offersByCities: {
-          city1: [mockOffer],
-          city2: []
-        },
-      }}
-      cities={[`city1`, `city2`]}
-      onCityClick={jest.fn()}
-      onSignIn={jest.fn()}
-    /></MemoryRouter>)
-    .toJSON();
+  it(`When offers loaded`, () => {
+    createMapBlock();
 
-  expect(tree).toMatchSnapshot();
+    const tree = renderer
+      .create(<MemoryRouter><App
+        isOffersLoaded={true}
+        activeCity={`city1`}
+        offersInCity={[getMockOfferTransformed(1, `city1`)]}
+        cities={[`city1`, `city2`]}
+        isAuthorizationRequired={true}
+        onCityClick={jest.fn()}
+        onSignIn={jest.fn()}
+      /></MemoryRouter>)
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
 });

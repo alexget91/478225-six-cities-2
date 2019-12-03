@@ -53,7 +53,7 @@ exports[`Place card correctly renders after relaunch 1`] = `
         </span>
       </div>
       <button
-        className="place-card__bookmark-button button"
+        className="place-card__bookmark-button button js-favorites-link"
         type="button"
       >
         <svg

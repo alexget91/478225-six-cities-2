@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import Main from "./main";
-import {createMapBlock, getMockOffer} from "../../common/test-stubs";
+import {createMapBlock, getMockOfferTransformed} from "../../common/test-stubs";
 import {MemoryRouter} from "react-router-dom";
 
 
@@ -12,8 +12,8 @@ describe(`Main page correctly renders after relaunch`, () => {
     const tree = renderer
       .create(<MemoryRouter><Main
         offers={[
-          getMockOffer(1, `city1`),
-          getMockOffer(2, `city1`),
+          getMockOfferTransformed(1, `city1`),
+          getMockOfferTransformed(2, `city1`),
         ]}
         cities={[`city1`, `city2`]}
         activeCity={`city1`}

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App correctly renders after relaunch 1`] = `
+exports[`App correctly renders after relaunch When offers loaded 1`] = `
 <div
   className="page page--gray page--main"
 >
@@ -238,7 +238,8 @@ exports[`App correctly renders after relaunch 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button button"
+                    className="place-card__bookmark-button button js-favorites-link"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
@@ -310,3 +311,5 @@ exports[`App correctly renders after relaunch 1`] = `
   </main>
 </div>
 `;
+
+exports[`App correctly renders after relaunch When offers not loaded 1`] = `"Loading..."`;
