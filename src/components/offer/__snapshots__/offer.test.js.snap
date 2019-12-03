@@ -44,7 +44,7 @@ Array [
             
           </h1>
           <button
-            className="property__bookmark-button button"
+            className="property__bookmark-button button js-favorites-link"
             type="button"
           >
             <svg
@@ -454,7 +454,9 @@ Array [
             className="near-places__image-wrapper place-card__image-wrapper"
           >
             <a
-              href="#"
+              className="js-detail-link"
+              href="/offer/0"
+              onClick={[Function]}
             >
               <img
                 alt="Place image"
@@ -486,7 +488,8 @@ Array [
                 </span>
               </div>
               <button
-                className="place-card__bookmark-button button"
+                className="place-card__bookmark-button button js-favorites-link"
+                onClick={[Function]}
                 type="button"
               >
                 <svg
@@ -529,8 +532,8 @@ Array [
               className="place-card__name"
             >
               <a
-                className="js-place-name"
-                href="#"
+                className="js-detail-link"
+                href="/offer/0"
                 onClick={[Function]}
               >
                 

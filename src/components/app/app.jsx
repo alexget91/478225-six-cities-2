@@ -2,135 +2,122 @@ import React from "react";
 import PropTypes from "prop-types";
 import Main from "../main/main";
 import Offer from "../offer/offer";
-import {placeListByCity, userData} from "../../common/global-prop-types";
-import URLS from "../../common/urls";
+import {placeList, userData} from "../../common/global-prop-types";
 import reviews from "../../mocks/reviews";
 import {connect} from "react-redux";
-import {UserActionCreator} from "../../reducer/user-reducer/user-reducer";
-import withActiveItem from "../../hocs/with-active-item/with-active-item";
+import {ActionCreator as UserActionCreator} from "../../reducer/user/reducer/reducer";
+import withActiveItem, {transformPropNames} from "../../hocs/with-active-item/with-active-item";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
-import {compose} from "redux";
 import Page from "../page/page";
-import {pageTypes, sortingOptions} from "../../common/constants";
-import Header from "../header/header";
-import MainContent from "../main-content/main-content";
-import MainEmpty from "../main-empty/main-empty";
+import {pageTypes} from "../../common/constants";
 import SignIn from "../sign-in/sign-in";
-import Operation from "../../reducer/operation/operation";
+import UserOperation from "../../reducer/user/operation/operation";
+import AppOperation from "../../reducer/app/operation/operation";
+import {Redirect, Route, Switch} from "react-router-dom";
+import Path from "../../common/path";
+import Header from "../header/header";
+import {
+  getOffers,
+  getOffersLoadStatus,
+  getCitiesSelector,
+  getOffersInCitySelector,
+} from "../../reducer/app/selectors/selectors";
+import {getAuthorizationRequired, getCity, getUser} from "../../reducer/user/selectors/selectors";
+import withCurrentOffer from "../../hocs/with-current-offer/with-current-offer";
+import withFavoritesClickHandler from "../../hocs/with-favorites-click-handler/with-favorites-click-handler";
+import {compose} from "recompose";
 
-const DEFAULT_SORT = sortingOptions.popular;
-
-const transformPropNames = (newItem, newCallback, props) => {
-  const newProps = Object.assign({}, props, {
-    [newItem]: props.activeItem,
-    [newCallback]: props.onActiveItemChange,
-  });
-  delete newProps.activeItem;
-  delete newProps.onActiveItemChange;
-  return newProps;
-};
-
-const getComponentWithOffer = (Component) => withActiveItem(withTransformProps(
-    (props) => transformPropNames(`activeOffer`, `onActiveOfferChange`, props)
-)(Component));
-
-const getComponentWithSort = (Component) => withActiveItem(withTransformProps(
-    (props) => transformPropNames(`sort`, `onSortChange`, props)
-)(Component), DEFAULT_SORT);
-
-
-const MainContentWrapped = compose(getComponentWithOffer, getComponentWithSort)(MainContent);
-
-const OfferWrapped = withActiveItem(withTransformProps(
+const OfferWithTransformedProps = withTransformProps(
     (props) => transformPropNames(`activeNearPlace`, `onActiveNearPlaceChange`, props)
-)(Offer));
+)(Offer);
 
-const getPageData = (props, cities) => {
-  const {activeCity, offers, isAuthorizationRequired, onCityClick, onSignIn} = props;
+const OfferWrapped = compose(
+    withCurrentOffer,
+    withFavoritesClickHandler,
+    withActiveItem
+)(OfferWithTransformedProps);
 
-  if (isAuthorizationRequired) {
-    return {
-      content: <SignIn
-        onFormSubmit={onSignIn}
-      />,
-      type: pageTypes.LOGIN,
-    };
-  }
-
-  switch (location.pathname) {
-    case URLS.main:
-      const isEmpty = !offers[activeCity].offers.length;
-
-      return {
-        content: <Main
-          cities={cities}
-          activeCity={offers[activeCity].city}
-          isEmpty={isEmpty}
-          onCityClick={onCityClick}
-        >
-          {isEmpty ? <MainEmpty cityName={activeCity}/> : <MainContentWrapped
-            activeCity={offers[activeCity].city}
-            offers={offers[activeCity].offers}
-          />}
-        </Main>,
-        type: isEmpty ? pageTypes.MAIN_EMPTY : pageTypes.MAIN,
-      };
-    case URLS.offer:
-      return {
-        content: <OfferWrapped
-          offer={offers[`Dusseldorf`].offers[0]}
-          city={offers[activeCity].city}
-          reviews={reviews}
-          neighbourhood={[offers[`Dusseldorf`].offers[1]]}
-        />,
-        type: pageTypes.OFFER,
-      };
-  }
-
-  return null;
-};
-
-getPageData.propTypes = {
-  activeCity: PropTypes.string,
-  offers: placeListByCity,
-  isAuthorizationRequired: PropTypes.bool,
-  onCityClick: PropTypes.func.isRequired,
-  onSignIn: PropTypes.func.isRequired,
-};
-
-const App = (props) => {
-  const {offers, user} = props;
-  const cities = Object.keys(offers);
-
-  if (!cities.length) {
-    return `Loading...`;
-  }
-
-  const pageData = getPageData(props, cities);
-
+const getComponentWithLayout = (Component, type, isAuthorizationRequired, user) => {
   return <Page
-    header={<Header email={user ? user.email : null}/>}
-    content={pageData.content}
-    type={pageData.type}
+    type={type}
+    header={<Header
+      isAuthorizationRequired={isAuthorizationRequired}
+      email={user ? user.email : null}
+    />}
+    content={Component}
   />;
 };
 
-App.propTypes = {
-  offers: placeListByCity,
-  user: PropTypes.exact(userData),
+const App = (props) => {
+  const {offers, cities, offersInCity, activeCity, user, isOffersLoaded, isAuthorizationRequired
+    , onCityClick, onSignIn, onFavoritesClick} = props;
+
+  if (!isOffersLoaded) {
+    return `Loading...`;
+  }
+
+  return <Switch>
+    <Route path={Path.INDEX} exact render={() => {
+      const pageType = offersInCity.length ? pageTypes.MAIN : pageTypes.MAIN_EMPTY;
+
+      return getComponentWithLayout(<Main
+        offers={offersInCity}
+        cities={cities}
+        activeCity={activeCity}
+        onCityClick={onCityClick}
+        onFavoritesClick={onFavoritesClick}
+      />, pageType, isAuthorizationRequired, user);
+    }}/>
+
+    <Route path={Path.LOGIN} exact render={() => {
+      if (isAuthorizationRequired) {
+        return getComponentWithLayout(<SignIn
+          onFormSubmit={onSignIn}
+        />, pageTypes.LOGIN, isAuthorizationRequired, user);
+      }
+
+      return <Redirect to={Path.INDEX}/>;
+    }}/>
+
+    <Route path={`${Path.OFFER}/:id`} exact render={(routeProps) => {
+      return getComponentWithLayout(<OfferWrapped
+        {...routeProps}
+        offers={offers}
+        reviews={reviews}
+        neighbourhood={[offers[1]]}
+        onFavoritesClick={onFavoritesClick}
+      />, pageTypes.OFFER, isAuthorizationRequired, user);
+    }}/>
+  </Switch>;
 };
 
+App.propTypes = {
+  cities: PropTypes.arrayOf(PropTypes.string).isRequired,
+  activeCity: PropTypes.string,
+  offers: placeList,
+  offersInCity: placeList,
+  user: PropTypes.exact(userData),
+  isOffersLoaded: PropTypes.bool,
+  isAuthorizationRequired: PropTypes.bool,
+  onCityClick: PropTypes.func.isRequired,
+  onSignIn: PropTypes.func.isRequired,
+  onFavoritesClick: PropTypes.func,
+};
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
-  activeCity: state.userReducer.city,
-  offers: state.appReducer.offers,
-  isAuthorizationRequired: state.userReducer.isAuthorizationRequired,
-  user: state.userReducer.user,
+  cities: getCitiesSelector(state),
+  activeCity: getCity(state),
+  offers: getOffers(state),
+  offersInCity: getOffersInCitySelector(state),
+  isOffersLoaded: getOffersLoadStatus(state),
+  isAuthorizationRequired: getAuthorizationRequired(state),
+  user: getUser(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onCityClick: (city) => dispatch(UserActionCreator.setCity(city)),
-  onSignIn: (email, password) => dispatch(Operation.signIn(email, password)),
+  onSignIn: (email, password) => dispatch(UserOperation.signIn(email, password)),
+  onFavoritesClick: (offerID, isFavorite) => dispatch(AppOperation.toggleFavorite(offerID, isFavorite)),
 });
 
 export {App};

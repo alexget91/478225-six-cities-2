@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App correctly renders after relaunch 1`] = `
+exports[`App correctly renders after relaunch When offers loaded 1`] = `
 <div
   className="page page--gray page--main"
 >
@@ -18,6 +18,8 @@ exports[`App correctly renders after relaunch 1`] = `
         >
           <a
             className="header__logo-link header__logo-link--active"
+            href="/"
+            onClick={[Function]}
           >
             <img
               alt="6 cities logo"
@@ -39,7 +41,8 @@ exports[`App correctly renders after relaunch 1`] = `
             >
               <a
                 className="header__nav-link header__nav-link--profile"
-                href="#"
+                href="/login"
+                onClick={[Function]}
               >
                 <div
                   className="header__avatar-wrapper user__avatar-wrapper"
@@ -82,7 +85,7 @@ exports[`App correctly renders after relaunch 1`] = `
               onClick={[Function]}
             >
               <span>
-                1
+                city1
               </span>
             </a>
           </li>
@@ -95,7 +98,7 @@ exports[`App correctly renders after relaunch 1`] = `
               onClick={[Function]}
             >
               <span>
-                2
+                city2
               </span>
             </a>
           </li>
@@ -121,7 +124,7 @@ exports[`App correctly renders after relaunch 1`] = `
           >
             1
              places to stay in 
-            1
+            city1
           </b>
           <form
             action="#"
@@ -192,7 +195,7 @@ exports[`App correctly renders after relaunch 1`] = `
           >
             <article
               className="cities__place-card place-card"
-              data-id={0}
+              data-id={1}
               onMouseEnter={[Function]}
               onMouseLeave={[Function]}
             >
@@ -201,7 +204,9 @@ exports[`App correctly renders after relaunch 1`] = `
                 className="cities__image-wrapper place-card__image-wrapper"
               >
                 <a
-                  href="#"
+                  className="js-detail-link"
+                  href="/offer/1"
+                  onClick={[Function]}
                 >
                   <img
                     alt="Place image"
@@ -233,7 +238,8 @@ exports[`App correctly renders after relaunch 1`] = `
                     </span>
                   </div>
                   <button
-                    className="place-card__bookmark-button button"
+                    className="place-card__bookmark-button button js-favorites-link"
+                    onClick={[Function]}
                     type="button"
                   >
                     <svg
@@ -276,11 +282,11 @@ exports[`App correctly renders after relaunch 1`] = `
                   className="place-card__name"
                 >
                   <a
-                    className="js-place-name"
-                    href="#"
+                    className="js-detail-link"
+                    href="/offer/1"
                     onClick={[Function]}
                   >
-                    
+                    Title1
                   </a>
                 </h2>
                 <p
@@ -305,3 +311,5 @@ exports[`App correctly renders after relaunch 1`] = `
   </main>
 </div>
 `;
+
+exports[`App correctly renders after relaunch When offers not loaded 1`] = `"Loading..."`;

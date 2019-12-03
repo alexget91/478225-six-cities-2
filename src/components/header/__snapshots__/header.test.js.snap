@@ -15,6 +15,8 @@ exports[`Header correctly renders after relaunch When user is authorized 1`] = `
       >
         <a
           className="header__logo-link header__logo-link--active"
+          href="/"
+          onClick={[Function]}
         >
           <img
             alt="6 cities logo"
@@ -36,7 +38,8 @@ exports[`Header correctly renders after relaunch When user is authorized 1`] = `
           >
             <a
               className="header__nav-link header__nav-link--profile"
-              href="#"
+              href="/favorites"
+              onClick={[Function]}
             >
               <div
                 className="header__avatar-wrapper user__avatar-wrapper"
@@ -70,6 +73,8 @@ exports[`Header correctly renders after relaunch When user is not authorized 1`]
       >
         <a
           className="header__logo-link header__logo-link--active"
+          href="/"
+          onClick={[Function]}
         >
           <img
             alt="6 cities logo"
@@ -91,7 +96,8 @@ exports[`Header correctly renders after relaunch When user is not authorized 1`]
           >
             <a
               className="header__nav-link header__nav-link--profile"
-              href="#"
+              href="/login"
+              onClick={[Function]}
             >
               <div
                 className="header__avatar-wrapper user__avatar-wrapper"

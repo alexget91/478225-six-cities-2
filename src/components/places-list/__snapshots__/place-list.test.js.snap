@@ -15,7 +15,9 @@ exports[`Place list correctly renders after relaunch 1`] = `
       className="cities__image-wrapper place-card__image-wrapper"
     >
       <a
-        href="#"
+        className="js-detail-link"
+        href="/offer/0"
+        onClick={[Function]}
       >
         <img
           alt="Place image"
@@ -47,7 +49,8 @@ exports[`Place list correctly renders after relaunch 1`] = `
           </span>
         </div>
         <button
-          className="place-card__bookmark-button button"
+          className="place-card__bookmark-button button js-favorites-link"
+          onClick={[Function]}
           type="button"
         >
           <svg
@@ -90,8 +93,8 @@ exports[`Place list correctly renders after relaunch 1`] = `
         className="place-card__name"
       >
         <a
-          className="js-place-name"
-          href="#"
+          className="js-detail-link"
+          href="/offer/0"
           onClick={[Function]}
         >
           

@@ -1,4 +1,10 @@
-const UserActionTypes = {
+const initialState = {
+  city: null,
+  user: null,
+  isAuthorizationRequired: true,
+};
+
+const ActionTypes = {
   SET_CITY: `SET_CITY`,
   SET_USER: `SET_USER`,
   SET_AUTHORIZATION_REQUIRED: `SET_AUTHORIZATION_REQUIRED`,
@@ -16,40 +22,34 @@ const transformUserData = (data) => {
   return newData;
 };
 
-const initialState = {
-  city: null,
-  user: null,
-  isAuthorizationRequired: true,
-};
-
-const UserActionCreator = {
+const ActionCreator = {
   setCity: (city) => ({
-    type: UserActionTypes.SET_CITY,
+    type: ActionTypes.SET_CITY,
     payload: city
   }),
 
   setUser: (data) => ({
-    type: UserActionTypes.SET_USER,
+    type: ActionTypes.SET_USER,
     payload: transformUserData(data)
   }),
 
   setAuthorizationRequired: (flag) => ({
-    type: UserActionTypes.SET_AUTHORIZATION_REQUIRED,
+    type: ActionTypes.SET_AUTHORIZATION_REQUIRED,
     payload: flag
   }),
 };
 
-const userReducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case UserActionTypes.SET_CITY:
+    case ActionTypes.SET_CITY:
       return Object.assign({}, state, {
         city: action.payload
       });
-    case UserActionTypes.SET_USER:
+    case ActionTypes.SET_USER:
       return Object.assign({}, state, {
         user: action.payload
       });
-    case UserActionTypes.SET_AUTHORIZATION_REQUIRED:
+    case ActionTypes.SET_AUTHORIZATION_REQUIRED:
       return Object.assign({}, state, {
         isAuthorizationRequired: action.payload
       });
@@ -58,4 +58,4 @@ const userReducer = (state = initialState, action) => {
   return state;
 };
 
-export {userReducer, UserActionCreator, UserActionTypes, transformUserData};
+export {reducer, ActionCreator, ActionTypes, transformUserData};

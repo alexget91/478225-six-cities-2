@@ -1,5 +1,5 @@
 import React from "react";
-import {cityData, placeCard, reviewItem} from "../../common/global-prop-types";
+import {placeCard, placeList, reviewItem} from "../../common/global-prop-types";
 import PropTypes from "prop-types";
 import {getPinsForMap, getRatingPercent} from "../../common/utils";
 import Reviews from "../reviews/reviews";
@@ -7,7 +7,11 @@ import Map from "../map/map";
 import PlacesList from "../places-list/places-list";
 
 const Offer = (props) => {
-  const {offer, city, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange} = props;
+  const {offer, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange, onFavoritesClick} = props;
+
+  if (!offer) {
+    return null;
+  }
 
   return <React.Fragment>
     <section className="property">
@@ -28,7 +32,8 @@ const Offer = (props) => {
           <div className="property__name-wrapper">
             <h1 className="property__name">{offer.title}</h1>
             <button type="button"
-              className={`property__bookmark-button${offer.isFavorite ? ` property__bookmark-button--active` : ``} button`}
+              className={`property__bookmark-button${offer.isFavorite ? ` property__bookmark-button--active` : ``} button js-favorites-link`}
+              onClick={onFavoritesClick}
             >
               <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
@@ -90,7 +95,7 @@ const Offer = (props) => {
         </div>
       </div>
       <Map offerPins={getPinsForMap(neighbourhood, activeNearPlace ? activeNearPlace.id : null)}
-        mapType={`offer`} city={city}/>
+        mapType={`offer`} city={offer.city}/>
     </section>
     {neighbourhood.length ? <div className="container">
       <section className="near-places places">
@@ -103,11 +108,11 @@ const Offer = (props) => {
 
 Offer.propTypes = {
   offer: PropTypes.exact(placeCard),
-  city: PropTypes.exact(cityData).isRequired,
   reviews: PropTypes.arrayOf(PropTypes.exact(reviewItem)).isRequired,
-  neighbourhood: PropTypes.arrayOf(PropTypes.exact(placeCard)),
+  neighbourhood: placeList,
   activeNearPlace: PropTypes.exact(placeCard),
   onActiveNearPlaceChange: PropTypes.func,
+  onFavoritesClick: PropTypes.func,
 };
 
 export default Offer;

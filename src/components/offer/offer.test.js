@@ -2,14 +2,23 @@ import renderer from "react-test-renderer";
 import React from "react";
 import Offer from "./offer";
 import {createMapBlock} from "../../common/test-stubs";
+import {MemoryRouter} from "react-router-dom";
 
 it(`Offer page correctly renders after relaunch`, () => {
   createMapBlock();
 
   const tree = renderer
-    .create(<Offer
+    .create(<MemoryRouter><Offer
+      match={{params: {id: `0`}}}
       offer={{
         id: 0,
+        city: {
+          name: ``,
+          location: {
+            latitude: 0,
+            longitude: 0,
+          }
+        },
         previewImage: ``,
         images: [``],
         title: ``,
@@ -27,13 +36,6 @@ it(`Offer page correctly renders after relaunch`, () => {
           avatarUrl: ``
         },
         description: ` `,
-      }}
-      city={{
-        name: ``,
-        location: {
-          latitude: 0,
-          longitude: 0,
-        }
       }}
       reviews={[{
         id: 0,
@@ -54,7 +56,7 @@ it(`Offer page correctly renders after relaunch`, () => {
           longitude: 0,
         }
       }]}
-    />)
+    /></MemoryRouter>)
     .toJSON();
 
   expect(tree).toMatchSnapshot();

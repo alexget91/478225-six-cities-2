@@ -50,7 +50,7 @@ PlacesSortingForm.propTypes = {
     sortingOptions.popular,
     sortingOptions.toHigh,
     sortingOptions.toLow,
-    sortingOptions.popular,
+    sortingOptions.topRated,
   ]),
   isVisible: PropTypes.bool,
   onSortChange: PropTypes.func.isRequired,

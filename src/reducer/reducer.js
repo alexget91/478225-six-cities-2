@@ -1,10 +1,11 @@
 import {combineReducers} from "redux";
-import {appReducer} from "./app-reducer/app-reducer";
-import {userReducer} from "./user-reducer/user-reducer";
+import {reducer as appReducer} from "./app/reducer/reducer";
+import {reducer as userReducer} from "./user/reducer/reducer";
+import NameSpace from "./name-space";
 
 const reducer = combineReducers({
-  appReducer,
-  userReducer,
+  [NameSpace.APP]: appReducer,
+  [NameSpace.USER]: userReducer,
 });
 
 export default reducer;
