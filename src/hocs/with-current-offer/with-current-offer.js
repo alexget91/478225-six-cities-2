@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {placeList} from "../../common/global-prop-types";
-import {getOfferByID} from "../../reducer/app/selectors/selectors";
+import {getOfferByID} from "../../reducer/data/selectors/selectors";
 
 const withCurrentOffer = (Component) => {
   class WithCurrentOffer extends PureComponent {

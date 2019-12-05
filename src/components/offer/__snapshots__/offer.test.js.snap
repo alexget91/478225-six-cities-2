@@ -262,9 +262,9 @@ Array [
             </li>
           </ul>
           <form
-            action="#"
             className="reviews__form form"
             method="post"
+            onSubmit={[Function]}
           >
             <label
               className="reviews__label form__label"
@@ -276,9 +276,12 @@ Array [
               className="reviews__rating-form form__rating"
             >
               <input
-                className="form__rating-input visually-hidden"
+                checked={false}
+                className="form__rating-input visually-hidden js-rating"
+                disabled={false}
                 id="5-stars"
                 name="rating"
+                onChange={[Function]}
                 type="radio"
                 value="5"
               />
@@ -298,9 +301,12 @@ Array [
                 </svg>
               </label>
               <input
-                className="form__rating-input visually-hidden"
+                checked={false}
+                className="form__rating-input visually-hidden js-rating"
+                disabled={false}
                 id="4-stars"
                 name="rating"
+                onChange={[Function]}
                 type="radio"
                 value="4"
               />
@@ -320,9 +326,12 @@ Array [
                 </svg>
               </label>
               <input
-                className="form__rating-input visually-hidden"
+                checked={false}
+                className="form__rating-input visually-hidden js-rating"
+                disabled={false}
                 id="3-stars"
                 name="rating"
+                onChange={[Function]}
                 type="radio"
                 value="3"
               />
@@ -342,9 +351,12 @@ Array [
                 </svg>
               </label>
               <input
-                className="form__rating-input visually-hidden"
+                checked={false}
+                className="form__rating-input visually-hidden js-rating"
+                disabled={false}
                 id="2-stars"
                 name="rating"
+                onChange={[Function]}
                 type="radio"
                 value="2"
               />
@@ -364,15 +376,18 @@ Array [
                 </svg>
               </label>
               <input
-                className="form__rating-input visually-hidden"
-                id="1-star"
+                checked={false}
+                className="form__rating-input visually-hidden js-rating"
+                disabled={false}
+                id="1-stars"
                 name="rating"
+                onChange={[Function]}
                 type="radio"
                 value="1"
               />
               <label
                 className="reviews__rating-label form__rating-label"
-                htmlFor="1-star"
+                htmlFor="1-stars"
                 title="terribly"
               >
                 <svg
@@ -387,10 +402,13 @@ Array [
               </label>
             </div>
             <textarea
-              className="reviews__textarea form__textarea"
+              className="reviews__textarea form__textarea js-review"
+              disabled={false}
               id="review"
               name="review"
+              onChange={[Function]}
               placeholder="Tell how was your stay, what you like and what can be improved"
+              value=""
             />
             <div
               className="reviews__button-wrapper"
@@ -414,7 +432,7 @@ Array [
               </p>
               <button
                 className="reviews__submit form__submit button"
-                disabled=""
+                disabled={true}
                 type="submit"
               >
                 Submit

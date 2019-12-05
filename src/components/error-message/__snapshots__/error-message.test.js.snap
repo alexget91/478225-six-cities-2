@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Error message correctly renders after relaunch 1`] = `
+<div
+  style={
+    Object {
+      "backgroundColor": "red",
+      "color": "black",
+      "fontSize": "25px",
+      "left": 0,
+      "margin": "0 auto",
+      "padding": "5px",
+      "position": "fixed",
+      "right": 0,
+      "textAlign": "center",
+      "top": 0,
+      "zIndex": 100,
+    }
+  }
+>
+  error
+  <span
+    className="js-close"
+    style={
+      Object {
+        "cursor": "pointer",
+        "float": "right",
+      }
+    }
+  >
+    [close]
+  </span>
+</div>
+`;

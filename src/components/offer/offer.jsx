@@ -1,5 +1,5 @@
 import React from "react";
-import {placeCard, placeList, reviewItem} from "../../common/global-prop-types";
+import {placeCard, placeList, reviewsList, sendingStatusType} from "../../common/global-prop-types";
 import PropTypes from "prop-types";
 import {getPinsForMap, getRatingPercent} from "../../common/utils";
 import Reviews from "../reviews/reviews";
@@ -7,7 +7,8 @@ import Map from "../map/map";
 import PlacesList from "../places-list/places-list";
 
 const Offer = (props) => {
-  const {offer, reviews, neighbourhood, activeNearPlace, onActiveNearPlaceChange, onFavoritesClick} = props;
+  const {offer, reviews, reviewSendingStatus, neighbourhood, activeNearPlace, isAuthorizationRequired
+    , onActiveNearPlaceChange, onFavoritesClick, onCommentSubmit, onCommentSubmitSuccess} = props;
 
   if (!offer) {
     return null;
@@ -91,7 +92,14 @@ const Offer = (props) => {
               </p>
             </div> : ``}
           </div> : ``}
-          <Reviews reviews={reviews}/>
+          <Reviews
+            reviews={reviews}
+            reviewSendingStatus={reviewSendingStatus}
+            offerID={offer.id}
+            isAuthorizationRequired={isAuthorizationRequired}
+            onCommentSubmit={onCommentSubmit}
+            onCommentSubmitSuccess={onCommentSubmitSuccess}
+          />
         </div>
       </div>
       <Map offerPins={getPinsForMap(neighbourhood, activeNearPlace ? activeNearPlace.id : null)}
@@ -100,7 +108,12 @@ const Offer = (props) => {
     {neighbourhood.length ? <div className="container">
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
-        <PlacesList offers={neighbourhood} listType={`offer`} onPlaceHover={onActiveNearPlaceChange}/>
+        <PlacesList
+          offers={neighbourhood}
+          listType={`offer`}
+          onPlaceHover={onActiveNearPlaceChange}
+          onFavoritesClick={onFavoritesClick}
+        />
       </section>
     </div> : ``}
   </React.Fragment>;
@@ -108,11 +121,15 @@ const Offer = (props) => {
 
 Offer.propTypes = {
   offer: PropTypes.exact(placeCard),
-  reviews: PropTypes.arrayOf(PropTypes.exact(reviewItem)).isRequired,
+  reviews: reviewsList.isRequired,
+  reviewSendingStatus: sendingStatusType,
   neighbourhood: placeList,
   activeNearPlace: PropTypes.exact(placeCard),
+  isAuthorizationRequired: PropTypes.bool,
   onActiveNearPlaceChange: PropTypes.func,
   onFavoritesClick: PropTypes.func,
+  onCommentSubmit: PropTypes.func,
+  onCommentSubmitSuccess: PropTypes.func,
 };
 
 export default Offer;

@@ -53,6 +53,7 @@ describe(`Routes works correctly`, () => {
         cities={[``]}
         offers={mockOffers}
         isOffersLoaded={true}
+        loadReviews={jest.fn()}
         onCityClick={jest.fn()}
         onSignIn={jest.fn()}
       />

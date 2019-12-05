@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import Page from "./page";
-import {pageTypes} from "../../common/constants";
+import {PageType} from "../../common/constants";
 
 describe(`Page component correctly renders after relaunch`, () => {
   it(`Without data`, () => {
@@ -23,12 +23,24 @@ describe(`Page component correctly renders after relaunch`, () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it(`With error message`, () => {
+    const tree = renderer
+      .create(<Page
+        header={<div className="header"></div>}
+        content={<div className="content"></div>}
+        error={`error message`}
+      />)
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
   it(`With type FAVORITES`, () => {
     const tree = renderer
       .create(<Page
         header={<div className="header"></div>}
         content={<div className="content"></div>}
-        type={pageTypes.FAVORITES}
+        type={PageType.FAVORITES}
       />)
       .toJSON();
 
@@ -40,7 +52,7 @@ describe(`Page component correctly renders after relaunch`, () => {
       .create(<Page
         header={<div className="header"></div>}
         content={<div className="content"></div>}
-        type={pageTypes.FAVORITES_EMPTY}
+        type={PageType.FAVORITES_EMPTY}
       />)
       .toJSON();
 
@@ -52,7 +64,7 @@ describe(`Page component correctly renders after relaunch`, () => {
       .create(<Page
         header={<div className="header"></div>}
         content={<div className="content"></div>}
-        type={pageTypes.LOGIN}
+        type={PageType.LOGIN}
       />)
       .toJSON();
 
@@ -64,7 +76,7 @@ describe(`Page component correctly renders after relaunch`, () => {
       .create(<Page
         header={<div className="header"></div>}
         content={<div className="content"></div>}
-        type={pageTypes.MAIN}
+        type={PageType.MAIN}
       />)
       .toJSON();
 
@@ -76,7 +88,7 @@ describe(`Page component correctly renders after relaunch`, () => {
       .create(<Page
         header={<div className="header"></div>}
         content={<div className="content"></div>}
-        type={pageTypes.MAIN_EMPTY}
+        type={PageType.MAIN_EMPTY}
       />)
       .toJSON();
 
@@ -88,7 +100,7 @@ describe(`Page component correctly renders after relaunch`, () => {
       .create(<Page
         header={<div className="header"></div>}
         content={<div className="content"></div>}
-        type={pageTypes.OFFER}
+        type={PageType.OFFER}
       />)
       .toJSON();
 

@@ -1,39 +1,41 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {pageTypes} from "../../common/constants";
+import {PageType} from "../../common/constants";
+import ErrorMessage from "../error-message/error-message";
 
 const cssClass = {
-  [pageTypes.FAVORITES]: {
+  [PageType.FAVORITES]: {
     wrapper: ``,
     main: ` page__main--favorites`,
   },
-  [pageTypes.FAVORITES_EMPTY]: {
+  [PageType.FAVORITES_EMPTY]: {
     wrapper: ` page--favorites-empty`,
     main: ` page__main--favorites page__main--favorites-empty`,
   },
-  [pageTypes.LOGIN]: {
+  [PageType.LOGIN]: {
     wrapper: ` page--gray page--login`,
     main: ` page__main--login`,
   },
-  [pageTypes.MAIN]: {
+  [PageType.MAIN]: {
     wrapper: ` page--gray page--main`,
     main: ` page__main--index`,
   },
-  [pageTypes.MAIN_EMPTY]: {
+  [PageType.MAIN_EMPTY]: {
     wrapper: ` page--gray page--main`,
     main: ` page__main--index page__main--index-empty`,
   },
-  [pageTypes.OFFER]: {
+  [PageType.OFFER]: {
     wrapper: ``,
     main: ` page__main--property`,
   },
 };
 
 const Page = (props) => {
-  const {type, header, content} = props;
+  const {type, header, content, error, onErrorClose} = props;
 
   return <div className={`page${type ? cssClass[type].wrapper : ``}`}>
     {header}
+    {error ? <ErrorMessage error={error} onCloseClick={onErrorClose}/> : null}
     <main className={`page__main${type ? cssClass[type].main : ``}`}>
       {content}
     </main>
@@ -41,9 +43,11 @@ const Page = (props) => {
 };
 
 Page.propTypes = {
-  type: PropTypes.oneOf(Object.keys(pageTypes)),
+  type: PropTypes.oneOf(Object.keys(PageType)),
   header: PropTypes.element,
   content: PropTypes.element,
+  error: PropTypes.string,
+  onErrorClose: PropTypes.func,
 };
 
 export default Page;

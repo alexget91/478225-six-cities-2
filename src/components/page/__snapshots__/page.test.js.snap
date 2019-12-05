@@ -1,5 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Page component correctly renders after relaunch With error message 1`] = `
+<div
+  className="page"
+>
+  <div
+    className="header"
+  />
+  <div
+    style={
+      Object {
+        "backgroundColor": "red",
+        "color": "black",
+        "fontSize": "25px",
+        "left": 0,
+        "margin": "0 auto",
+        "padding": "5px",
+        "position": "fixed",
+        "right": 0,
+        "textAlign": "center",
+        "top": 0,
+        "zIndex": 100,
+      }
+    }
+  >
+    error message
+    <span
+      className="js-close"
+      style={
+        Object {
+          "cursor": "pointer",
+          "float": "right",
+        }
+      }
+    >
+      [close]
+    </span>
+  </div>
+  <main
+    className="page__main"
+  >
+    <div
+      className="content"
+    />
+  </main>
+</div>
+`;
+
 exports[`Page component correctly renders after relaunch With type FAVORITES 1`] = `
 <div
   className="page"
