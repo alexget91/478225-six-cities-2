@@ -2,30 +2,31 @@ import React from "react";
 import PropTypes from "prop-types";
 import Main from "../main/main";
 import Offer from "../offer/offer";
-import {placeList, userData} from "../../common/global-prop-types";
-import reviews from "../../mocks/reviews";
+import {placeList, reviewsList, sendingStatusType, userData} from "../../common/global-prop-types";
 import {connect} from "react-redux";
+import {ActionCreator as AppActionCreator} from "../../reducer/app/reducer/reducer";
 import {ActionCreator as UserActionCreator} from "../../reducer/user/reducer/reducer";
+import Operation from "../../reducer/operation/operation";
 import withActiveItem, {transformPropNames} from "../../hocs/with-active-item/with-active-item";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
 import Page from "../page/page";
-import {pageTypes} from "../../common/constants";
+import {PageType, FormSendingStatus} from "../../common/constants";
 import SignIn from "../sign-in/sign-in";
-import UserOperation from "../../reducer/user/operation/operation";
-import AppOperation from "../../reducer/app/operation/operation";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Path from "../../common/path";
 import Header from "../header/header";
+import {getOffersLoadStatus, getError, getReviewSendingStatus} from "../../reducer/app/selectors/selectors";
 import {
   getOffers,
-  getOffersLoadStatus,
+  getReviews,
   getCitiesSelector,
   getOffersInCitySelector,
-} from "../../reducer/app/selectors/selectors";
+} from "../../reducer/data/selectors/selectors";
 import {getAuthorizationRequired, getCity, getUser} from "../../reducer/user/selectors/selectors";
 import withCurrentOffer from "../../hocs/with-current-offer/with-current-offer";
 import withFavoritesClickHandler from "../../hocs/with-favorites-click-handler/with-favorites-click-handler";
 import {compose} from "recompose";
+import withReviewsList from "../../hocs/with-reviews-list/with-reviews-list";
 
 const OfferWithTransformedProps = withTransformProps(
     (props) => transformPropNames(`activeNearPlace`, `onActiveNearPlaceChange`, props)
@@ -33,32 +34,35 @@ const OfferWithTransformedProps = withTransformProps(
 
 const OfferWrapped = compose(
     withCurrentOffer,
+    withReviewsList,
     withFavoritesClickHandler,
     withActiveItem
 )(OfferWithTransformedProps);
 
-const getComponentWithLayout = (Component, type, isAuthorizationRequired, user) => {
-  return <Page
-    type={type}
-    header={<Header
-      isAuthorizationRequired={isAuthorizationRequired}
-      email={user ? user.email : null}
-    />}
-    content={Component}
-  />;
-};
-
 const App = (props) => {
-  const {offers, cities, offersInCity, activeCity, user, isOffersLoaded, isAuthorizationRequired
-    , onCityClick, onSignIn, onFavoritesClick} = props;
+  const {offers, reviews, cities, offersInCity, activeCity, user, isOffersLoaded, reviewSendingStatus, isAuthorizationRequired
+    , error, loadReviews, onCityClick, onSignIn, onFavoritesClick, onCommentSubmit, onCommentSubmitSuccess, onErrorClose} = props;
 
   if (!isOffersLoaded) {
     return `Loading...`;
   }
 
+  const getComponentWithLayout = (Component, type) => {
+    return <Page
+      type={type}
+      header={<Header
+        isAuthorizationRequired={isAuthorizationRequired}
+        email={user ? user.email : null}
+      />}
+      content={Component}
+      error={error}
+      onErrorClose={onErrorClose}
+    />;
+  };
+
   return <Switch>
     <Route path={Path.INDEX} exact render={() => {
-      const pageType = offersInCity.length ? pageTypes.MAIN : pageTypes.MAIN_EMPTY;
+      const pageType = offersInCity.length ? PageType.MAIN : PageType.MAIN_EMPTY;
 
       return getComponentWithLayout(<Main
         offers={offersInCity}
@@ -66,14 +70,14 @@ const App = (props) => {
         activeCity={activeCity}
         onCityClick={onCityClick}
         onFavoritesClick={onFavoritesClick}
-      />, pageType, isAuthorizationRequired, user);
+      />, pageType);
     }}/>
 
     <Route path={Path.LOGIN} exact render={() => {
       if (isAuthorizationRequired) {
         return getComponentWithLayout(<SignIn
           onFormSubmit={onSignIn}
-        />, pageTypes.LOGIN, isAuthorizationRequired, user);
+        />, PageType.LOGIN);
       }
 
       return <Redirect to={Path.INDEX}/>;
@@ -84,9 +88,14 @@ const App = (props) => {
         {...routeProps}
         offers={offers}
         reviews={reviews}
+        reviewSendingStatus={reviewSendingStatus}
         neighbourhood={[offers[1]]}
+        loadReviews={loadReviews}
+        isAuthorizationRequired={isAuthorizationRequired}
         onFavoritesClick={onFavoritesClick}
-      />, pageTypes.OFFER, isAuthorizationRequired, user);
+        onCommentSubmit={onCommentSubmit}
+        onCommentSubmitSuccess={onCommentSubmitSuccess}
+      />, PageType.OFFER);
     }}/>
   </Switch>;
 };
@@ -96,12 +105,19 @@ App.propTypes = {
   activeCity: PropTypes.string,
   offers: placeList,
   offersInCity: placeList,
+  reviews: reviewsList,
   user: PropTypes.exact(userData),
   isOffersLoaded: PropTypes.bool,
+  reviewSendingStatus: sendingStatusType,
   isAuthorizationRequired: PropTypes.bool,
+  error: PropTypes.string,
+  loadReviews: PropTypes.func,
   onCityClick: PropTypes.func.isRequired,
   onSignIn: PropTypes.func.isRequired,
   onFavoritesClick: PropTypes.func,
+  onCommentSubmit: PropTypes.func,
+  onCommentSubmitSuccess: PropTypes.func,
+  onErrorClose: PropTypes.func,
 };
 
 const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
@@ -109,15 +125,25 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   activeCity: getCity(state),
   offers: getOffers(state),
   offersInCity: getOffersInCitySelector(state),
+  reviews: getReviews(state),
   isOffersLoaded: getOffersLoadStatus(state),
+  reviewSendingStatus: getReviewSendingStatus(state),
   isAuthorizationRequired: getAuthorizationRequired(state),
   user: getUser(state),
+  error: getError(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  loadReviews: (offerID) => dispatch(Operation.loadReviews(offerID)),
   onCityClick: (city) => dispatch(UserActionCreator.setCity(city)),
-  onSignIn: (email, password) => dispatch(UserOperation.signIn(email, password)),
-  onFavoritesClick: (offerID, isFavorite) => dispatch(AppOperation.toggleFavorite(offerID, isFavorite)),
+  onSignIn: (email, password) => dispatch(Operation.signIn(email, password)),
+  onFavoritesClick: (offerID, isFavorite) => dispatch(Operation.toggleFavorite(offerID, isFavorite)),
+  onCommentSubmit: (offerID, rating, comment) => {
+    dispatch(AppActionCreator.setReviewSending(FormSendingStatus.SENDING));
+    dispatch(Operation.sendReview(offerID, rating, comment));
+  },
+  onCommentSubmitSuccess: () => dispatch(AppActionCreator.setReviewSending(FormSendingStatus.READY)),
+  onErrorClose: () => dispatch(AppActionCreator.setError()),
 });
 
 export {App};

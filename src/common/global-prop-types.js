@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import {FormSendingStatus} from "./constants";
 
 const cityData = {
   name: PropTypes.string.isRequired,
@@ -50,6 +51,7 @@ const placeList = PropTypes.arrayOf(PropTypes.exact(placeCard));
 const reviewItem = {
   id: PropTypes.number.isRequired,
   user: PropTypes.exact({
+    id: PropTypes.number,
     isPro: PropTypes.bool,
     name: PropTypes.string.isRequired,
     avatarUrl: PropTypes.string
@@ -59,6 +61,9 @@ const reviewItem = {
   date: PropTypes.string.isRequired
 };
 
-const displayType = PropTypes.oneOf([`offer`, `list`]).isRequired;
+const reviewsList = PropTypes.arrayOf(PropTypes.exact(reviewItem));
 
-export {placeCard, placeList, reviewItem, displayType, cityData, userData};
+const displayType = PropTypes.oneOf([`offer`, `list`]).isRequired;
+const sendingStatusType = PropTypes.oneOf(Object.values(FormSendingStatus));
+
+export {placeCard, placeList, reviewItem, reviewsList, displayType, cityData, userData, sendingStatusType};

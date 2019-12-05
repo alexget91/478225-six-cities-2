@@ -5,15 +5,19 @@ import {Provider} from "react-redux";
 import {createStore, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
 import reducer from "./reducer/reducer";
-import Operation from "./reducer/app/operation/operation";
+import Operation from "./reducer/operation/operation";
 import configureAPI from "./api";
 import {compose} from "recompose";
 import {Router} from "react-router-dom";
 import history from "./history";
 import Path from "./common/path";
+import {ActionCreator} from "./reducer/app/reducer/reducer";
 
 const init = () => {
-  const api = configureAPI(() => history.push(Path.LOGIN));
+  const api = configureAPI(
+      () => history.push(Path.LOGIN),
+      (error) => store.dispatch(ActionCreator.setError(error))
+  );
   const store = createStore(
       reducer,
       compose(

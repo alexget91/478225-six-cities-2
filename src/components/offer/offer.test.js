@@ -56,6 +56,8 @@ it(`Offer page correctly renders after relaunch`, () => {
           longitude: 0,
         }
       }]}
+      onCommentSubmit={jest.fn()}
+      onCommentSubmitSuccess={jest.fn()}
     /></MemoryRouter>)
     .toJSON();
 

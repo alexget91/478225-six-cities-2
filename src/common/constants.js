@@ -1,4 +1,4 @@
-const pageTypes = {
+const PageType = {
   FAVORITES: `FAVORITES`,
   FAVORITES_EMPTY: `FAVORITES_EMPTY`,
   LOGIN: `LOGIN`,
@@ -14,4 +14,10 @@ const sortingOptions = {
   topRated: `top-rated`,
 };
 
-export {pageTypes, sortingOptions};
+const FormSendingStatus = {
+  READY: `READY`,
+  SUCCESS: `SUCCESS`,
+  SENDING: `SENDING`,
+};
+
+export {PageType, sortingOptions, FormSendingStatus};

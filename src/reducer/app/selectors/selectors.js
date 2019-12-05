@@ -1,36 +1,13 @@
-import {createSelector} from "reselect";
 import NameSpace from "../../name-space";
-import {getCity} from "../../user/selectors/selectors";
 
 const NAME_SPACE = NameSpace.APP;
 
-const getOffers = (state) => state[NAME_SPACE].offers;
 const getOffersLoadStatus = (state) => state[NAME_SPACE].isOffersLoaded;
-
-const getCities = (offers) => Array.from(
-    offers.reduce(
-        (result, offer) => result.add(offer.city.name),
-        new Set()
-    )
-);
-
-const getOffersInCity = (offers, city) => offers.filter(
-    (offer) => offer.city.name === city
-);
-
-const getOfferByID = (offers, id) => offers.find(
-    (offer) => offer.id === id
-);
-
-const getCitiesSelector = createSelector(getOffers, getCities);
-const getOffersInCitySelector = createSelector(getOffers, getCity, getOffersInCity);
+const getReviewSendingStatus = (state) => state[NAME_SPACE].reviewSendingStatus;
+const getError = (state) => state[NAME_SPACE].errorMessage;
 
 export {
-  getOffers,
   getOffersLoadStatus,
-  getCities,
-  getOffersInCity,
-  getOfferByID,
-  getCitiesSelector,
-  getOffersInCitySelector
+  getReviewSendingStatus,
+  getError,
 };

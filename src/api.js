@@ -1,9 +1,10 @@
 import axios from "axios";
+import Settings from "./common/settings";
 
-const configureAPI = (onLoginFail) => {
+const configureAPI = (onLoginFail, onError) => {
   const api = axios.create({
     baseURL: `https://htmlacademy-react-2.appspot.com/six-cities`,
-    timeout: 5000,
+    timeout: Settings.API_TIMEOUT,
     withCredentials: true,
   });
 
@@ -12,10 +13,16 @@ const configureAPI = (onLoginFail) => {
   const onFail = (err) => {
     switch (err.response.status) {
       case 400:
-        throw new Error(err.response.data.error);
+        onError(err.response.data.error);
+        break;
       case 401:
         onLoginFail();
         break;
+      case 500:
+        onError(`Server is not available`);
+        break;
+      default:
+        onError(`${err.response.status}: ${err.response.data.error}`);
     }
 
     return err;
