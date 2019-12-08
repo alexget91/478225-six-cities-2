@@ -15,10 +15,17 @@ import SignIn from "../sign-in/sign-in";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Path from "../../common/path";
 import Header from "../header/header";
-import {getOffersLoadStatus, getError, getReviewSendingStatus} from "../../reducer/app/selectors/selectors";
+import {
+  getOffersLoadStatus,
+  getFavoritesLoadStatus,
+  getError,
+  getReviewSendingStatus,
+} from "../../reducer/app/selectors/selectors";
 import {
   getOffers,
   getReviews,
+  getFavorites,
+  getOffersByCities,
   getCitiesSelector,
   getOffersInCitySelector,
 } from "../../reducer/data/selectors/selectors";
@@ -27,6 +34,8 @@ import withCurrentOffer from "../../hocs/with-current-offer/with-current-offer";
 import withFavoritesClickHandler from "../../hocs/with-favorites-click-handler/with-favorites-click-handler";
 import {compose} from "recompose";
 import withReviewsList from "../../hocs/with-reviews-list/with-reviews-list";
+import Favorites from "../favorites/favorites";
+import PrivateRoute from "../../hocs/private-route/private-route";
 
 const OfferWithTransformedProps = withTransformProps(
     (props) => transformPropNames(`activeNearPlace`, `onActiveNearPlaceChange`, props)
@@ -40,11 +49,12 @@ const OfferWrapped = compose(
 )(OfferWithTransformedProps);
 
 const App = (props) => {
-  const {offers, reviews, cities, offersInCity, activeCity, user, isOffersLoaded, reviewSendingStatus, isAuthorizationRequired
-    , error, loadReviews, onCityClick, onSignIn, onFavoritesClick, onCommentSubmit, onCommentSubmitSuccess, onErrorClose} = props;
+  const {offers, reviews, favorites, cities, offersInCity, activeCity, user, isOffersLoaded, isFavoritesLoaded
+    , reviewSendingStatus, isAuthorizationRequired, error, loadReviews, onCityClick, onSignIn, onFavoritesClick
+    , onCommentSubmit, onCommentSubmitSuccess, onErrorClose} = props;
 
   if (!isOffersLoaded) {
-    return `Loading...`;
+    return error ? error : `Loading...`;
   }
 
   const getComponentWithLayout = (Component, type) => {
@@ -97,6 +107,16 @@ const App = (props) => {
         onCommentSubmitSuccess={onCommentSubmitSuccess}
       />, PageType.OFFER);
     }}/>
+
+    <PrivateRoute path={Path.FAVORITES} exact isAuthorizationRequired={isAuthorizationRequired} render={() => {
+      const pageType = favorites.length ? PageType.FAVORITES : PageType.FAVORITES_EMPTY;
+
+      return getComponentWithLayout(<Favorites
+        offers={getOffersByCities(favorites)}
+        isLoaded={isFavoritesLoaded}
+        onFavoritesClick={onFavoritesClick}
+      />, pageType);
+    }}/>
   </Switch>;
 };
 
@@ -106,8 +126,10 @@ App.propTypes = {
   offers: placeList,
   offersInCity: placeList,
   reviews: reviewsList,
+  favorites: placeList,
   user: PropTypes.exact(userData),
   isOffersLoaded: PropTypes.bool,
+  isFavoritesLoaded: PropTypes.bool,
   reviewSendingStatus: sendingStatusType,
   isAuthorizationRequired: PropTypes.bool,
   error: PropTypes.string,
@@ -126,7 +148,9 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   offers: getOffers(state),
   offersInCity: getOffersInCitySelector(state),
   reviews: getReviews(state),
+  favorites: getFavorites(state),
   isOffersLoaded: getOffersLoadStatus(state),
+  isFavoritesLoaded: getFavoritesLoadStatus(state),
   reviewSendingStatus: getReviewSendingStatus(state),
   isAuthorizationRequired: getAuthorizationRequired(state),
   user: getUser(state),

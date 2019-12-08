@@ -7,6 +7,7 @@ import {cityData, placeCard, placeList} from "../../common/global-prop-types";
 import withOpenable from "../../hocs/with-openable/with-openable";
 import PlacesSortingForm from "../places-sorting-form/places-sorting-form";
 import {getSortedOffersSelector} from "../places-sorting/places-sorting";
+import {PlacesListView} from "../../common/constants";
 
 const PlacesSortingWrapped = withOpenable(PlacesSortingForm);
 
@@ -19,7 +20,7 @@ const MainContent = (props) => {
       <b className="places__found">{offers.length} places to stay in {activeCity.name}</b>
       <PlacesSortingWrapped sort={sort} onSortChange={onSortChange}/>
       <PlacesList
-        listType={`list`}
+        listType={PlacesListView.LIST}
         offers={getSortedOffersSelector({sort, offers})}
         onPlaceHover={onActiveOfferChange}
         onFavoritesClick={onFavoritesClick}
@@ -27,7 +28,7 @@ const MainContent = (props) => {
     </section>
     <div className="cities__right-section">
       <Map offerPins={getPinsForMap(offers, activeOffer ? activeOffer.id : null)}
-        mapType={`list`} city={activeCity}/>
+        mapType={PlacesListView.LIST} city={activeCity}/>
     </div>
   </React.Fragment>;
 };

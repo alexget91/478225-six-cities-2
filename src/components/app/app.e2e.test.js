@@ -8,12 +8,14 @@ import {getMockOfferTransformed} from "../../common/test-stubs";
 import Main from "../main/main";
 import SignIn from "../sign-in/sign-in";
 import Offer from "../offer/offer";
+import Favorites from "../favorites/favorites";
 
 Enzyme.configure({adapter: new Adapter()});
 
 jest.mock(`../main/main`, () => jest.fn().mockReturnValue(null));
 jest.mock(`../sign-in/sign-in`, () => jest.fn().mockReturnValue(null));
 jest.mock(`../offer/offer`, () => jest.fn().mockReturnValue(null));
+jest.mock(`../favorites/favorites`, () => jest.fn().mockReturnValue(null));
 
 const mockOffers = [getMockOfferTransformed(0, `city1`)];
 
@@ -60,5 +62,19 @@ describe(`Routes works correctly`, () => {
     </MemoryRouter>);
 
     expect(Offer).toHaveBeenCalled();
+  });
+
+  it(`To favorites page`, () => {
+    mount(<MemoryRouter initialEntries={[`${Path.FAVORITES}`]}>
+      <App
+        cities={[``]}
+        favorites={mockOffers}
+        isOffersLoaded={true}
+        onCityClick={jest.fn()}
+        onSignIn={jest.fn()}
+      />
+    </MemoryRouter>);
+
+    expect(Favorites).toHaveBeenCalled();
   });
 });

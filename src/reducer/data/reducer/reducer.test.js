@@ -310,6 +310,13 @@ describe(`Data action creators works correctly`, () => {
     });
   });
 
+  it(`Data action creator for set favorites returns correct action`, () => {
+    expect(ActionCreator.setFavorites(mockOffers)).toEqual({
+      type: ActionTypes.SET_FAVORITES,
+      payload: mockOffersTransformed,
+    });
+  });
+
   it(`Data action creator for update offer returns correct action`, () => {
     expect(ActionCreator.updateOffer({foo: `bar`})).toEqual({
       type: ActionTypes.UPDATE_OFFER,
@@ -331,6 +338,7 @@ describe(`Data reducer works correctly`, () => {
       },
     ],
     reviews: [],
+    favorites: [],
   };
 
   it(`Data reducer without action should return current state`, () => {
@@ -346,12 +354,21 @@ describe(`Data reducer works correctly`, () => {
     }));
   });
 
-  it(`Data reducer should set given value as кумшуцы`, () => {
+  it(`Data reducer should set given value as reviews`, () => {
     expect(reducer(mockInitialState, {
       type: ActionTypes.SET_REVIEWS,
       payload: mockReviewsTransformed
     })).toEqual(Object.assign({}, mockInitialState, {
       reviews: mockReviewsTransformed,
+    }));
+  });
+
+  it(`Data reducer should set given value as favorites`, () => {
+    expect(reducer(mockInitialState, {
+      type: ActionTypes.SET_FAVORITES,
+      payload: mockOffersTransformed
+    })).toEqual(Object.assign({}, mockInitialState, {
+      favorites: mockOffersTransformed,
     }));
   });
 

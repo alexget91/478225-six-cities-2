@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import leaflet from "leaflet";
-import {cityData, displayType} from "../../common/global-prop-types";
+import {cityData, placesListType} from "../../common/global-prop-types";
+import {PlacesListView} from "../../common/constants";
 
-const MAP_CLASS = {
-  offer: `property__map`,
-  list: `cities__map`,
+const MapClass = {
+  [PlacesListView.OFFER]: `property__map`,
+  [PlacesListView.LIST]: `cities__map`,
 };
 
 class Map extends React.PureComponent {
@@ -28,7 +29,7 @@ class Map extends React.PureComponent {
 
   render() {
     const {mapType} = this.props;
-    return <section id="map" className={`${MAP_CLASS[mapType]} map`}></section>;
+    return <section id="map" className={`${MapClass[mapType]} map`}></section>;
   }
 
   componentDidMount() {
@@ -86,7 +87,7 @@ Map.propTypes = {
     coords: PropTypes.arrayOf(PropTypes.number).isRequired,
     isActive: PropTypes.bool,
   })).isRequired,
-  mapType: displayType
+  mapType: placesListType
 };
 
 export default Map;

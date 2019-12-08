@@ -2,6 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import PlacesList from "./places-list";
 import {MemoryRouter} from "react-router-dom";
+import {PlacesListView} from "../../common/constants";
 
 it(`Place list correctly renders after relaunch`, () => {
   const tree = renderer
@@ -12,7 +13,7 @@ it(`Place list correctly renders after relaunch`, () => {
         title: ``,
         type: `apartment`,
       }]}
-      listType={`list`}
+      listType={PlacesListView.LIST}
     /></MemoryRouter>)
     .toJSON();
 

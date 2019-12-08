@@ -27,6 +27,7 @@ const init = () => {
   );
 
   store.dispatch(Operation.loadOffers());
+  store.dispatch(Operation.loadFavorites());
 
   ReactDOM.render(
       <Provider store={store}>

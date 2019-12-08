@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {FormSendingStatus} from "./constants";
+import {FormSendingStatus, PlacesListView} from "./constants";
 
 const cityData = {
   name: PropTypes.string.isRequired,
@@ -63,7 +63,7 @@ const reviewItem = {
 
 const reviewsList = PropTypes.arrayOf(PropTypes.exact(reviewItem));
 
-const displayType = PropTypes.oneOf([`offer`, `list`]).isRequired;
+const placesListType = PropTypes.oneOf(Object.values(PlacesListView)).isRequired;
 const sendingStatusType = PropTypes.oneOf(Object.values(FormSendingStatus));
 
-export {placeCard, placeList, reviewItem, reviewsList, displayType, cityData, userData, sendingStatusType};
+export {placeCard, placeList, reviewItem, reviewsList, placesListType, cityData, userData, sendingStatusType};

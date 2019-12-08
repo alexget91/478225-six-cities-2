@@ -1,11 +1,13 @@
 const initialState = {
   offers: [],
   reviews: [],
+  favorites: [],
 };
 
 const ActionTypes = {
   SET_OFFERS: `SET_OFFERS`,
   SET_REVIEWS: `SET_REVIEWS`,
+  SET_FAVORITES: `SET_FAVORITES`,
   UPDATE_OFFER: `UPDATE_OFFER`,
 };
 
@@ -66,6 +68,11 @@ const ActionCreator = {
     payload: transformReviewsList(reviews),
   }),
 
+  setFavorites: (favorites) => ({
+    type: ActionTypes.SET_FAVORITES,
+    payload: transformOffersList(favorites),
+  }),
+
   updateOffer: (offer) => ({
     type: ActionTypes.UPDATE_OFFER,
     payload: offer,
@@ -81,6 +88,10 @@ const reducer = (state = initialState, action) => {
     case ActionTypes.SET_REVIEWS:
       return Object.assign({}, state, {
         reviews: action.payload
+      });
+    case ActionTypes.SET_FAVORITES:
+      return Object.assign({}, state, {
+        favorites: action.payload
       });
     case ActionTypes.UPDATE_OFFER:
       return Object.assign({}, state, {

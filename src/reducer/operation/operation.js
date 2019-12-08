@@ -12,9 +12,11 @@ const Operation = {
   loadOffers: () => (dispatch, _, api) => {
     return api.get(`/hotels`)
       .then((response) => {
-        dispatch(UserActionCreator.setCity(response.data[0].city.name));
-        dispatch(DataActionCreator.setOffers(response.data));
-        dispatch(AppActionCreator.setOffersLoaded(true));
+        if (response.data) {
+          dispatch(UserActionCreator.setCity(response.data[0].city.name));
+          dispatch(DataActionCreator.setOffers(response.data));
+          dispatch(AppActionCreator.setOffersLoaded(true));
+        }
       });
   },
 
@@ -22,6 +24,16 @@ const Operation = {
     return api.get(`/comments/${offerID}`)
       .then((response) => {
         dispatch(DataActionCreator.setReviews(response.data));
+      });
+  },
+
+  loadFavorites: () => (dispatch, _, api) => {
+    return api.get(`/favorite`)
+      .then((response) => {
+        if (response.data) {
+          dispatch(DataActionCreator.setFavorites(response.data));
+          dispatch(AppActionCreator.setFavoritesLoaded(true));
+        }
       });
   },
 
@@ -43,6 +55,7 @@ const Operation = {
       .then((response) => {
         if (response.data) {
           dispatch(DataActionCreator.updateOffer(response.data));
+          dispatch(Operation.loadFavorites());
         }
       });
   },
@@ -53,8 +66,10 @@ const Operation = {
       password
     })
       .then((response) => {
-        dispatch(UserActionCreator.setUser(response.data));
-        dispatch(UserActionCreator.setAuthorizationRequired(false));
+        if (response.data) {
+          dispatch(UserActionCreator.setUser(response.data));
+          dispatch(UserActionCreator.setAuthorizationRequired(false));
+        }
       });
   },
 };

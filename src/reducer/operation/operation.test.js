@@ -73,6 +73,9 @@ const mockReviewsTransformed = [
   },
 ];
 
+const mockFavorites = [getMockOfferFields(2, `Amsterdam`)];
+const mockFavoritesTransformed = [getMockOfferFieldsTransformed(2, `Amsterdam`)];
+
 const api = configureAPI();
 const apiMock = new MockAdapter(api);
 
@@ -117,6 +120,28 @@ it(`Should make a correct API call to get reviews`, () => {
       expect(dispatch).toHaveBeenCalledWith({
         type: DataActionTypes.SET_REVIEWS,
         payload: mockReviewsTransformed,
+      });
+    });
+});
+
+it(`Should make a correct API call to get favorites`, () => {
+  const dispatch = jest.fn();
+  const loader = Operation.loadFavorites();
+
+  apiMock
+    .onGet(`/favorite`)
+    .reply(200, mockFavorites);
+
+  return loader(dispatch, null, api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenNthCalledWith(1, {
+        type: DataActionTypes.SET_FAVORITES,
+        payload: mockFavoritesTransformed,
+      });
+      expect(dispatch).toHaveBeenNthCalledWith(2, {
+        type: AppActionTypes.SET_FAVORITES_LOADED,
+        payload: true,
       });
     });
 });
@@ -167,6 +192,7 @@ describe(`Should make a correct API call to send review`, () => {
 
 describe(`Should make a correct API call to toggle favorite status`, () => {
   const dispatch = jest.fn();
+  const loadFavoritesHandler = jest.fn();
   const offerID = 1;
   const setFavorite = Operation.toggleFavorite(offerID, false);
   const removeFavorite = Operation.toggleFavorite(offerID, true);
@@ -175,23 +201,33 @@ describe(`Should make a correct API call to toggle favorite status`, () => {
     .onPost(`/favorite/${offerID}/1`).reply(200, {id: offerID, isFavorite: true})
     .onPost(`/favorite/${offerID}/0`).reply(200, {id: offerID, isFavorite: false});
 
-  it(`On favorite set`, () => setFavorite(dispatch, null, api)
-    .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(1);
-      expect(dispatch).toHaveBeenCalledWith({
-        type: DataActionTypes.UPDATE_OFFER,
-        payload: {id: offerID, isFavorite: true},
-      });
-    }));
+  it(`On favorite set`, () => {
+    Operation.loadFavorites = () => loadFavoritesHandler;
 
-  it(`On favorite remove`, () => removeFavorite(dispatch, null, api)
-    .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(2);
-      expect(dispatch).toHaveBeenCalledWith({
-        type: DataActionTypes.UPDATE_OFFER,
-        payload: {id: offerID, isFavorite: false},
+    return setFavorite(dispatch, null, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: DataActionTypes.UPDATE_OFFER,
+          payload: {id: offerID, isFavorite: true},
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(2, loadFavoritesHandler);
       });
-    }));
+  });
+
+  it(`On favorite remove`, () => {
+    Operation.loadFavorites = () => loadFavoritesHandler;
+
+    return removeFavorite(dispatch, null, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(4);
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
+          type: DataActionTypes.UPDATE_OFFER,
+          payload: {id: offerID, isFavorite: false},
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(4, loadFavoritesHandler);
+      });
+  });
 });
 
 it(`Should make a correct API call to sign in`, () => {
