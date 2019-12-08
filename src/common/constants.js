@@ -7,6 +7,12 @@ const PageType = {
   OFFER: `OFFER`,
 };
 
+const PlacesListView = {
+  OFFER: `OFFER`,
+  LIST: `LIST`,
+  FAVORITES: `FAVORITES`,
+};
+
 const sortingOptions = {
   popular: `popular`,
   toHigh: `to-high`,
@@ -20,4 +26,4 @@ const FormSendingStatus = {
   SENDING: `SENDING`,
 };
 
-export {PageType, sortingOptions, FormSendingStatus};
+export {PageType, PlacesListView, sortingOptions, FormSendingStatus};

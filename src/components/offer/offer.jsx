@@ -5,6 +5,7 @@ import {getPinsForMap, getRatingPercent} from "../../common/utils";
 import Reviews from "../reviews/reviews";
 import Map from "../map/map";
 import PlacesList from "../places-list/places-list";
+import {PlacesListView} from "../../common/constants";
 
 const Offer = (props) => {
   const {offer, reviews, reviewSendingStatus, neighbourhood, activeNearPlace, isAuthorizationRequired
@@ -103,14 +104,14 @@ const Offer = (props) => {
         </div>
       </div>
       <Map offerPins={getPinsForMap(neighbourhood, activeNearPlace ? activeNearPlace.id : null)}
-        mapType={`offer`} city={offer.city}/>
+        mapType={PlacesListView.OFFER} city={offer.city}/>
     </section>
     {neighbourhood.length ? <div className="container">
       <section className="near-places places">
         <h2 className="near-places__title">Other places in the neighbourhood</h2>
         <PlacesList
           offers={neighbourhood}
-          listType={`offer`}
+          listType={PlacesListView.OFFER}
           onPlaceHover={onActiveNearPlaceChange}
           onFavoritesClick={onFavoritesClick}
         />

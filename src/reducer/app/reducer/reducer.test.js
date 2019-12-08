@@ -8,6 +8,13 @@ describe(`App action creators works correctly`, () => {
     });
   });
 
+  it(`App action creator for set "favorites is loaded" returns correct action`, () => {
+    expect(ActionCreator.setFavoritesLoaded(true)).toEqual({
+      type: ActionTypes.SET_FAVORITES_LOADED,
+      payload: true,
+    });
+  });
+
   it(`App action creator for set review sending status returns correct action`, () => {
     expect(ActionCreator.setReviewSending(`status`)).toEqual({
       type: ActionTypes.SET_REVIEW_SENDING,
@@ -26,6 +33,7 @@ describe(`App action creators works correctly`, () => {
 describe(`App reducer works correctly`, () => {
   const mockInitialState = {
     isOffersLoaded: false,
+    isFavoritesLoaded: false,
     reviewSendingStatus: `status`,
     errorMessage: null,
   };
@@ -40,6 +48,15 @@ describe(`App reducer works correctly`, () => {
       payload: true,
     })).toEqual(Object.assign({}, mockInitialState, {
       isOffersLoaded: true,
+    }));
+  });
+
+  it(`App reducer should set "favorites is loaded" correctly`, () => {
+    expect(reducer(mockInitialState, {
+      type: ActionTypes.SET_FAVORITES_LOADED,
+      payload: true,
+    })).toEqual(Object.assign({}, mockInitialState, {
+      isFavoritesLoaded: true,
     }));
   });
 

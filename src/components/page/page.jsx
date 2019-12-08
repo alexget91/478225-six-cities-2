@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {PageType} from "../../common/constants";
 import ErrorMessage from "../error-message/error-message";
+import {Link} from "react-router-dom";
+import Path from "../../common/path";
 
 const cssClass = {
   [PageType.FAVORITES]: {
@@ -39,6 +41,12 @@ const Page = (props) => {
     <main className={`page__main${type ? cssClass[type].main : ``}`}>
       {content}
     </main>
+    {type === PageType.FAVORITES || type === PageType.FAVORITES_EMPTY ?
+      <footer className="footer container">
+        <Link className="footer__logo-link js-link-index" to={Path.INDEX}>
+          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
+        </Link>
+      </footer> : null}
   </div>;
 };
 

@@ -61,6 +61,23 @@ exports[`Page component correctly renders after relaunch With type FAVORITES 1`]
       className="content"
     />
   </main>
+  <footer
+    className="footer container"
+  >
+    <a
+      className="footer__logo-link js-link-index"
+      href="/"
+      onClick={[Function]}
+    >
+      <img
+        alt="6 cities logo"
+        className="footer__logo"
+        height="33"
+        src="img/logo.svg"
+        width="64"
+      />
+    </a>
+  </footer>
 </div>
 `;
 
@@ -78,6 +95,23 @@ exports[`Page component correctly renders after relaunch With type FAVORITES_EMP
       className="content"
     />
   </main>
+  <footer
+    className="footer container"
+  >
+    <a
+      className="footer__logo-link js-link-index"
+      href="/"
+      onClick={[Function]}
+    >
+      <img
+        alt="6 cities logo"
+        className="footer__logo"
+        height="33"
+        src="img/logo.svg"
+        width="64"
+      />
+    </a>
+  </footer>
 </div>
 `;
 

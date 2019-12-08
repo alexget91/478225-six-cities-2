@@ -3,6 +3,7 @@ import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import PlaceCard from "./place-card";
 import Path from "../../common/path";
+import {PlacesListView} from "../../common/constants";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -21,7 +22,7 @@ const placeCard = shallow(<PlaceCard
     title: ``,
     type: `apartment`,
   }}
-  cardType={`list`}
+  cardType={PlacesListView.LIST}
   onMouseHover={mouseHoverHandler}
   onFavoritesClick={favoritesClickHandler}
 />);

@@ -479,13 +479,13 @@ Array [
               <img
                 alt="Place image"
                 className="place-card__image"
-                height="200"
-                width="260"
+                height={200}
+                width={260}
               />
             </a>
           </div>
           <div
-            className="place-card__info"
+            className=" place-card__info"
           >
             <div
               className="place-card__price-wrapper"

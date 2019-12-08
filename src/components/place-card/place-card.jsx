@@ -1,9 +1,10 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {displayType, placeCard} from "../../common/global-prop-types";
+import {placesListType, placeCard} from "../../common/global-prop-types";
 import {getRatingPercent} from "../../common/utils";
 import {Link} from "react-router-dom";
 import Path from "../../common/path";
+import {PlacesListView} from "../../common/constants";
 
 const TYPE_NAMES = {
   apartment: `Apartment`,
@@ -12,14 +13,25 @@ const TYPE_NAMES = {
   hotel: `Hotel`,
 };
 
-const CARD_CLASS = {
-  offer: `near-places__card`,
-  list: `cities__place-card`,
-};
-
-const IMAGE_CLASS = {
-  offer: `near-places__image-wrapper`,
-  list: `cities__image-wrapper`,
+const CardSettings = {
+  [PlacesListView.OFFER]: {
+    cardClass: `near-places__card`,
+    imageClass: `near-places__image-wrapper`,
+    infoClass: ``,
+    imageSizes: [260, 200],
+  },
+  [PlacesListView.LIST]: {
+    cardClass: `cities__place-card`,
+    imageClass: `cities__image-wrapper`,
+    infoClass: ``,
+    imageSizes: [260, 200],
+  },
+  [PlacesListView.FAVORITES]: {
+    cardClass: `favorites__card`,
+    imageClass: `favorites__image-wrapper`,
+    infoClass: `favorites__card-info`,
+    imageSizes: [150, 100],
+  },
 };
 
 class PlaceCard extends PureComponent {
@@ -35,18 +47,19 @@ class PlaceCard extends PureComponent {
     const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type} = offer;
     const detailURL = `${Path.OFFER}/${id}`;
 
-    return <article key={id} data-id={id} className={`${CARD_CLASS[cardType]} place-card`}
+    return <article key={id} data-id={id} className={`${CardSettings[cardType].cardClass} place-card`}
       onMouseEnter={this._mouseEnterHandler} onMouseLeave={this._mouseLeaveHandler}
     >
       {isPremium ? <div className="place-card__mark">
         <span>Premium</span>
       </div> : ``}
-      <div className={`${IMAGE_CLASS[cardType]} place-card__image-wrapper`}>
+      <div className={`${CardSettings[cardType].imageClass} place-card__image-wrapper`}>
         <Link className="js-detail-link" to={detailURL}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
+          <img className="place-card__image" src={previewImage}
+            width={CardSettings[cardType].imageSizes[0]} height={CardSettings[cardType].imageSizes[1]} alt="Place image"/>
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={`${CardSettings[cardType].infoClass} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{priceByNight}</b>
@@ -78,18 +91,25 @@ class PlaceCard extends PureComponent {
 
   _mouseEnterHandler() {
     const {offer, onMouseHover} = this.props;
-    const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type} = offer;
-    onMouseHover({id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type});
+
+    if (onMouseHover) {
+      const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type} = offer;
+      onMouseHover({id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type});
+    }
   }
 
   _mouseLeaveHandler() {
-    this.props.onMouseHover();
+    const {onMouseHover} = this.props;
+
+    if (onMouseHover) {
+      onMouseHover();
+    }
   }
 }
 
 PlaceCard.propTypes = {
   offer: PropTypes.exact(placeCard).isRequired,
-  cardType: displayType,
+  cardType: placesListType,
   onMouseHover: PropTypes.func,
   onFavoritesClick: PropTypes.func,
 };
