@@ -10,13 +10,15 @@ import configureAPI from "./api";
 import {compose} from "recompose";
 import {Router} from "react-router-dom";
 import history from "./history";
-import Path from "./common/path";
-import {ActionCreator} from "./reducer/app/reducer/reducer";
+import {ActionCreator as AppActionCreator} from "./reducer/app/reducer/reducer";
+import {ActionCreator as UserActionCreator} from "./reducer/user/reducer/reducer";
 
 const init = () => {
   const api = configureAPI(
-      () => history.push(Path.LOGIN),
-      (error) => store.dispatch(ActionCreator.setError(error))
+      () => {
+        store.dispatch(UserActionCreator.setAuthorizationRequired(true));
+      },
+      (error) => store.dispatch(AppActionCreator.setError(error))
   );
   const store = createStore(
       reducer,
@@ -26,8 +28,7 @@ const init = () => {
       )
   );
 
-  store.dispatch(Operation.loadOffers());
-  store.dispatch(Operation.loadFavorites());
+  store.dispatch(Operation.getUser());
 
   ReactDOM.render(
       <Provider store={store}>
