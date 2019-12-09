@@ -7,6 +7,8 @@ import Map from "../map/map";
 import PlacesList from "../places-list/places-list";
 import {PlacesListView} from "../../common/constants";
 
+const IMAGES_COUNT = 6;
+
 const Offer = (props) => {
   const {offer, reviews, reviewSendingStatus, neighbourhood, activeNearPlace, isAuthorizationRequired
     , onActiveNearPlaceChange, onFavoritesClick, onCommentSubmit, onCommentSubmitSuccess} = props;
@@ -19,7 +21,7 @@ const Offer = (props) => {
     <section className="property">
       <div className="property__gallery-container container">
         <div className="property__gallery">
-          {offer.images.map((src, i) => {
+          {offer.images.slice(0, IMAGES_COUNT).map((src, i) => {
             return <div key={offer.id + src + i} className="property__image-wrapper">
               <img className="property__image" src={src} alt="Photo studio"/>
             </div>;
