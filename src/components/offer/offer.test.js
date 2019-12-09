@@ -36,6 +36,10 @@ it(`Offer page correctly renders after relaunch`, () => {
           avatarUrl: ``
         },
         description: ` `,
+        location: {
+          latitude: 0,
+          longitude: 0,
+        },
       }}
       reviews={[{
         id: 0,

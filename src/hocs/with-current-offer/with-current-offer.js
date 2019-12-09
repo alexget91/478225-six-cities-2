@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {placeList} from "../../common/global-prop-types";
 import {getOfferByID} from "../../reducer/data/selectors/selectors";
+import {getNearPlaces} from "../../common/utils";
 
 const withCurrentOffer = (Component) => {
   class WithCurrentOffer extends PureComponent {
@@ -25,6 +26,7 @@ const withCurrentOffer = (Component) => {
       return <Component
         {...this.props}
         offer={this.state.offer}
+        neighbourhood={getNearPlaces(this.props.offers, this.state.offer)}
       />;
     }
 

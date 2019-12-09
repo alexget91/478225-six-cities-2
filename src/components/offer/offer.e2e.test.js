@@ -34,6 +34,10 @@ const placeCard = shallow(<Offer
       avatarUrl: ``
     },
     description: ` `,
+    location: {
+      latitude: 0,
+      longitude: 0,
+    },
   }}
   reviews={[]}
   neighbourhood={[{

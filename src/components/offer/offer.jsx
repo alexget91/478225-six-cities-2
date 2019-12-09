@@ -10,8 +10,8 @@ import {PlacesListView} from "../../common/constants";
 const IMAGES_COUNT = 6;
 
 const Offer = (props) => {
-  const {offer, reviews, reviewSendingStatus, neighbourhood, activeNearPlace, isAuthorizationRequired
-    , onActiveNearPlaceChange, onFavoritesClick, onCommentSubmit, onCommentSubmitSuccess} = props;
+  const {offer, reviews, reviewSendingStatus, neighbourhood, isAuthorizationRequired
+    , onFavoritesClick, onNearPlaceFavoritesClick, onCommentSubmit, onCommentSubmitSuccess} = props;
 
   if (!offer) {
     return null;
@@ -105,7 +105,7 @@ const Offer = (props) => {
           />
         </div>
       </div>
-      <Map offerPins={getPinsForMap(neighbourhood, activeNearPlace ? activeNearPlace.id : null)}
+      <Map offerPins={getPinsForMap([offer, ...neighbourhood], offer.id)}
         mapType={PlacesListView.OFFER} city={offer.city}/>
     </section>
     {neighbourhood.length ? <div className="container">
@@ -114,12 +114,15 @@ const Offer = (props) => {
         <PlacesList
           offers={neighbourhood}
           listType={PlacesListView.OFFER}
-          onPlaceHover={onActiveNearPlaceChange}
-          onFavoritesClick={onFavoritesClick}
+          onFavoritesClick={onNearPlaceFavoritesClick}
         />
       </section>
-    </div> : ``}
+    </div> : null}
   </React.Fragment>;
+};
+
+Offer.defaultProps = {
+  neighbourhood: [],
 };
 
 Offer.propTypes = {
@@ -127,10 +130,9 @@ Offer.propTypes = {
   reviews: reviewsList.isRequired,
   reviewSendingStatus: sendingStatusType,
   neighbourhood: placeList,
-  activeNearPlace: PropTypes.exact(placeCard),
   isAuthorizationRequired: PropTypes.bool,
-  onActiveNearPlaceChange: PropTypes.func,
   onFavoritesClick: PropTypes.func,
+  onNearPlaceFavoritesClick: PropTypes.func,
   onCommentSubmit: PropTypes.func,
   onCommentSubmitSuccess: PropTypes.func,
 };
