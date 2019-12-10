@@ -7,8 +7,7 @@ import {connect} from "react-redux";
 import {ActionCreator as AppActionCreator} from "../../reducer/app/reducer/reducer";
 import {ActionCreator as UserActionCreator} from "../../reducer/user/reducer/reducer";
 import Operation from "../../reducer/operation/operation";
-import withActiveItem, {transformPropNames} from "../../hocs/with-active-item/with-active-item";
-import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
 import Page from "../page/page";
 import {PageType, FormSendingStatus} from "../../common/constants";
 import SignIn from "../sign-in/sign-in";
@@ -31,22 +30,18 @@ import {
 } from "../../reducer/data/selectors/selectors";
 import {getAuthorizationRequired, getCity, getUser} from "../../reducer/user/selectors/selectors";
 import withCurrentOffer from "../../hocs/with-current-offer/with-current-offer";
-import withFavoritesClickHandler from "../../hocs/with-favorites-click-handler/with-favorites-click-handler";
+import withHandleFavoritesClick from "../../hocs/with-handle-favorites-click/with-handle-favorites-click";
 import {compose} from "recompose";
 import withReviewsList from "../../hocs/with-reviews-list/with-reviews-list";
 import Favorites from "../favorites/favorites";
 import PrivateRoute from "../../hocs/private-route/private-route";
 
-const OfferWithTransformedProps = withTransformProps(
-    (props) => transformPropNames(`activeNearPlace`, `onActiveNearPlaceChange`, props)
-)(Offer);
-
 const OfferWrapped = compose(
     withCurrentOffer,
     withReviewsList,
-    withFavoritesClickHandler,
+    withHandleFavoritesClick,
     withActiveItem
-)(OfferWithTransformedProps);
+)(Offer);
 
 const App = (props) => {
   const {offers, reviews, favorites, cities, offersInCity, activeCity, user, isOffersLoaded, isFavoritesLoaded
@@ -99,10 +94,10 @@ const App = (props) => {
         offers={offers}
         reviews={reviews}
         reviewSendingStatus={reviewSendingStatus}
-        neighbourhood={[offers[1]]}
         loadReviews={loadReviews}
         isAuthorizationRequired={isAuthorizationRequired}
         onFavoritesClick={onFavoritesClick}
+        onNearPlaceFavoritesClick={onFavoritesClick}
         onCommentSubmit={onCommentSubmit}
         onCommentSubmitSuccess={onCommentSubmitSuccess}
       />, PageType.OFFER);

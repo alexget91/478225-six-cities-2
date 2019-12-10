@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PlaceCard from "../place-card/place-card";
 import {placesListType, placeList} from "../../common/global-prop-types";
-import withFavoritesClickHandler from "../../hocs/with-favorites-click-handler/with-favorites-click-handler";
+import withHandleFavoritesClick from "../../hocs/with-handle-favorites-click/with-handle-favorites-click";
 import {PlacesListView} from "../../common/constants";
 
 const ListClass = {
@@ -10,7 +10,7 @@ const ListClass = {
   [PlacesListView.LIST]: `cities__places-list tabs__content`,
 };
 
-const PlaceCardWrapped = withFavoritesClickHandler(PlaceCard);
+const PlaceCardWrapped = withHandleFavoritesClick(PlaceCard);
 
 const PlacesList = (props) => {
   const {offers, listType, onPlaceHover, onFavoritesClick} = props;

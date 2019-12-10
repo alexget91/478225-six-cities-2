@@ -18,7 +18,7 @@ const Reviews = (props) => {
           key={review.id}
           id={review.id}
           user={review.user}
-          rating={review.rating}
+          rating={Math.round(review.rating)}
           comment={review.comment}
           date={review.date}
         />;

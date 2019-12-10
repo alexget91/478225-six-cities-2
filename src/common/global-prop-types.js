@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {FormSendingStatus, PlacesListView} from "./constants";
+import {FormSendingStatus, PlacesListView, PlaceType} from "./constants";
 
 const cityData = {
   name: PropTypes.string.isRequired,
@@ -27,7 +27,7 @@ const placeCard = {
   isPremium: PropTypes.bool,
   isFavorite: PropTypes.bool,
   rating: PropTypes.number,
-  type: PropTypes.oneOf([`apartment`, `room`, `house`, `hotel`]).isRequired,
+  type: PropTypes.oneOf(Object.values(PlaceType)).isRequired,
   bedrooms: PropTypes.number,
   maxAdults: PropTypes.number,
   priceByNight: PropTypes.number.isRequired,

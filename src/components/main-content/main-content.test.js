@@ -3,6 +3,7 @@ import renderer from "react-test-renderer";
 import {createMapBlock} from "../../common/test-stubs";
 import MainContent from "./main-content";
 import {MemoryRouter} from "react-router-dom";
+import {PlaceType} from "../../common/constants";
 
 it(`Main content correctly renders after relaunch`, () => {
   createMapBlock();
@@ -20,7 +21,7 @@ it(`Main content correctly renders after relaunch`, () => {
         id: 0,
         priceByNight: 0,
         title: ``,
-        type: `apartment`,
+        type: PlaceType.APARTMENT,
         location: {
           latitude: 0,
           longitude: 0,

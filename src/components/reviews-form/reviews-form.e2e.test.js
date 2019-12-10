@@ -5,17 +5,17 @@ import ReviewsForm from "./reviews-form";
 
 Enzyme.configure({adapter: new Adapter()});
 
-const changeHandler = jest.fn();
-const submitHandler = jest.fn();
+const handleChange = jest.fn();
+const handleSubmit = jest.fn();
 const reviewsForm = mount(<ReviewsForm
-  onChange={changeHandler}
-  onSubmit={submitHandler}
+  onChange={handleChange}
+  onSubmit={handleSubmit}
 />);
 
 describe(`Reviews form correctly calls callbacks`, () => {
   it(`On form submitting`, () => {
     reviewsForm.simulate(`submit`);
-    expect(submitHandler).toHaveBeenCalledTimes(1);
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
   });
 
   it(`On rating change`, () => {
@@ -23,7 +23,7 @@ describe(`Reviews form correctly calls callbacks`, () => {
     expect(ratingInput.length).toBe(1);
 
     ratingInput.simulate(`change`);
-    expect(changeHandler).toHaveBeenCalledTimes(1);
+    expect(handleChange).toHaveBeenCalledTimes(1);
   });
 
   it(`On review change`, () => {
@@ -31,6 +31,6 @@ describe(`Reviews form correctly calls callbacks`, () => {
     expect(reviewInput.length).toBe(1);
 
     reviewInput.simulate(`change`);
-    expect(changeHandler).toHaveBeenCalledTimes(2);
+    expect(handleChange).toHaveBeenCalledTimes(2);
   });
 });

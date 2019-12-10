@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {placeList} from "../../common/global-prop-types";
-import withFavoritesClickHandler from "../../hocs/with-favorites-click-handler/with-favorites-click-handler";
+import withHandleFavoritesClick from "../../hocs/with-handle-favorites-click/with-handle-favorites-click";
 import PlaceCard from "../place-card/place-card";
 import {PlacesListView} from "../../common/constants";
 
-const PlaceCardWrapped = withFavoritesClickHandler(PlaceCard);
+const PlaceCardWrapped = withHandleFavoritesClick(PlaceCard);
 
 const Favorites = (props) => {
   const {offers, isLoaded, onFavoritesClick} = props;

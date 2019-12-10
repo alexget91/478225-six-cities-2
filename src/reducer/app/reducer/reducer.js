@@ -7,7 +7,7 @@ const initialState = {
   errorMessage: null,
 };
 
-const ActionTypes = {
+const ActionType = {
   SET_OFFERS_LOADED: `SET_OFFERS_LOADED`,
   SET_FAVORITES_LOADED: `SET_FAVORITES_LOADED`,
   SET_REVIEW_SENDING: `SET_REVIEW_SENDING`,
@@ -16,41 +16,41 @@ const ActionTypes = {
 
 const ActionCreator = {
   setOffersLoaded: (status) => ({
-    type: ActionTypes.SET_OFFERS_LOADED,
+    type: ActionType.SET_OFFERS_LOADED,
     payload: status,
   }),
 
   setFavoritesLoaded: (status) => ({
-    type: ActionTypes.SET_FAVORITES_LOADED,
+    type: ActionType.SET_FAVORITES_LOADED,
     payload: status,
   }),
 
   setReviewSending: (status) => ({
-    type: ActionTypes.SET_REVIEW_SENDING,
+    type: ActionType.SET_REVIEW_SENDING,
     payload: status,
   }),
 
   setError: (error) => ({
-    type: ActionTypes.SET_ERROR,
+    type: ActionType.SET_ERROR,
     payload: error,
   }),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.SET_OFFERS_LOADED:
+    case ActionType.SET_OFFERS_LOADED:
       return Object.assign({}, state, {
         isOffersLoaded: action.payload
       });
-    case ActionTypes.SET_FAVORITES_LOADED:
+    case ActionType.SET_FAVORITES_LOADED:
       return Object.assign({}, state, {
         isFavoritesLoaded: action.payload
       });
-    case ActionTypes.SET_REVIEW_SENDING:
+    case ActionType.SET_REVIEW_SENDING:
       return Object.assign({}, state, {
         reviewSendingStatus: action.payload
       });
-    case ActionTypes.SET_ERROR:
+    case ActionType.SET_ERROR:
       return Object.assign({}, state, {
         errorMessage: action.payload
       });
@@ -59,4 +59,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {reducer, ActionCreator, ActionTypes};
+export {reducer, ActionCreator, ActionType};

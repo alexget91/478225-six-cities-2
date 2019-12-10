@@ -7,17 +7,24 @@ const PageType = {
   OFFER: `OFFER`,
 };
 
+const PlaceType = {
+  APARTMENT: `apartment`,
+  ROOM: `room`,
+  HOUSE: `house`,
+  HOTEL: `hotel`,
+};
+
 const PlacesListView = {
   OFFER: `OFFER`,
   LIST: `LIST`,
   FAVORITES: `FAVORITES`,
 };
 
-const sortingOptions = {
-  popular: `popular`,
-  toHigh: `to-high`,
-  toLow: `to-low`,
-  topRated: `top-rated`,
+const SortingOption = {
+  POPULAR: `popular`,
+  TO_HIGH: `to-high`,
+  TO_LOW: `to-low`,
+  TOP_RATED: `top-rated`,
 };
 
 const FormSendingStatus = {
@@ -26,4 +33,4 @@ const FormSendingStatus = {
   SENDING: `SENDING`,
 };
 
-export {PageType, PlacesListView, sortingOptions, FormSendingStatus};
+export {PageType, PlaceType, PlacesListView, SortingOption, FormSendingStatus};

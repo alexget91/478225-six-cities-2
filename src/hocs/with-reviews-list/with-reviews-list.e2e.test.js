@@ -10,12 +10,12 @@ it(`Calls callback to load review list for current offer`, () => {
   const MockComponent = () => <div/>;
   const MockComponentWrapped = withReviewsList(MockComponent);
 
-  const loadReviewsHandler = jest.fn();
+  const handleLoadReviews = jest.fn();
   shallow(<MockComponentWrapped
     offer={getMockOfferTransformed(1, ``)}
-    loadReviews={loadReviewsHandler}
+    loadReviews={handleLoadReviews}
   />);
 
-  expect(loadReviewsHandler).toHaveBeenCalledTimes(1);
-  expect(loadReviewsHandler).toHaveBeenCalledWith(1);
+  expect(handleLoadReviews).toHaveBeenCalledTimes(1);
+  expect(handleLoadReviews).toHaveBeenCalledWith(1);
 });

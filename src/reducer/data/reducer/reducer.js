@@ -4,7 +4,7 @@ const initialState = {
   favorites: [],
 };
 
-const ActionTypes = {
+const ActionType = {
   SET_OFFERS: `SET_OFFERS`,
   SET_REVIEWS: `SET_REVIEWS`,
   SET_FAVORITES: `SET_FAVORITES`,
@@ -59,41 +59,41 @@ const updateOffer = (offers, newOffer) => {
 
 const ActionCreator = {
   setOffers: (offers) => ({
-    type: ActionTypes.SET_OFFERS,
+    type: ActionType.SET_OFFERS,
     payload: transformOffersList(offers),
   }),
 
   setReviews: (reviews) => ({
-    type: ActionTypes.SET_REVIEWS,
+    type: ActionType.SET_REVIEWS,
     payload: transformReviewsList(reviews),
   }),
 
   setFavorites: (favorites) => ({
-    type: ActionTypes.SET_FAVORITES,
+    type: ActionType.SET_FAVORITES,
     payload: transformOffersList(favorites),
   }),
 
   updateOffer: (offer) => ({
-    type: ActionTypes.UPDATE_OFFER,
+    type: ActionType.UPDATE_OFFER,
     payload: offer,
   }),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.SET_OFFERS:
+    case ActionType.SET_OFFERS:
       return Object.assign({}, state, {
         offers: action.payload
       });
-    case ActionTypes.SET_REVIEWS:
+    case ActionType.SET_REVIEWS:
       return Object.assign({}, state, {
         reviews: action.payload
       });
-    case ActionTypes.SET_FAVORITES:
+    case ActionType.SET_FAVORITES:
       return Object.assign({}, state, {
         favorites: action.payload
       });
-    case ActionTypes.UPDATE_OFFER:
+    case ActionType.UPDATE_OFFER:
       return Object.assign({}, state, {
         offers: updateOffer(state.offers, action.payload)
       });
@@ -107,7 +107,7 @@ export {
   transformOfferData,
   transformOffersList,
   transformReviewsList,
-  ActionTypes,
+  ActionType,
   ActionCreator,
   updateOffer,
   reducer,

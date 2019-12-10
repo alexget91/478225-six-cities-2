@@ -5,7 +5,7 @@ import ErrorMessage from "../error-message/error-message";
 import {Link} from "react-router-dom";
 import Path from "../../common/path";
 
-const cssClass = {
+const CSSclass = {
   [PageType.FAVORITES]: {
     wrapper: ``,
     main: ` page__main--favorites`,
@@ -35,10 +35,10 @@ const cssClass = {
 const Page = (props) => {
   const {type, header, content, error, onErrorClose} = props;
 
-  return <div className={`page${type ? cssClass[type].wrapper : ``}`}>
+  return <div className={`page${type ? CSSclass[type].wrapper : ``}`}>
     {header}
     {error ? <ErrorMessage error={error} onCloseClick={onErrorClose}/> : null}
-    <main className={`page__main${type ? cssClass[type].main : ``}`}>
+    <main className={`page__main${type ? CSSclass[type].main : ``}`}>
       {content}
     </main>
     {type === PageType.FAVORITES || type === PageType.FAVORITES_EMPTY ?

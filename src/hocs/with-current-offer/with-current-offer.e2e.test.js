@@ -13,6 +13,9 @@ describe(`HOC withCurrentOffer`, () => {
   const mockOffers = [
     getMockOfferTransformed(1, ``),
     getMockOfferTransformed(2, ``),
+    getMockOfferTransformed(3, ``),
+    getMockOfferTransformed(4, ``),
+    getMockOfferTransformed(5, ``),
   ];
 
   const wrapper = shallow(<MockComponentWrapped
@@ -29,5 +32,10 @@ describe(`HOC withCurrentOffer`, () => {
       match: {params: {id: `2`}}
     });
     expect(wrapper.state().offer).toEqual(mockOffers[1]);
+  });
+
+  it(`Correctly set component props`, () => {
+    expect(wrapper.props().offer).toEqual(mockOffers[1]);
+    expect(wrapper.props().neighbourhood).toEqual([mockOffers[0], mockOffers[2], mockOffers[3]]);
   });
 });

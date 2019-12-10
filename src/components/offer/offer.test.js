@@ -3,6 +3,7 @@ import React from "react";
 import Offer from "./offer";
 import {createMapBlock} from "../../common/test-stubs";
 import {MemoryRouter} from "react-router-dom";
+import {PlaceType} from "../../common/constants";
 
 it(`Offer page correctly renders after relaunch`, () => {
   createMapBlock();
@@ -25,7 +26,7 @@ it(`Offer page correctly renders after relaunch`, () => {
         isPremium: true,
         isFavorite: false,
         rating: 1,
-        type: `apartment`,
+        type: PlaceType.APARTMENT,
         bedrooms: 1,
         maxAdults: 1,
         priceByNight: 1,
@@ -36,6 +37,10 @@ it(`Offer page correctly renders after relaunch`, () => {
           avatarUrl: ``
         },
         description: ` `,
+        location: {
+          latitude: 0,
+          longitude: 0,
+        },
       }}
       reviews={[{
         id: 0,
@@ -50,7 +55,7 @@ it(`Offer page correctly renders after relaunch`, () => {
         id: 0,
         priceByNight: 0,
         title: ``,
-        type: `apartment`,
+        type: PlaceType.APARTMENT,
         location: {
           latitude: 0,
           longitude: 0,

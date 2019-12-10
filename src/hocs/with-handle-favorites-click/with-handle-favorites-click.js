@@ -2,33 +2,33 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {placeCard} from "../../common/global-prop-types";
 
-const withFavoritesClickHandler = (Component) => {
-  class WithFavoritesClickHandler extends PureComponent {
+const withHandleFavoritesClick = (Component) => {
+  class WithHandleFavoritesClick extends PureComponent {
     constructor(props) {
       super(props);
 
-      this._favoritesClickHandler = this._favoritesClickHandler.bind(this);
+      this._handleFavoritesClick = this._handleFavoritesClick.bind(this);
     }
 
     render() {
       return <Component
         {...this.props}
-        onFavoritesClick={this._favoritesClickHandler}
+        onFavoritesClick={this._handleFavoritesClick}
       />;
     }
 
-    _favoritesClickHandler() {
+    _handleFavoritesClick() {
       const {offer, onFavoritesClick} = this.props;
       onFavoritesClick(offer.id, offer.isFavorite);
     }
   }
 
-  WithFavoritesClickHandler.propTypes = {
+  WithHandleFavoritesClick.propTypes = {
     offer: PropTypes.exact(placeCard).isRequired,
     onFavoritesClick: PropTypes.func,
   };
 
-  return WithFavoritesClickHandler;
+  return WithHandleFavoritesClick;
 };
 
-export default withFavoritesClickHandler;
+export default withHandleFavoritesClick;

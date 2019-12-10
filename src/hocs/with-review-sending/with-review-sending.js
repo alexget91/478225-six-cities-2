@@ -1,8 +1,12 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {FormSendingStatus} from "../../common/constants";
-import Settings from "../../common/settings";
 import {sendingStatusType} from "../../common/global-prop-types";
+
+const CommentLength = {
+  MIN: 50,
+  MAX: 300,
+};
 
 const withReviewSending = (Component) => {
   class WithReviewSending extends PureComponent {
@@ -17,21 +21,9 @@ const withReviewSending = (Component) => {
 
       this.state = this.defaultState;
 
-      this._formChangeHandler = this._formChangeHandler.bind(this);
       this._checkSubmitPossibility = this._checkSubmitPossibility.bind(this);
-      this._submitHandler = this._submitHandler.bind(this);
-    }
-
-    render() {
-      return <Component
-        {...this.props}
-        rating={this.state.rating}
-        review={this.state.review}
-        isSubmitEnabled={this.state.isSubmitEnabled}
-        isSubmitting={this.props.sendingStatus === FormSendingStatus.SENDING}
-        onChange={this._formChangeHandler}
-        onSubmit={this._submitHandler}
-      />;
+      this._handleFormChange = this._handleFormChange.bind(this);
+      this._handleSubmit = this._handleSubmit.bind(this);
     }
 
     componentDidUpdate() {
@@ -42,7 +34,19 @@ const withReviewSending = (Component) => {
       }
     }
 
-    _formChangeHandler(evt) {
+    render() {
+      return <Component
+        {...this.props}
+        rating={this.state.rating}
+        review={this.state.review}
+        isSubmitEnabled={this.state.isSubmitEnabled}
+        isSubmitting={this.props.sendingStatus === FormSendingStatus.SENDING}
+        onChange={this._handleFormChange}
+        onSubmit={this._handleSubmit}
+      />;
+    }
+
+    _handleFormChange(evt) {
       this.setState({
         [evt.target.name]: evt.target.value
       }, this._checkSubmitPossibility);
@@ -53,12 +57,12 @@ const withReviewSending = (Component) => {
 
       this.setState({
         isSubmitEnabled: Boolean(rating)
-          && review.length >= Settings.COMMENT_LENGTH_MIN
-          && review.length < Settings.COMMENT_LENGTH_MAX
+          && review.length >= CommentLength.MIN
+          && review.length < CommentLength.MAX
       });
     }
 
-    _submitHandler(evt) {
+    _handleSubmit(evt) {
       evt.preventDefault();
 
       const {onSubmit, offerID} = this.props;

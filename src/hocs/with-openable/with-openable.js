@@ -8,8 +8,16 @@ const withOpenable = (Component) => class WithOpenable extends PureComponent {
       isVisible: false,
     };
 
-    this._visibilityChangeHandler = this._visibilityChangeHandler.bind(this);
-    this._documentClickHandler = this._documentClickHandler.bind(this);
+    this._handleVisibilityChange = this._handleVisibilityChange.bind(this);
+    this._handleDocumentClick = this._handleDocumentClick.bind(this);
+  }
+
+  componentDidUpdate() {
+    const {isVisible} = this.state;
+
+    if (isVisible) {
+      document.addEventListener(`click`, this._handleDocumentClick);
+    }
   }
 
   render() {
@@ -18,24 +26,16 @@ const withOpenable = (Component) => class WithOpenable extends PureComponent {
     return <Component
       {...this.props}
       isVisible={isVisible}
-      onVisibilityChange={this._visibilityChangeHandler}
+      onVisibilityChange={this._handleVisibilityChange}
     />;
   }
 
-  componentDidUpdate() {
-    const {isVisible} = this.state;
-
-    if (isVisible) {
-      document.addEventListener(`click`, this._documentClickHandler);
-    }
-  }
-
-  _documentClickHandler() {
+  _handleDocumentClick() {
     this.setState({isVisible: false});
-    document.removeEventListener(`click`, this._documentClickHandler);
+    document.removeEventListener(`click`, this._handleDocumentClick);
   }
 
-  _visibilityChangeHandler() {
+  _handleVisibilityChange() {
     this.setState({isVisible: !this.state.isVisible});
   }
 };

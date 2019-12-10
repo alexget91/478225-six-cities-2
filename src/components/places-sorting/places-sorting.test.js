@@ -1,5 +1,5 @@
 import {getSortedOffers} from "./places-sorting";
-import {sortingOptions} from "../../common/constants";
+import {SortingOption} from "../../common/constants";
 
 describe(`Offers are sorted correctly`, () => {
   const mockOffers = [
@@ -26,7 +26,7 @@ describe(`Offers are sorted correctly`, () => {
   ];
 
   it(`Popular`, () => {
-    expect(getSortedOffers(sortingOptions.popular, mockOffers)).toEqual([
+    expect(getSortedOffers(SortingOption.POPULAR, mockOffers)).toEqual([
       {
         id: 1,
         rating: 4.6,
@@ -51,7 +51,7 @@ describe(`Offers are sorted correctly`, () => {
   });
 
   it(`Price: low to high`, () => {
-    expect(getSortedOffers(sortingOptions.toHigh, mockOffers)).toEqual([
+    expect(getSortedOffers(SortingOption.TO_HIGH, mockOffers)).toEqual([
       {
         id: 2,
         priceByNight: 80,
@@ -76,7 +76,7 @@ describe(`Offers are sorted correctly`, () => {
   });
 
   it(`Price: high to low`, () => {
-    expect(getSortedOffers(sortingOptions.toLow, mockOffers)).toEqual([
+    expect(getSortedOffers(SortingOption.TO_LOW, mockOffers)).toEqual([
       {
         id: 4,
         priceByNight: 180,
@@ -101,7 +101,7 @@ describe(`Offers are sorted correctly`, () => {
   });
 
   it(`Top rated first`, () => {
-    expect(getSortedOffers(sortingOptions.topRated, mockOffers)).toEqual([
+    expect(getSortedOffers(SortingOption.TOP_RATED, mockOffers)).toEqual([
       {
         id: 4,
         priceByNight: 180,
