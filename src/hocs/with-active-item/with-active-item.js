@@ -1,19 +1,19 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
-const PropNames = {
+const PropName = {
   ACTIVE_ITEM: `activeItem`,
   ON_ACTIVE_ITEM_CHANGE: `onActiveItemChange`,
 };
 
 const transformPropNames = (newItem, newCallback, props) => {
   const newProps = Object.assign({}, props, {
-    [newItem]: props[PropNames.ACTIVE_ITEM],
-    [newCallback]: props[PropNames.ON_ACTIVE_ITEM_CHANGE],
+    [newItem]: props[PropName.ACTIVE_ITEM],
+    [newCallback]: props[PropName.ON_ACTIVE_ITEM_CHANGE],
   });
 
-  delete newProps[PropNames.ACTIVE_ITEM];
-  delete newProps[PropNames.ON_ACTIVE_ITEM_CHANGE];
+  delete newProps[PropName.ACTIVE_ITEM];
+  delete newProps[PropName.ON_ACTIVE_ITEM_CHANGE];
 
   return newProps;
 };
@@ -24,16 +24,16 @@ const withActiveItem = (Component, defaultActiveItem) => {
       super(props);
 
       this.state = {
-        [PropNames.ACTIVE_ITEM]: defaultActiveItem,
+        [PropName.ACTIVE_ITEM]: defaultActiveItem,
       };
 
-      this._activeItemChangeHandler = this._activeItemChangeHandler.bind(this);
+      this._handleActiveItemChange = this._handleActiveItemChange.bind(this);
     }
 
     render() {
       const newProps = {
-        [PropNames.ACTIVE_ITEM]: this.state[PropNames.ACTIVE_ITEM],
-        [PropNames.ON_ACTIVE_ITEM_CHANGE]: this._activeItemChangeHandler,
+        [PropName.ACTIVE_ITEM]: this.state[PropName.ACTIVE_ITEM],
+        [PropName.ON_ACTIVE_ITEM_CHANGE]: this._handleActiveItemChange,
       };
 
       return <Component
@@ -42,7 +42,7 @@ const withActiveItem = (Component, defaultActiveItem) => {
       />;
     }
 
-    _activeItemChangeHandler(activeItem) {
+    _handleActiveItemChange(activeItem) {
       this.setState({activeItem});
     }
   }
@@ -54,6 +54,6 @@ const withActiveItem = (Component, defaultActiveItem) => {
   return WithActiveItem;
 };
 
-export {PropNames, transformPropNames};
+export {PropName, transformPropNames};
 
 export default withActiveItem;

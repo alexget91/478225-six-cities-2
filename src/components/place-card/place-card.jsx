@@ -4,13 +4,13 @@ import {placesListType, placeCard} from "../../common/global-prop-types";
 import {getRatingPercent} from "../../common/utils";
 import {Link} from "react-router-dom";
 import Path from "../../common/path";
-import {PlacesListView} from "../../common/constants";
+import {PlacesListView, PlaceType} from "../../common/constants";
 
-const TYPE_NAMES = {
-  apartment: `Apartment`,
-  room: `Private room`,
-  house: `House`,
-  hotel: `Hotel`,
+const TypeName = {
+  [PlaceType.APARTMENT]: `Apartment`,
+  [PlaceType.ROOM]: `Private room`,
+  [PlaceType.HOUSE]: `House`,
+  [PlaceType.HOTEL]: `Hotel`,
 };
 
 const CardSettings = {
@@ -38,8 +38,8 @@ class PlaceCard extends PureComponent {
   constructor(props) {
     super(props);
 
-    this._mouseEnterHandler = this._mouseEnterHandler.bind(this);
-    this._mouseLeaveHandler = this._mouseLeaveHandler.bind(this);
+    this._handleMouseEnter = this._handleMouseEnter.bind(this);
+    this._handleMouseLeave = this._handleMouseLeave.bind(this);
   }
 
   render() {
@@ -48,7 +48,7 @@ class PlaceCard extends PureComponent {
     const detailURL = `${Path.OFFER}/${id}`;
 
     return <article key={id} data-id={id} className={`${CardSettings[cardType].cardClass} place-card`}
-      onMouseEnter={this._mouseEnterHandler} onMouseLeave={this._mouseLeaveHandler}
+      onMouseEnter={this._handleMouseEnter} onMouseLeave={this._handleMouseLeave}
     >
       {isPremium ? <div className="place-card__mark">
         <span>Premium</span>
@@ -84,12 +84,12 @@ class PlaceCard extends PureComponent {
         <h2 className="place-card__name">
           <Link className="js-detail-link" to={detailURL}>{title}</Link>
         </h2>
-        <p className="place-card__type">{TYPE_NAMES[type]}</p>
+        <p className="place-card__type">{TypeName[type]}</p>
       </div>
     </article>;
   }
 
-  _mouseEnterHandler() {
+  _handleMouseEnter() {
     const {offer, onMouseHover} = this.props;
 
     if (onMouseHover) {
@@ -98,7 +98,7 @@ class PlaceCard extends PureComponent {
     }
   }
 
-  _mouseLeaveHandler() {
+  _handleMouseLeave() {
     const {onMouseHover} = this.props;
 
     if (onMouseHover) {

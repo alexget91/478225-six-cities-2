@@ -4,7 +4,7 @@ const initialState = {
   isAuthorizationRequired: true,
 };
 
-const ActionTypes = {
+const ActionType = {
   SET_CITY: `SET_CITY`,
   SET_USER: `SET_USER`,
   SET_AUTHORIZATION_REQUIRED: `SET_AUTHORIZATION_REQUIRED`,
@@ -24,32 +24,32 @@ const transformUserData = (data) => {
 
 const ActionCreator = {
   setCity: (city) => ({
-    type: ActionTypes.SET_CITY,
+    type: ActionType.SET_CITY,
     payload: city
   }),
 
   setUser: (data) => ({
-    type: ActionTypes.SET_USER,
+    type: ActionType.SET_USER,
     payload: transformUserData(data)
   }),
 
   setAuthorizationRequired: (flag) => ({
-    type: ActionTypes.SET_AUTHORIZATION_REQUIRED,
+    type: ActionType.SET_AUTHORIZATION_REQUIRED,
     payload: flag
   }),
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionTypes.SET_CITY:
+    case ActionType.SET_CITY:
       return Object.assign({}, state, {
         city: action.payload
       });
-    case ActionTypes.SET_USER:
+    case ActionType.SET_USER:
       return Object.assign({}, state, {
         user: action.payload
       });
-    case ActionTypes.SET_AUTHORIZATION_REQUIRED:
+    case ActionType.SET_AUTHORIZATION_REQUIRED:
       return Object.assign({}, state, {
         isAuthorizationRequired: action.payload
       });
@@ -58,4 +58,4 @@ const reducer = (state = initialState, action) => {
   return state;
 };
 
-export {reducer, ActionCreator, ActionTypes, transformUserData};
+export {reducer, ActionCreator, ActionType, transformUserData};

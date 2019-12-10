@@ -6,11 +6,11 @@ import CitiesList from "./cities-list";
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Clicking on a city pass city name to callback`, () => {
-  const clickHandler = jest.fn();
+  const handleClick = jest.fn();
   const citiesList = shallow(<CitiesList
     cities={[`1`, `2`]}
     activeCity={`1`}
-    onCityClick={clickHandler}
+    onCityClick={handleClick}
   />);
 
   const cityElement = citiesList.find(`.js-city-item`).first();
@@ -20,6 +20,6 @@ it(`Clicking on a city pass city name to callback`, () => {
     preventDefault: () => {},
     currentTarget: {textContent: `1`}
   });
-  expect(clickHandler).toHaveBeenCalledTimes(1);
-  expect(clickHandler).toHaveBeenCalledWith(`1`);
+  expect(handleClick).toHaveBeenCalledTimes(1);
+  expect(handleClick).toHaveBeenCalledWith(`1`);
 });

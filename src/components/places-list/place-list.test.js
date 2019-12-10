@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import PlacesList from "./places-list";
 import {MemoryRouter} from "react-router-dom";
-import {PlacesListView} from "../../common/constants";
+import {PlacesListView, PlaceType} from "../../common/constants";
 
 it(`Place list correctly renders after relaunch`, () => {
   const tree = renderer
@@ -11,7 +11,7 @@ it(`Place list correctly renders after relaunch`, () => {
         id: 0,
         priceByNight: 0,
         title: ``,
-        type: `apartment`,
+        type: PlaceType.APARTMENT,
       }]}
       listType={PlacesListView.LIST}
     /></MemoryRouter>)

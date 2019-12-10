@@ -6,7 +6,7 @@ import Path from "../../common/path";
 import history from "../../history";
 import {getAuthorizationRequired} from "../user/selectors/selectors";
 
-const FAVORITE_STATUS = {
+const FavoriteStatus = {
   TRUE: 1,
   FALSE: 0,
 };
@@ -64,7 +64,7 @@ const Operation = {
   },
 
   toggleFavorite: (offerID, isFavorite) => (dispatch, getState, api) => {
-    return api.post(`/favorite/${offerID}/${isFavorite ? FAVORITE_STATUS.FALSE : FAVORITE_STATUS.TRUE}`)
+    return api.post(`/favorite/${offerID}/${isFavorite ? FavoriteStatus.FALSE : FavoriteStatus.TRUE}`)
       .then((response) => {
         withAuthCheck(getState(), () => {
           if (response.data) {
@@ -103,6 +103,6 @@ const Operation = {
   },
 };
 
-export {withAuthCheck};
+export {FavoriteStatus, withAuthCheck};
 
 export default Operation;

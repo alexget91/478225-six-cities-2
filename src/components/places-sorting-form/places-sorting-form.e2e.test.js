@@ -6,9 +6,9 @@ import PlacesSortingForm from "./places-sorting-form";
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Clicking on a sorting option pass sorting id to callback`, () => {
-  const clickHandler = jest.fn();
+  const handleClick = jest.fn();
   const placesSorting = shallow(<PlacesSortingForm
-    onSortChange={clickHandler}
+    onSortChange={handleClick}
     onVisibilityChange={jest.fn()}
   />);
 
@@ -20,6 +20,6 @@ it(`Clicking on a sorting option pass sorting id to callback`, () => {
       dataset: {sort: `1`}
     }
   });
-  expect(clickHandler).toHaveBeenCalledTimes(1);
-  expect(clickHandler).toHaveBeenCalledWith(`1`);
+  expect(handleClick).toHaveBeenCalledTimes(1);
+  expect(handleClick).toHaveBeenCalledWith(`1`);
 });

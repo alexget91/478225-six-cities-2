@@ -3,12 +3,12 @@ import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import PlaceCard from "./place-card";
 import Path from "../../common/path";
-import {PlacesListView} from "../../common/constants";
+import {PlacesListView, PlaceType} from "../../common/constants";
 
 Enzyme.configure({adapter: new Adapter()});
 
-const mouseHoverHandler = jest.fn();
-const favoritesClickHandler = jest.fn();
+const handleMouseHover = jest.fn();
+const handleFavoritesClick = jest.fn();
 const id = 0;
 
 const placeCard = shallow(<PlaceCard
@@ -20,11 +20,11 @@ const placeCard = shallow(<PlaceCard
     priceByNight: 0,
     rating: 0,
     title: ``,
-    type: `apartment`,
+    type: PlaceType.APARTMENT,
   }}
   cardType={PlacesListView.LIST}
-  onMouseHover={mouseHoverHandler}
-  onFavoritesClick={favoritesClickHandler}
+  onMouseHover={handleMouseHover}
+  onFavoritesClick={handleFavoritesClick}
 />);
 
 it(`Links to the offer page has correct URL`, () => {
@@ -38,8 +38,8 @@ it(`Links to the offer page has correct URL`, () => {
 describe(`Mouse hover handler gets the correct information`, () => {
   it(`On mouseenter`, () => {
     placeCard.simulate(`mouseenter`);
-    expect(mouseHoverHandler).toHaveBeenCalledTimes(1);
-    expect(mouseHoverHandler).toHaveBeenCalledWith({
+    expect(handleMouseHover).toHaveBeenCalledTimes(1);
+    expect(handleMouseHover).toHaveBeenCalledWith({
       id,
       isPremium: false,
       isFavorite: false,
@@ -47,14 +47,14 @@ describe(`Mouse hover handler gets the correct information`, () => {
       priceByNight: 0,
       rating: 0,
       title: ``,
-      type: `apartment`,
+      type: PlaceType.APARTMENT,
     });
   });
 
   it(`On mouseleave`, () => {
     placeCard.simulate(`mouseleave`);
-    expect(mouseHoverHandler).toHaveBeenCalledTimes(2);
-    expect(mouseHoverHandler).toHaveBeenCalledWith();
+    expect(handleMouseHover).toHaveBeenCalledTimes(2);
+    expect(handleMouseHover).toHaveBeenCalledWith();
   });
 });
 
@@ -63,5 +63,5 @@ it(`Click on favorites button calls callback`, () => {
   expect(favoritesLinks.length).toBe(1);
 
   favoritesLinks.simulate(`click`);
-  expect(favoritesClickHandler).toHaveBeenCalledTimes(1);
+  expect(handleFavoritesClick).toHaveBeenCalledTimes(1);
 });

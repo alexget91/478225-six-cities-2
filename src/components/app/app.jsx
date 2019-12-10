@@ -30,7 +30,7 @@ import {
 } from "../../reducer/data/selectors/selectors";
 import {getAuthorizationRequired, getCity, getUser} from "../../reducer/user/selectors/selectors";
 import withCurrentOffer from "../../hocs/with-current-offer/with-current-offer";
-import withFavoritesClickHandler from "../../hocs/with-favorites-click-handler/with-favorites-click-handler";
+import withHandleFavoritesClick from "../../hocs/with-handle-favorites-click/with-handle-favorites-click";
 import {compose} from "recompose";
 import withReviewsList from "../../hocs/with-reviews-list/with-reviews-list";
 import Favorites from "../favorites/favorites";
@@ -39,8 +39,8 @@ import PrivateRoute from "../../hocs/private-route/private-route";
 const OfferWrapped = compose(
     withCurrentOffer,
     withReviewsList,
-    withFavoritesClickHandler,
-    withActiveItem,
+    withHandleFavoritesClick,
+    withActiveItem
 )(Offer);
 
 const App = (props) => {

@@ -1,9 +1,9 @@
 import MockAdapter from "axios-mock-adapter";
 import configureAPI from "../../api";
-import Operation, {withAuthCheck} from "./operation";
-import {ActionTypes as AppActionTypes} from "../app/reducer/reducer";
-import {ActionTypes as DataActionTypes} from "../data/reducer/reducer";
-import {ActionTypes as UserActionTypes} from "../user/reducer/reducer";
+import Operation, {FavoriteStatus, withAuthCheck} from "./operation";
+import {ActionType as AppActionType} from "../app/reducer/reducer";
+import {ActionType as DataActionType} from "../data/reducer/reducer";
+import {ActionType as UserActionType} from "../user/reducer/reducer";
 import {getMockOfferFields, getMockOfferFieldsTransformed} from "../../common/test-stubs";
 import {FormSendingStatus} from "../../common/constants";
 import NameSpace from "../name-space";
@@ -97,15 +97,15 @@ describe(`Should make a correct API call to get hotels`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(3);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: UserActionTypes.SET_CITY,
+          type: UserActionType.SET_CITY,
           payload: `Amsterdam`,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: DataActionTypes.SET_OFFERS,
+          type: DataActionType.SET_OFFERS,
           payload: mockOffersTransformed,
         });
         expect(dispatch).toHaveBeenNthCalledWith(3, {
-          type: AppActionTypes.SET_OFFERS_LOADED,
+          type: AppActionType.SET_OFFERS_LOADED,
           payload: true,
         });
       });
@@ -136,7 +136,7 @@ it(`Should make a correct API call to get reviews`, () => {
     .then(() => {
       expect(dispatch).toHaveBeenCalledTimes(1);
       expect(dispatch).toHaveBeenCalledWith({
-        type: DataActionTypes.SET_REVIEWS,
+        type: DataActionType.SET_REVIEWS,
         payload: mockReviewsTransformed,
       });
     });
@@ -155,11 +155,11 @@ describe(`Should make a correct API call to get favorites`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: DataActionTypes.SET_FAVORITES,
+          type: DataActionType.SET_FAVORITES,
           payload: mockFavoritesTransformed,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: AppActionTypes.SET_FAVORITES_LOADED,
+          type: AppActionType.SET_FAVORITES_LOADED,
           payload: true,
         });
       });
@@ -191,11 +191,11 @@ describe(`Should make a correct API call to send review`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: DataActionTypes.SET_REVIEWS,
+          type: DataActionType.SET_REVIEWS,
           payload: mockReviewsTransformed,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: AppActionTypes.SET_REVIEW_SENDING,
+          type: AppActionType.SET_REVIEW_SENDING,
           payload: FormSendingStatus.SUCCESS,
         });
       });
@@ -214,7 +214,7 @@ describe(`Should make a correct API call to send review`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(1);
         expect(dispatch).toHaveBeenCalledWith({
-          type: AppActionTypes.SET_REVIEW_SENDING,
+          type: AppActionType.SET_REVIEW_SENDING,
           payload: FormSendingStatus.READY,
         });
       });
@@ -223,32 +223,32 @@ describe(`Should make a correct API call to send review`, () => {
 
 describe(`Should make a correct API call to toggle favorite status`, () => {
   const dispatch = jest.fn();
-  const loadFavoritesHandler = jest.fn();
+  const handleLoadFavorites = jest.fn();
   const offerID = 1;
   const setFavorite = Operation.toggleFavorite(offerID, false);
   const removeFavorite = Operation.toggleFavorite(offerID, true);
 
   describe(`On favorite set`, () => {
     it(`Success`, () => {
-      Operation.loadFavorites = () => loadFavoritesHandler;
+      Operation.loadFavorites = () => handleLoadFavorites;
 
       apiMock
-        .onPost(`/favorite/${offerID}/1`).reply(200, {id: offerID, isFavorite: true});
+        .onPost(`/favorite/${offerID}/${FavoriteStatus.TRUE}`).reply(200, {id: offerID, isFavorite: true});
 
       return setFavorite(dispatch, getMockState, api)
         .then(() => {
           expect(dispatch).toHaveBeenCalledTimes(2);
           expect(dispatch).toHaveBeenNthCalledWith(1, {
-            type: DataActionTypes.UPDATE_OFFER,
+            type: DataActionType.UPDATE_OFFER,
             payload: {id: offerID, isFavorite: true},
           });
-          expect(dispatch).toHaveBeenNthCalledWith(2, loadFavoritesHandler);
+          expect(dispatch).toHaveBeenNthCalledWith(2, handleLoadFavorites);
         });
     });
 
     it(`Error`, () => {
       apiMock
-        .onPost(`/favorite/${offerID}/1`).reply(200, undefined);
+        .onPost(`/favorite/${offerID}/${FavoriteStatus.TRUE}`).reply(200, undefined);
 
       return setFavorite(dispatch, getMockState, api)
         .then(() => {
@@ -259,25 +259,25 @@ describe(`Should make a correct API call to toggle favorite status`, () => {
 
   describe(`On favorite remove`, () => {
     it(`Success`, () => {
-      Operation.loadFavorites = () => loadFavoritesHandler;
+      Operation.loadFavorites = () => handleLoadFavorites;
 
       apiMock
-        .onPost(`/favorite/${offerID}/0`).reply(200, {id: offerID, isFavorite: false});
+        .onPost(`/favorite/${offerID}/${FavoriteStatus.FALSE}`).reply(200, {id: offerID, isFavorite: false});
 
       return removeFavorite(dispatch, getMockState, api)
         .then(() => {
           expect(dispatch).toHaveBeenCalledTimes(4);
           expect(dispatch).toHaveBeenNthCalledWith(3, {
-            type: DataActionTypes.UPDATE_OFFER,
+            type: DataActionType.UPDATE_OFFER,
             payload: {id: offerID, isFavorite: false},
           });
-          expect(dispatch).toHaveBeenNthCalledWith(4, loadFavoritesHandler);
+          expect(dispatch).toHaveBeenNthCalledWith(4, handleLoadFavorites);
         });
     });
 
     it(`Error`, () => {
       apiMock
-        .onPost(`/favorite/${offerID}/0`).reply(200, undefined);
+        .onPost(`/favorite/${offerID}/${FavoriteStatus.FALSE}`).reply(200, undefined);
 
       return removeFavorite(dispatch, getMockState, api)
         .then(() => {
@@ -289,13 +289,13 @@ describe(`Should make a correct API call to toggle favorite status`, () => {
 
 describe(`Should make a correct API call to sign in`, () => {
   const dispatch = jest.fn();
-  const loadOffersHandler = jest.fn();
-  const loadFavoritesHandler = jest.fn();
+  const handleLoadOffers = jest.fn();
+  const handleLoadFavorites = jest.fn();
   const loader = Operation.signIn();
 
   it(`When authorization success`, () => {
-    Operation.loadOffers = () => loadOffersHandler;
-    Operation.loadFavorites = () => loadFavoritesHandler;
+    Operation.loadOffers = () => handleLoadOffers;
+    Operation.loadFavorites = () => handleLoadFavorites;
 
     apiMock
       .onPost(`/login`)
@@ -305,15 +305,15 @@ describe(`Should make a correct API call to sign in`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(4);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: UserActionTypes.SET_USER,
+          type: UserActionType.SET_USER,
           payload: mockUserTransformed,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
-          type: UserActionTypes.SET_AUTHORIZATION_REQUIRED,
+          type: UserActionType.SET_AUTHORIZATION_REQUIRED,
           payload: false,
         });
-        expect(dispatch).toHaveBeenNthCalledWith(3, loadOffersHandler);
-        expect(dispatch).toHaveBeenNthCalledWith(4, loadFavoritesHandler);
+        expect(dispatch).toHaveBeenNthCalledWith(3, handleLoadOffers);
+        expect(dispatch).toHaveBeenNthCalledWith(4, handleLoadFavorites);
       });
   });
 
@@ -331,13 +331,13 @@ describe(`Should make a correct API call to sign in`, () => {
 
 describe(`Should make a correct API call to check authorization`, () => {
   const dispatch = jest.fn();
-  const loadOffersHandler = jest.fn();
-  const loadFavoritesHandler = jest.fn();
+  const handleLoadOffers = jest.fn();
+  const handleLoadFavorites = jest.fn();
   const loader = Operation.getUser();
 
   it(`When user is authorized`, () => {
-    Operation.loadOffers = () => loadOffersHandler;
-    Operation.loadFavorites = () => loadFavoritesHandler;
+    Operation.loadOffers = () => handleLoadOffers;
+    Operation.loadFavorites = () => handleLoadFavorites;
 
     apiMock
       .onGet(`/login`)
@@ -347,20 +347,20 @@ describe(`Should make a correct API call to check authorization`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(4);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: UserActionTypes.SET_USER,
+          type: UserActionType.SET_USER,
           payload: mockUserTransformed,
         });
-        expect(dispatch).toHaveBeenNthCalledWith(2, loadFavoritesHandler);
+        expect(dispatch).toHaveBeenNthCalledWith(2, handleLoadFavorites);
         expect(dispatch).toHaveBeenNthCalledWith(3, {
-          type: UserActionTypes.SET_AUTHORIZATION_REQUIRED,
+          type: UserActionType.SET_AUTHORIZATION_REQUIRED,
           payload: false,
         });
-        expect(dispatch).toHaveBeenNthCalledWith(4, loadOffersHandler);
+        expect(dispatch).toHaveBeenNthCalledWith(4, handleLoadOffers);
       });
   });
 
   it(`When user is not authorized`, () => {
-    Operation.loadOffers = () => loadOffersHandler;
+    Operation.loadOffers = () => handleLoadOffers;
 
     apiMock
       .onGet(`/login`)
@@ -369,25 +369,25 @@ describe(`Should make a correct API call to check authorization`, () => {
     return loader(dispatch, null, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(5);
-        expect(dispatch).toHaveBeenCalledWith(loadOffersHandler);
+        expect(dispatch).toHaveBeenCalledWith(handleLoadOffers);
       });
   });
 });
 
 describe(`withAuthCheck`, () => {
-  const isAuthorizedHandler = jest.fn();
+  const handleIsAuthorized = jest.fn();
 
   it(`Redirects to login page if authorization required`, () => {
     history.push = jest.fn();
-    withAuthCheck(getMockState(true), isAuthorizedHandler);
+    withAuthCheck(getMockState(true), handleIsAuthorized);
 
-    expect(isAuthorizedHandler).toHaveBeenCalledTimes(0);
+    expect(handleIsAuthorized).toHaveBeenCalledTimes(0);
     expect(history.push).toHaveBeenCalledTimes(1);
     expect(history.push.mock.calls[0]).toEqual([Path.LOGIN]);
   });
 
   it(`Cals callback if user is authorized`, () => {
-    withAuthCheck(getMockState(), isAuthorizedHandler);
-    expect(isAuthorizedHandler).toHaveBeenCalledTimes(1);
+    withAuthCheck(getMockState(), handleIsAuthorized);
+    expect(handleIsAuthorized).toHaveBeenCalledTimes(1);
   });
 });

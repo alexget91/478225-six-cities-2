@@ -1,30 +1,30 @@
-import {ActionCreator, ActionTypes, reducer} from "./reducer";
+import {ActionCreator, ActionType, reducer} from "./reducer";
 
 describe(`App action creators works correctly`, () => {
   it(`App action creator for set "offers is loaded" returns correct action`, () => {
     expect(ActionCreator.setOffersLoaded(true)).toEqual({
-      type: ActionTypes.SET_OFFERS_LOADED,
+      type: ActionType.SET_OFFERS_LOADED,
       payload: true,
     });
   });
 
   it(`App action creator for set "favorites is loaded" returns correct action`, () => {
     expect(ActionCreator.setFavoritesLoaded(true)).toEqual({
-      type: ActionTypes.SET_FAVORITES_LOADED,
+      type: ActionType.SET_FAVORITES_LOADED,
       payload: true,
     });
   });
 
   it(`App action creator for set review sending status returns correct action`, () => {
     expect(ActionCreator.setReviewSending(`status`)).toEqual({
-      type: ActionTypes.SET_REVIEW_SENDING,
+      type: ActionType.SET_REVIEW_SENDING,
       payload: `status`,
     });
   });
 
   it(`App action creator for set error message returns correct action`, () => {
     expect(ActionCreator.setError(`error`)).toEqual({
-      type: ActionTypes.SET_ERROR,
+      type: ActionType.SET_ERROR,
       payload: `error`,
     });
   });
@@ -44,7 +44,7 @@ describe(`App reducer works correctly`, () => {
 
   it(`App reducer should set "offers is loaded" correctly`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_OFFERS_LOADED,
+      type: ActionType.SET_OFFERS_LOADED,
       payload: true,
     })).toEqual(Object.assign({}, mockInitialState, {
       isOffersLoaded: true,
@@ -53,7 +53,7 @@ describe(`App reducer works correctly`, () => {
 
   it(`App reducer should set "favorites is loaded" correctly`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_FAVORITES_LOADED,
+      type: ActionType.SET_FAVORITES_LOADED,
       payload: true,
     })).toEqual(Object.assign({}, mockInitialState, {
       isFavoritesLoaded: true,
@@ -62,7 +62,7 @@ describe(`App reducer works correctly`, () => {
 
   it(`App reducer should set review sending status correctly`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_REVIEW_SENDING,
+      type: ActionType.SET_REVIEW_SENDING,
       payload: `newStatus`,
     })).toEqual(Object.assign({}, mockInitialState, {
       reviewSendingStatus: `newStatus`,
@@ -71,7 +71,7 @@ describe(`App reducer works correctly`, () => {
 
   it(`App reducer should set error message correctly`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_ERROR,
+      type: ActionType.SET_ERROR,
       payload: `error`,
     })).toEqual(Object.assign({}, mockInitialState, {
       errorMessage: `error`,

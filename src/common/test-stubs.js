@@ -1,3 +1,5 @@
+import {PlaceType} from "./constants";
+
 const createMapBlock = () => {
   const div = global.document.createElement(`div`);
   div.setAttribute(`id`, `map`);
@@ -16,7 +18,7 @@ const getMockOfferTransformed = (id, cityName, isFavorite) => ({
   isFavorite: isFavorite || false,
   priceByNight: 0,
   title: `Title${id}`,
-  type: `apartment`,
+  type: PlaceType.APARTMENT,
   location: {
     latitude: 0,
     longitude: 0,
@@ -38,7 +40,7 @@ const getMockOfferFields = (id, cityName) => ({
   "max_adults": `max_adults`,
   "price": `price`,
   "title": `Title${id}`,
-  "type": `apartment`,
+  "type": PlaceType.APARTMENT,
   "host": {
     "is_pro": `is_pro`,
     "avatar_url": `avatar_url`,
@@ -61,7 +63,7 @@ const getMockOfferFieldsTransformed = (id, cityName) => ({
   },
   priceByNight: `price`,
   title: `Title${id}`,
-  type: `apartment`,
+  type: PlaceType.APARTMENT,
   previewImage: `preview_image`,
   isFavorite: `is_favorite`,
   isPremium: `is_premium`,

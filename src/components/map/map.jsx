@@ -27,11 +27,6 @@ class Map extends React.PureComponent {
     this.layerGroup = null;
   }
 
-  render() {
-    const {mapType} = this.props;
-    return <section id="map" className={`${MapClass[mapType]} map`}></section>;
-  }
-
   componentDidMount() {
     this._setCityParams();
     this._initMap();
@@ -41,6 +36,11 @@ class Map extends React.PureComponent {
   componentDidUpdate() {
     this._setCityParams();
     this._showMapForCity();
+  }
+
+  render() {
+    const {mapType} = this.props;
+    return <section id="map" className={`${MapClass[mapType]} map`}></section>;
   }
 
   _setCityParams() {

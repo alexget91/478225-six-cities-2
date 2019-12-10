@@ -25,13 +25,13 @@ describe(`HOC withReviewSending`, () => {
 
   const MockComponentWrapped = withReviewSending(MockComponent);
 
-  const submitHandler = jest.fn();
-  const submitSuccessHandler = jest.fn();
+  const handleSubmit = jest.fn();
+  const handleSubmitSuccess = jest.fn();
   const wrapper = mount(<MockComponentWrapped
     offerID={1}
     sendingStatus={FormSendingStatus.READY}
-    onSubmit={submitHandler}
-    onSubmitSuccess={submitSuccessHandler}
+    onSubmit={handleSubmit}
+    onSubmitSuccess={handleSubmitSuccess}
   />);
 
   const form = wrapper.find(`.js-form`);
@@ -79,12 +79,12 @@ describe(`HOC withReviewSending`, () => {
 
   it(`Calls submit callback with correct data`, () => {
     form.simulate(`submit`);
-    expect(submitHandler).toHaveBeenCalledTimes(1);
-    expect(submitHandler).toHaveBeenCalledWith(1, `2`, `11111111111111111111111111111111111111111111111111`);
+    expect(handleSubmit).toHaveBeenCalledTimes(1);
+    expect(handleSubmit).toHaveBeenCalledWith(1, `2`, `11111111111111111111111111111111111111111111111111`);
   });
 
   it(`Calls callback when submit success`, () => {
     wrapper.setProps({sendingStatus: FormSendingStatus.SUCCESS});
-    expect(submitSuccessHandler).toHaveBeenCalled();
+    expect(handleSubmitSuccess).toHaveBeenCalled();
   });
 });

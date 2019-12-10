@@ -17,9 +17,9 @@ describe(`HOC withOpenable`, () => {
 
   it(`Correctly change visibility`, () => {
     expect(wrapper.state().isVisible).toEqual(false);
-    wrapper.instance()._visibilityChangeHandler();
+    wrapper.instance()._handleVisibilityChange();
     expect(wrapper.state().isVisible).toEqual(true);
-    wrapper.instance()._visibilityChangeHandler();
+    wrapper.instance()._handleVisibilityChange();
     expect(wrapper.state().isVisible).toEqual(false);
   });
 

@@ -5,14 +5,14 @@ class SignIn extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.formSubmitHandler = this.formSubmitHandler.bind(this);
+    this._handleFormSubmit = this._handleFormSubmit.bind(this);
   }
 
   render() {
     return <div className="page__login-container container">
       <section className="login">
         <h1 className="login__title">Sign in</h1>
-        <form className="login__form form js-login-form" action="#" method="post" onSubmit={this.formSubmitHandler}>
+        <form className="login__form form js-login-form" action="#" method="post" onSubmit={this._handleFormSubmit}>
           <div className="login__input-wrapper form__input-wrapper">
             <label className="visually-hidden">E-mail</label>
             <input className="login__input form__input js-email-input" type="email" name="email" placeholder="Email" required/>
@@ -34,7 +34,7 @@ class SignIn extends PureComponent {
     </div>;
   }
 
-  formSubmitHandler(evt) {
+  _handleFormSubmit(evt) {
     evt.preventDefault();
 
     const formData = new FormData(evt.target);

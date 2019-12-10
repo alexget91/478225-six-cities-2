@@ -7,7 +7,9 @@ import {compose} from "recompose";
 import MainContent from "../main-content/main-content";
 import withActiveItem, {transformPropNames} from "../../hocs/with-active-item/with-active-item";
 import withTransformProps from "../../hocs/with-transform-props/with-transform-props";
-import Settings from "../../common/settings";
+import {SortingOption} from "../../common/constants";
+
+const DEFAULT_SORT = SortingOption.POPULAR;
 
 const getComponentWithOffer = (Component) => withActiveItem(withTransformProps(
     (props) => transformPropNames(`activeOffer`, `onActiveOfferChange`, props)
@@ -15,7 +17,7 @@ const getComponentWithOffer = (Component) => withActiveItem(withTransformProps(
 
 const getComponentWithSort = (Component) => withActiveItem(withTransformProps(
     (props) => transformPropNames(`sort`, `onSortChange`, props)
-)(Component), Settings.DEFAULT_SORT);
+)(Component), DEFAULT_SORT);
 
 const MainContentWrapped = compose(getComponentWithOffer, getComponentWithSort)(MainContent);
 

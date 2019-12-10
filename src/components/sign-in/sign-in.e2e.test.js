@@ -6,8 +6,8 @@ import SignIn from "./sign-in";
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Sign-in form submitting calls callback with correct data`, () => {
-  const formSubmitHandler = jest.fn();
-  const signIn = mount(<SignIn onFormSubmit={formSubmitHandler}/>);
+  const handleFormSubmit = jest.fn();
+  const signIn = mount(<SignIn onFormSubmit={handleFormSubmit}/>);
 
   const loginForm = signIn.find(`.js-login-form`);
   expect(loginForm.length).toBe(1);
@@ -26,6 +26,6 @@ it(`Sign-in form submitting calls callback with correct data`, () => {
     target: loginForm.instance(),
   });
 
-  expect(formSubmitHandler).toHaveBeenCalledTimes(1);
-  expect(formSubmitHandler).toHaveBeenCalledWith(`mockEmail`, `mockPassword`);
+  expect(handleFormSubmit).toHaveBeenCalledTimes(1);
+  expect(handleFormSubmit).toHaveBeenCalledWith(`mockEmail`, `mockPassword`);
 });

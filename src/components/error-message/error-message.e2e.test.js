@@ -6,15 +6,15 @@ import ErrorMessage from "./error-message";
 Enzyme.configure({adapter: new Adapter()});
 
 it(`Click on close button calls callback`, () => {
-  const clickHandler = jest.fn();
+  const handleClick = jest.fn();
   const errorMessage = shallow(<ErrorMessage
     error={``}
-    onCloseClick={clickHandler}
+    onCloseClick={handleClick}
   />);
 
   const closeButton = errorMessage.find(`.js-close`);
   expect(closeButton.length).toBe(1);
 
   closeButton.simulate(`click`);
-  expect(clickHandler).toHaveBeenCalledTimes(1);
+  expect(handleClick).toHaveBeenCalledTimes(1);
 });

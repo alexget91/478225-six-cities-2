@@ -3,7 +3,7 @@ import {
   transformOfferData,
   transformOffersList,
   transformReviewsList,
-  ActionTypes,
+  ActionType,
   ActionCreator,
   updateOffer,
   reducer,
@@ -298,28 +298,28 @@ describe(`Data transformation works correctly`, () => {
 describe(`Data action creators works correctly`, () => {
   it(`Data action creator for set offers returns correct action`, () => {
     expect(ActionCreator.setOffers(mockOffers)).toEqual({
-      type: ActionTypes.SET_OFFERS,
+      type: ActionType.SET_OFFERS,
       payload: mockOffersTransformed,
     });
   });
 
   it(`Data action creator for set reviews returns correct action`, () => {
     expect(ActionCreator.setReviews(mockReviews)).toEqual({
-      type: ActionTypes.SET_REVIEWS,
+      type: ActionType.SET_REVIEWS,
       payload: mockReviewsTransformed,
     });
   });
 
   it(`Data action creator for set favorites returns correct action`, () => {
     expect(ActionCreator.setFavorites(mockOffers)).toEqual({
-      type: ActionTypes.SET_FAVORITES,
+      type: ActionType.SET_FAVORITES,
       payload: mockOffersTransformed,
     });
   });
 
   it(`Data action creator for update offer returns correct action`, () => {
     expect(ActionCreator.updateOffer({foo: `bar`})).toEqual({
-      type: ActionTypes.UPDATE_OFFER,
+      type: ActionType.UPDATE_OFFER,
       payload: {foo: `bar`},
     });
   });
@@ -347,7 +347,7 @@ describe(`Data reducer works correctly`, () => {
 
   it(`Data reducer should set given value as offers`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_OFFERS,
+      type: ActionType.SET_OFFERS,
       payload: mockOffersTransformed
     })).toEqual(Object.assign({}, mockInitialState, {
       offers: mockOffersTransformed,
@@ -356,7 +356,7 @@ describe(`Data reducer works correctly`, () => {
 
   it(`Data reducer should set given value as reviews`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_REVIEWS,
+      type: ActionType.SET_REVIEWS,
       payload: mockReviewsTransformed
     })).toEqual(Object.assign({}, mockInitialState, {
       reviews: mockReviewsTransformed,
@@ -365,7 +365,7 @@ describe(`Data reducer works correctly`, () => {
 
   it(`Data reducer should set given value as favorites`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_FAVORITES,
+      type: ActionType.SET_FAVORITES,
       payload: mockOffersTransformed
     })).toEqual(Object.assign({}, mockInitialState, {
       favorites: mockOffersTransformed,
@@ -374,7 +374,7 @@ describe(`Data reducer works correctly`, () => {
 
   it(`Data reducer should update offer correctly`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.UPDATE_OFFER,
+      type: ActionType.UPDATE_OFFER,
       payload: Object.assign({}, mockOffer, {
         "id": 2,
         "is_favorite": true,

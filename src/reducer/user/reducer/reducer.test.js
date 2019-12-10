@@ -1,4 +1,4 @@
-import {ActionTypes, ActionCreator, reducer, transformUserData} from "./reducer";
+import {ActionType, ActionCreator, reducer, transformUserData} from "./reducer";
 
 it(`User data transformation works correctly`, () => {
   expect(transformUserData({
@@ -19,21 +19,21 @@ it(`User data transformation works correctly`, () => {
 describe(`User action creators works correctly`, () => {
   it(`User action creator for set the city returns correct action`, () => {
     expect(ActionCreator.setCity(`Paris`)).toEqual({
-      type: ActionTypes.SET_CITY,
+      type: ActionType.SET_CITY,
       payload: `Paris`
     });
   });
 
   it(`User action creator for set user returns correct action`, () => {
     expect(ActionCreator.setUser({foo: `bar`})).toEqual({
-      type: ActionTypes.SET_USER,
+      type: ActionType.SET_USER,
       payload: {foo: `bar`}
     });
   });
 
   it(`User action creator for set "authorization required" returns correct action`, () => {
     expect(ActionCreator.setAuthorizationRequired(true)).toEqual({
-      type: ActionTypes.SET_AUTHORIZATION_REQUIRED,
+      type: ActionType.SET_AUTHORIZATION_REQUIRED,
       payload: true
     });
   });
@@ -52,7 +52,7 @@ describe(`User reducer works correctly`, () => {
 
   it(`User reducer should set given value as city`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_CITY,
+      type: ActionType.SET_CITY,
       payload: `Paris`
     })).toEqual({
       city: `Paris`,
@@ -63,7 +63,7 @@ describe(`User reducer works correctly`, () => {
 
   it(`User reducer should set given value as user`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_USER,
+      type: ActionType.SET_USER,
       payload: {foo: `bar`}
     })).toEqual({
       city: null,
@@ -74,7 +74,7 @@ describe(`User reducer works correctly`, () => {
 
   it(`User reducer should set given value as "authorization required"`, () => {
     expect(reducer(mockInitialState, {
-      type: ActionTypes.SET_AUTHORIZATION_REQUIRED,
+      type: ActionType.SET_AUTHORIZATION_REQUIRED,
       payload: false
     })).toEqual({
       city: null,
