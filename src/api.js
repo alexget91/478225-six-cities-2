@@ -1,5 +1,11 @@
 import axios from "axios";
 
+const HTTPstatus = {
+  BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  INTERNAL_SERVER_ERROR: 500,
+};
+
 const configureAPI = (onLoginFail, onError) => {
   const api = axios.create({
     baseURL: `https://htmlacademy-react-2.appspot.com/six-cities`,
@@ -12,13 +18,13 @@ const configureAPI = (onLoginFail, onError) => {
   const onFail = (err) => {
     if (err.response) {
       switch (err.response.status) {
-        case 400:
+        case HTTPstatus.BAD_REQUEST:
           onError(err.response.data.error);
           break;
-        case 401:
+        case HTTPstatus.UNAUTHORIZED:
           onLoginFail();
           break;
-        case 500:
+        case HTTPstatus.INTERNAL_SERVER_ERROR:
           onError(`Server is not available`);
           break;
         default:
