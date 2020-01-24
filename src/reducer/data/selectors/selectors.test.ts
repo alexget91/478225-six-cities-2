@@ -8,30 +8,30 @@ import {
   getOffersByCities,
 } from "./selectors";
 import NameSpace from "../../name-space";
+import {PlaceList, ReviewsList} from "../../../common/types";
+import {getMockOffer} from "../../../common/test-stubs";
+import {GlobalState} from "../../reducer";
 
-const mockOffers = [
-  {
-    id: 1,
-    city: {name: `city1`},
-  },
-  {
-    id: 2,
-    city: {name: `city1`},
-  },
-  {
-    id: 3,
-    city: {name: `city2`},
-  },
+const mockOffers: PlaceList = [
+  getMockOffer(1, `city1`),
+  getMockOffer(2, `city1`),
+  getMockOffer(3, `city2`),
 ];
 
-const mockFavorites = [{
-  id: 2,
-  city: {name: `city1`},
+const mockFavorites: PlaceList = [getMockOffer(2, `city1`)];
+
+const mockReviews: ReviewsList = [{
+  id: 1,
+  user: {
+    id: 1,
+    name: ``,
+  },
+  rating: 0,
+  comment: ``,
+  date: ``,
 }];
 
-const mockReviews = [{id: 1}];
-
-const mockState = {
+const mockState: GlobalState = {
   [NameSpace.DATA]: {
     offers: mockOffers,
     reviews: mockReviews,
@@ -56,40 +56,21 @@ it(`Cities selector returns correct cities from state`, () => {
 });
 
 it(`Offers in city selector returns correct offers from state`, () => {
-  expect(getOffersInCity(mockOffers, `city1`)).toEqual([{
-    id: 1,
-    city: {name: `city1`},
-  },
-  {
-    id: 2,
-    city: {name: `city1`},
-  }]);
+  expect(getOffersInCity(mockOffers, `city1`)).toEqual([mockOffers[0], mockOffers[1]]);
 });
 
 it(`Offer by ID selector returns correct offer from state`, () => {
-  expect(getOfferByID(mockOffers, 2)).toEqual({
-    id: 2,
-    city: {name: `city1`},
-  });
+  expect(getOfferByID(mockOffers, 2)).toEqual(mockOffers[1]);
 });
 
 it(`Offer by cities selector returns correct offers from state`, () => {
   expect(getOffersByCities(mockOffers)).toEqual({
     city1: [
-      {
-        id: 1,
-        city: {name: `city1`},
-      },
-      {
-        id: 2,
-        city: {name: `city1`},
-      },
+      mockOffers[0],
+      mockOffers[1],
     ],
     city2: [
-      {
-        id: 3,
-        city: {name: `city2`},
-      },
+      mockOffers[2],
     ],
   });
 });

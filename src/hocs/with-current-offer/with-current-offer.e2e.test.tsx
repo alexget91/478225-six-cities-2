@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Enzyme from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
 import withCurrentOffer from "./with-current-offer";
-import {getMockOfferTransformed} from "../../common/test-stubs";
+import {getMockOffer} from "../../common/test-stubs";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -11,11 +11,11 @@ describe(`HOC withCurrentOffer`, () => {
   const MockComponentWrapped = withCurrentOffer(MockComponent);
 
   const mockOffers = [
-    getMockOfferTransformed(1, ``),
-    getMockOfferTransformed(2, ``),
-    getMockOfferTransformed(3, ``),
-    getMockOfferTransformed(4, ``),
-    getMockOfferTransformed(5, ``),
+    getMockOffer(1, ``),
+    getMockOffer(2, ``),
+    getMockOffer(3, ``),
+    getMockOffer(4, ``),
+    getMockOffer(5, ``),
   ];
 
   const wrapper = Enzyme.shallow(<MockComponentWrapped

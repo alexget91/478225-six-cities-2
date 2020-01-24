@@ -161,7 +161,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(Operation.sendReview(offerID, rating, comment));
   },
   onCommentSubmitSuccess: () => dispatch(AppActionCreator.setReviewSending(FormSendingStatus.READY)),
-  onErrorClose: () => dispatch(AppActionCreator.setError()),
+  onErrorClose: () => dispatch(AppActionCreator.setError(null)),
 });
 
 export {App};

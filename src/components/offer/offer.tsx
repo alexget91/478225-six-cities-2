@@ -41,19 +41,19 @@ const Offer = (props: Props) => {
       </div>
       <div className="property__container container">
         <div className="property__wrapper">
-          {offer.isPremium ? <div className="property__mark">
+          {offer.is_premium ? <div className="property__mark">
             <span>Premium</span>
           </div> : ``}
           <div className="property__name-wrapper">
             <h1 className="property__name">{offer.title}</h1>
             <button type="button"
-              className={`property__bookmark-button${offer.isFavorite ? ` property__bookmark-button--active` : ``} button js-favorites-link`}
+              className={`property__bookmark-button${offer.is_favorite ? ` property__bookmark-button--active` : ``} button js-favorites-link`}
               onClick={onFavoritesClick}
             >
               <svg className="property__bookmark-icon place-card__bookmark-icon" width="31" height="33">
                 <use xlinkHref="#icon-bookmark"></use>
               </svg>
-              <span className="visually-hidden">{offer.isFavorite ? `In bookmarks` : `To bookmarks`}</span>
+              <span className="visually-hidden">{offer.is_favorite ? `In bookmarks` : `To bookmarks`}</span>
             </button>
           </div>
           <div className="property__rating rating">
@@ -70,12 +70,12 @@ const Offer = (props: Props) => {
             {offer.bedrooms ? <li className="property__feature property__feature--bedrooms">
               {offer.bedrooms} Bedrooms
             </li> : ``}
-            {offer.maxAdults ? <li className="property__feature property__feature--adults">
-                Max {offer.maxAdults} adults
+            {offer.max_adults ? <li className="property__feature property__feature--adults">
+                Max {offer.max_adults} adults
             </li> : ``}
           </ul>
-          {offer.priceByNight ? <div className="property__price">
-            <b className="property__price-value">&euro;{offer.priceByNight}</b>
+          {offer.price ? <div className="property__price">
+            <b className="property__price-value">&euro;{offer.price}</b>
             <span className="property__price-text">&nbsp;night</span>
           </div> : ``}
           {offer.goods ? <div className="property__inside">
@@ -89,14 +89,14 @@ const Offer = (props: Props) => {
           {offer.host ? <div className="property__host">
             <h2 className="property__host-title">Meet the host</h2>
             <div className="property__host-user user">
-              <div className={`property__avatar-wrapper${offer.host.isPro ? ` property__avatar-wrapper--pro` : ``} user__avatar-wrapper`}>
-                <img className="property__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74"
+              <div className={`property__avatar-wrapper${offer.host.is_pro ? ` property__avatar-wrapper--pro` : ``} user__avatar-wrapper`}>
+                <img className="property__avatar user__avatar" src={offer.host.avatar_url} width="74" height="74"
                   alt="Host avatar"/>
               </div>
               <span className="property__user-name">
                 {offer.host.name}
               </span>
-              {offer.host.isPro ? <span className="property__user-status">
+              {offer.host.is_pro ? <span className="property__user-status">
                   Pro
               </span> : ``}
             </div>

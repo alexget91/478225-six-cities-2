@@ -5,12 +5,13 @@ import {
   getError,
 } from "./selectors";
 import NameSpace from "../../name-space";
+import {GlobalState} from "../../reducer";
 
-const mockState = {
+const mockState: GlobalState = {
   [NameSpace.APP]: {
     isOffersLoaded: false,
     isFavoritesLoaded: false,
-    reviewSendingStatus: `status`,
+    reviewSendingStatus: `status` as any,
     errorMessage: `error`,
   },
 };

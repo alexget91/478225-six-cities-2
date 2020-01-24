@@ -1,297 +1,305 @@
 import {
-  transformUserData,
-  transformOfferData,
-  transformOffersList,
-  transformReviewsList,
   ActionType,
   ActionCreator,
+  transformReviewsList,
   updateOffer,
   reducer,
+  State,
 } from "./reducer";
-import {getMockOfferFields, getMockOfferFieldsTransformed} from "../../../common/test-stubs";
+import {getMockOffer} from "../../../common/test-stubs";
+import {PlaceCard, PlaceList, ReviewsList} from "../../../common/types";
 
-const mockOffers = [
-  {
-    id: 1,
-    city: {
-      name: `Amsterdam`,
-    },
-    host: {
-      "is_pro": false,
-      "avatar_url": ``,
-    },
-  },
-  {
-    id: 2,
-    city: {
-      name: `Amsterdam`,
-    },
-    host: {
-      "is_pro": false,
-      "avatar_url": ``,
-    },
-  },
-  {
-    id: 3,
-    city: {
-      name: `Hamburg`,
-    },
-    host: {
-      "is_pro": false,
-      "avatar_url": ``,
-    },
-  }
+const mockOffers: PlaceList = [
+  getMockOffer(1, `Amsterdam`),
+  getMockOffer(2, `Amsterdam`),
+  getMockOffer(3, `Hamburg`),
 ];
 
-const mockOffersTransformed = [
-  {
-    id: 1,
-    city: {
-      name: `Amsterdam`,
-    },
-    host: {
-      "isPro": false,
-      "avatarUrl": ``,
-    },
-  },
-  {
-    id: 2,
-    city: {
-      name: `Amsterdam`,
-    },
-    host: {
-      "isPro": false,
-      "avatarUrl": ``,
-    },
-  },
-  {
-    id: 3,
-    city: {
-      name: `Hamburg`,
-    },
-    host: {
-      "isPro": false,
-      "avatarUrl": ``,
-    },
-  }
-];
+const mockOffer: PlaceCard = getMockOffer(1, `city`);
 
-const mockOffer = getMockOfferFields(1, `city`);
-const mockOfferTransformed = getMockOfferFieldsTransformed(1, `city`);
-
-const mockUser = {
-  "is_pro": `is_pro`,
-  "avatar_url": `avatar_url`,
-  "foo": `bar`,
-};
-
-const mockUserTransformed = {
-  isPro: `is_pro`,
-  avatarUrl: `avatar_url`,
-  foo: `bar`,
-};
-
-const mockReviews = [
+const mockReviews: ReviewsList = [
   {
     id: 1,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-05-08T14:13:56.569Z`
   },
   {
     id: 2,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-04-08T11:14:58.569Z`
   },
   {
     id: 3,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-06-08T11:14:58.569Z`
   },
   {
     id: 4,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-01-08T11:14:58.569Z`
   },
   {
     id: 5,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-03-08T11:15:58.569Z`
   },
   {
     id: 6,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-08-08T11:14:58.569Z`
   },
   {
     id: 7,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-02-08T11:14:58.569Z`
   },
   {
     id: 8,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2018-04-08T11:14:58.569Z`
   },
   {
     id: 9,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-09-08T11:14:58.569Z`
   },
   {
     id: 10,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2018-03-08T11:14:58.569Z`
   },
   {
     id: 11,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-03-08T11:14:58.569Z`
   },
   {
     id: 12,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-05-08T11:14:58.569Z`
   },
 ];
 
-const mockReviewsTransformed = [
+const mockReviewsTransformed: ReviewsList = [
   {
     id: 9,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-09-08T11:14:58.569Z`
   },
   {
     id: 6,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-08-08T11:14:58.569Z`
   },
   {
     id: 3,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-06-08T11:14:58.569Z`
   },
   {
     id: 1,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-05-08T14:13:56.569Z`
   },
   {
     id: 12,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-05-08T11:14:58.569Z`
   },
   {
     id: 2,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-04-08T11:14:58.569Z`
   },
   {
     id: 5,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-03-08T11:15:58.569Z`
   },
   {
     id: 11,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-03-08T11:14:58.569Z`
   },
   {
     id: 7,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-02-08T11:14:58.569Z`
   },
   {
     id: 4,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-01-08T11:14:58.569Z`
   },
 ];
 
 describe(`Data transformation works correctly`, () => {
-  it(`User data transformation works correctly`, () => {
-    expect(transformUserData(mockUser)).toEqual(mockUserTransformed);
-  });
-
-  it(`Offer data transformation works correctly`, () => {
-    expect(transformOfferData(mockOffer)).toEqual(mockOfferTransformed);
-  });
-
-  it(`Offers list transformation works correctly`, () => {
-    expect(transformOffersList(mockOffers)).toEqual(mockOffersTransformed);
-  });
-
   it(`Reviews list transformation works correctly`, () => {
     expect(transformReviewsList(mockReviews)).toEqual(mockReviewsTransformed);
   });
 
   it(`Update offer in list works correctly`, () => {
-    expect(updateOffer([{id: 1}, {id: 2}], mockOffer)).toEqual([mockOfferTransformed, {id: 2}]);
+    expect(updateOffer([
+      getMockOffer(1, `Amsterdam`),
+      getMockOffer(2, `Amsterdam`),
+    ], mockOffer)).toEqual([
+      mockOffer,
+      getMockOffer(2, `Amsterdam`),
+    ]);
   });
 });
 
@@ -299,7 +307,7 @@ describe(`Data action creators works correctly`, () => {
   it(`Data action creator for set offers returns correct action`, () => {
     expect(ActionCreator.setOffers(mockOffers)).toEqual({
       type: ActionType.SET_OFFERS,
-      payload: mockOffersTransformed,
+      payload: mockOffers,
     });
   });
 
@@ -313,44 +321,41 @@ describe(`Data action creators works correctly`, () => {
   it(`Data action creator for set favorites returns correct action`, () => {
     expect(ActionCreator.setFavorites(mockOffers)).toEqual({
       type: ActionType.SET_FAVORITES,
-      payload: mockOffersTransformed,
+      payload: mockOffers,
     });
   });
 
   it(`Data action creator for update offer returns correct action`, () => {
-    expect(ActionCreator.updateOffer({foo: `bar`})).toEqual({
+    expect(ActionCreator.updateOffer(mockOffer)).toEqual({
       type: ActionType.UPDATE_OFFER,
-      payload: {foo: `bar`},
+      payload: mockOffer,
     });
   });
 });
 
 describe(`Data reducer works correctly`, () => {
-  const mockInitialState = {
+  const mockInitialState: State = {
     offers: [
-      {
-        id: 1,
-        isFavorite: false,
-      },
-      {
-        id: 2,
-        isFavorite: false,
-      },
+      getMockOffer(1, `city1`, false),
+      getMockOffer(2, `city2`, false),
     ],
     reviews: [],
     favorites: [],
   };
 
   it(`Data reducer without action should return current state`, () => {
-    expect(reducer(mockInitialState, {})).toEqual(mockInitialState);
+    expect(reducer(mockInitialState, {
+      type: null,
+      payload: null,
+    })).toEqual(mockInitialState);
   });
 
   it(`Data reducer should set given value as offers`, () => {
     expect(reducer(mockInitialState, {
       type: ActionType.SET_OFFERS,
-      payload: mockOffersTransformed
+      payload: mockOffers
     })).toEqual(Object.assign({}, mockInitialState, {
-      offers: mockOffersTransformed,
+      offers: mockOffers,
     }));
   });
 
@@ -366,29 +371,20 @@ describe(`Data reducer works correctly`, () => {
   it(`Data reducer should set given value as favorites`, () => {
     expect(reducer(mockInitialState, {
       type: ActionType.SET_FAVORITES,
-      payload: mockOffersTransformed
+      payload: mockOffers
     })).toEqual(Object.assign({}, mockInitialState, {
-      favorites: mockOffersTransformed,
+      favorites: mockOffers,
     }));
   });
 
   it(`Data reducer should update offer correctly`, () => {
     expect(reducer(mockInitialState, {
       type: ActionType.UPDATE_OFFER,
-      payload: Object.assign({}, mockOffer, {
-        "id": 2,
-        "is_favorite": true,
-      }),
+      payload: mockOffer,
     })).toEqual(Object.assign({}, mockInitialState, {
       offers: [
-        {
-          id: 1,
-          isFavorite: false,
-        },
-        Object.assign({}, mockOfferTransformed, {
-          id: 2,
-          isFavorite: true,
-        }),
+        mockOffer,
+        getMockOffer(2, `city2`, false),
       ],
     }));
   });

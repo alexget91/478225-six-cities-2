@@ -7,9 +7,9 @@ const getOffers = (data) => data.offers;
 const getSortedOffers = (sort, offers) => {
   switch (sort) {
     case SortingOption.TO_HIGH:
-      return offers.slice().sort((a, b) => a.priceByNight - b.priceByNight);
+      return offers.slice().sort((a, b) => a.price - b.price);
     case SortingOption.TO_LOW:
-      return offers.slice().sort((a, b) => b.priceByNight - a.priceByNight);
+      return offers.slice().sort((a, b) => b.price - a.price);
     case SortingOption.TOP_RATED:
       return offers.slice().sort((a, b) => b.rating - a.rating);
   }

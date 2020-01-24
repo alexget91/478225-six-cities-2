@@ -9,10 +9,10 @@ it(`Place card correctly renders after relaunch`, () => {
     .create(<MemoryRouter><PlaceCard
       offer={{
         id: 0,
-        isPremium: true,
-        isFavorite: false,
-        previewImage: ``,
-        priceByNight: 0,
+        is_premium: true,
+        is_favorite: false,
+        preview_image: ``,
+        price: 0,
         rating: 0,
         title: ``,
         type: PlaceType.APARTMENT,

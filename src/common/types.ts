@@ -3,8 +3,8 @@ import {PlaceType} from "./constants";
 type Host = {
   id: number,
   name: string,
-  avatarUrl?: string,
-  isPro?: boolean,
+  avatar_url?: string,
+  is_pro?: boolean,
 }
 
 type User = {
@@ -25,16 +25,16 @@ type City = {
 type PlaceCard = {
   id: number,
   city?: City,
-  previewImage?: string,
+  preview_image?: string,
   images?: Array<string>,
   title: string,
-  isPremium?: boolean,
-  isFavorite?: boolean,
+  is_premium?: boolean,
+  is_favorite?: boolean,
   rating?: number,
   type: PlaceType,
   bedrooms?: number,
-  maxAdults?: number,
-  priceByNight: number,
+  max_adults?: number,
+  price: number,
   goods?: Array<string>,
   host?: Host,
   description?: string,

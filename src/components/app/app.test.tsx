@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
 import {App} from "./app";
-import {createMapBlock, getMockOfferTransformed} from "../../common/test-stubs";
+import {createMapBlock, getMockOffer} from "../../common/test-stubs";
 import {MemoryRouter} from "react-router-dom";
 
 describe(`App correctly renders after relaunch`, () => {
@@ -24,7 +24,7 @@ describe(`App correctly renders after relaunch`, () => {
       .create(<MemoryRouter><App
         isOffersLoaded={true}
         activeCity={`city1`}
-        offersInCity={[getMockOfferTransformed(1, `city1`)]}
+        offersInCity={[getMockOffer(1, `city1`)]}
         cities={[`city1`, `city2`]}
         isAuthorizationRequired={true}
         onCityClick={jest.fn()}

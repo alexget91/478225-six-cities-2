@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
 import Favorites from "./favorites";
-import {getMockOfferTransformed} from "../../common/test-stubs";
+import {getMockOffer} from "../../common/test-stubs";
 import {MemoryRouter} from "react-router-dom";
 
 describe(`Favorites correctly renders after relaunch`, () => {
@@ -10,7 +10,7 @@ describe(`Favorites correctly renders after relaunch`, () => {
       .create(<MemoryRouter><Favorites
         isLoaded={true}
         offers={{
-          city: [getMockOfferTransformed(1, `city`, true)],
+          city: [getMockOffer(1, `city`, true)],
         }}
       /></MemoryRouter>)
       .toJSON();

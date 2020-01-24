@@ -18,22 +18,22 @@ const placeCard = Enzyme.shallow(<Offer
         longitude: 0,
       }
     },
-    previewImage: ``,
+    preview_image: ``,
     images: [``],
     title: ``,
-    isPremium: true,
-    isFavorite: false,
+    is_premium: true,
+    is_favorite: false,
     rating: 1,
     type: PlaceType.APARTMENT,
     bedrooms: 1,
-    maxAdults: 1,
-    priceByNight: 1,
+    max_adults: 1,
+    price: 1,
     goods: [``],
     host: {
       id: 0,
-      isPro: true,
+      is_pro: true,
       name: ``,
-      avatarUrl: ``
+      avatar_url: ``
     },
     description: ` `,
     location: {
@@ -44,7 +44,7 @@ const placeCard = Enzyme.shallow(<Offer
   reviews={[]}
   neighbourhood={[{
     id: 0,
-    priceByNight: 0,
+    price: 0,
     title: ``,
     type: PlaceType.APARTMENT,
     location: {

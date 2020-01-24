@@ -1,20 +1,13 @@
-import {ActionType, ActionCreator, reducer, transformUserData} from "./reducer";
+import {ActionType, ActionCreator, reducer, State} from "./reducer";
+import {User} from "../../../common/types";
 
-it(`User data transformation works correctly`, () => {
-  expect(transformUserData({
-    "id": 1,
-    "email": `email`,
-    "name": `name`,
-    "avatar_url": `avatarUrl`,
-    "is_pro": false,
-  })).toEqual({
-    id: 1,
-    email: `email`,
-    name: `name`,
-    avatarUrl: `avatarUrl`,
-    isPro: false,
-  });
-});
+const mockUser: User = {
+  id: 1,
+  email: `email`,
+  name: `name`,
+  avatar_url: `avatarUrl`,
+  is_pro: false
+};
 
 describe(`User action creators works correctly`, () => {
   it(`User action creator for set the city returns correct action`, () => {
@@ -25,9 +18,9 @@ describe(`User action creators works correctly`, () => {
   });
 
   it(`User action creator for set user returns correct action`, () => {
-    expect(ActionCreator.setUser({foo: `bar`})).toEqual({
+    expect(ActionCreator.setUser(mockUser)).toEqual({
       type: ActionType.SET_USER,
-      payload: {foo: `bar`}
+      payload: mockUser
     });
   });
 
@@ -40,14 +33,17 @@ describe(`User action creators works correctly`, () => {
 });
 
 describe(`User reducer works correctly`, () => {
-  const mockInitialState = {
+  const mockInitialState: State = {
     city: null,
     user: null,
     isAuthorizationRequired: true,
   };
 
   it(`User reducer without action should return current state`, () => {
-    expect(reducer(mockInitialState, {})).toEqual(mockInitialState);
+    expect(reducer(mockInitialState, {
+      type: null,
+      payload: null,
+    })).toEqual(mockInitialState);
   });
 
   it(`User reducer should set given value as city`, () => {
@@ -64,10 +60,10 @@ describe(`User reducer works correctly`, () => {
   it(`User reducer should set given value as user`, () => {
     expect(reducer(mockInitialState, {
       type: ActionType.SET_USER,
-      payload: {foo: `bar`}
+      payload: mockUser
     })).toEqual({
       city: null,
-      user: {foo: `bar`},
+      user: mockUser,
       isAuthorizationRequired: true,
     });
   });

@@ -1,88 +1,96 @@
+import {AxiosInstance} from "axios";
 import MockAdapter from "axios-mock-adapter";
 import configureAPI from "../../api";
 import Operation, {FavoriteStatus, withAuthCheck} from "./operation";
 import {ActionType as AppActionType} from "../app/reducer/reducer";
 import {ActionType as DataActionType} from "../data/reducer/reducer";
 import {ActionType as UserActionType} from "../user/reducer/reducer";
-import {getMockOfferFields, getMockOfferFieldsTransformed} from "../../common/test-stubs";
+import {getMockOffer} from "../../common/test-stubs";
 import {FormSendingStatus} from "../../common/constants";
 import NameSpace from "../name-space";
 import history from "../../history";
 import Path from "../../common/path";
+import {PlaceList, ReviewsList, User} from "../../common/types";
+import {GlobalState} from "../reducer";
 
-const mockOffers = [
-  getMockOfferFields(1, `Amsterdam`),
-  getMockOfferFields(2, `Amsterdam`),
-  getMockOfferFields(3, `Hamburg`),
+const mockOffers: PlaceList = [
+  getMockOffer(1, `Amsterdam`),
+  getMockOffer(2, `Amsterdam`),
+  getMockOffer(3, `Hamburg`),
 ];
 
-const mockOffersTransformed = [
-  getMockOfferFieldsTransformed(1, `Amsterdam`),
-  getMockOfferFieldsTransformed(2, `Amsterdam`),
-  getMockOfferFieldsTransformed(3, `Hamburg`),
-];
-
-const mockUser = {
-  "id": 1,
-  "email": `email`,
-  "name": `name`,
-  "avatar_url": `avatarUrl`,
-  "is_pro": false
-};
-
-const mockUserTransformed = {
+const mockUser: User = {
   id: 1,
   email: `email`,
   name: `name`,
-  avatarUrl: `avatarUrl`,
-  isPro: false
+  avatar_url: `avatarUrl`,
+  is_pro: false
 };
 
-const mockReviews = [
+const mockReviews: ReviewsList = [
   {
     id: 2,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-04-08T11:14:58.569Z`
   },
   {
     id: 3,
     user: {
-      "is_pro": false,
-      "avatar_url": ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-06-08T11:14:58.569Z`
   },
 ];
 
-const mockReviewsTransformed = [
+const mockReviewsTransformed: ReviewsList = [
   {
     id: 3,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-06-08T11:14:58.569Z`
   },
   {
     id: 2,
     user: {
-      isPro: false,
-      avatarUrl: ``
+      id: 0,
+      name: ``,
+      is_pro: false,
+      avatar_url: ``
     },
+    rating: 0,
+    comment: ``,
     date: `2019-04-08T11:14:58.569Z`
   },
 ];
 
-const mockFavorites = [getMockOfferFields(2, `Amsterdam`)];
-const mockFavoritesTransformed = [getMockOfferFieldsTransformed(2, `Amsterdam`)];
+const mockFavorites: PlaceList = [getMockOffer(2, `Amsterdam`)];
 
-const api = configureAPI();
-const apiMock = new MockAdapter(api);
+const api: AxiosInstance = configureAPI();
+const apiMock: MockAdapter = new MockAdapter(api);
 
-const getMockState = (isAuthorizationRequired) => ({[NameSpace.USER]: {isAuthorizationRequired}});
+const getMockState = (isAuthorizationRequired?: boolean): GlobalState => ({[NameSpace.USER]: {
+  city: null,
+  user: null,
+  isAuthorizationRequired,
+}});
 
 describe(`Should make a correct API call to get hotels`, () => {
   const dispatch = jest.fn();
@@ -102,7 +110,7 @@ describe(`Should make a correct API call to get hotels`, () => {
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: DataActionType.SET_OFFERS,
-          payload: mockOffersTransformed,
+          payload: mockOffers,
         });
         expect(dispatch).toHaveBeenNthCalledWith(3, {
           type: AppActionType.SET_OFFERS_LOADED,
@@ -125,7 +133,7 @@ describe(`Should make a correct API call to get hotels`, () => {
 
 it(`Should make a correct API call to get reviews`, () => {
   const dispatch = jest.fn();
-  const offerID = 1;
+  const offerID: number = 1;
   const loader = Operation.loadReviews(offerID);
 
   apiMock
@@ -156,7 +164,7 @@ describe(`Should make a correct API call to get favorites`, () => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: DataActionType.SET_FAVORITES,
-          payload: mockFavoritesTransformed,
+          payload: mockFavorites,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: AppActionType.SET_FAVORITES_LOADED,
@@ -180,7 +188,7 @@ describe(`Should make a correct API call to get favorites`, () => {
 describe(`Should make a correct API call to send review`, () => {
   it(`When data is correct`, () => {
     const dispatch = jest.fn();
-    const offerID = 1;
+    const offerID: number = 1;
     const loader = Operation.sendReview(offerID, 5, `comment`);
 
     apiMock
@@ -203,7 +211,7 @@ describe(`Should make a correct API call to send review`, () => {
 
   it(`When data is not correct`, () => {
     const dispatch = jest.fn();
-    const offerID = 1;
+    const offerID: number = 1;
     const loader = Operation.sendReview(offerID, null, ``);
 
     apiMock
@@ -224,7 +232,7 @@ describe(`Should make a correct API call to send review`, () => {
 describe(`Should make a correct API call to toggle favorite status`, () => {
   const dispatch = jest.fn();
   const handleLoadFavorites = jest.fn();
-  const offerID = 1;
+  const offerID: number = 1;
   const setFavorite = Operation.toggleFavorite(offerID, false);
   const removeFavorite = Operation.toggleFavorite(offerID, true);
 
@@ -233,14 +241,14 @@ describe(`Should make a correct API call to toggle favorite status`, () => {
       Operation.loadFavorites = () => handleLoadFavorites;
 
       apiMock
-        .onPost(`/favorite/${offerID}/${FavoriteStatus.TRUE}`).reply(200, {id: offerID, isFavorite: true});
+        .onPost(`/favorite/${offerID}/${FavoriteStatus.TRUE}`).reply(200, {id: offerID, is_favorite: true});
 
       return setFavorite(dispatch, getMockState, api)
         .then(() => {
           expect(dispatch).toHaveBeenCalledTimes(2);
           expect(dispatch).toHaveBeenNthCalledWith(1, {
             type: DataActionType.UPDATE_OFFER,
-            payload: {id: offerID, isFavorite: true},
+            payload: {id: offerID, is_favorite: true},
           });
           expect(dispatch).toHaveBeenNthCalledWith(2, handleLoadFavorites);
         });
@@ -262,14 +270,14 @@ describe(`Should make a correct API call to toggle favorite status`, () => {
       Operation.loadFavorites = () => handleLoadFavorites;
 
       apiMock
-        .onPost(`/favorite/${offerID}/${FavoriteStatus.FALSE}`).reply(200, {id: offerID, isFavorite: false});
+        .onPost(`/favorite/${offerID}/${FavoriteStatus.FALSE}`).reply(200, {id: offerID, is_favorite: false});
 
       return removeFavorite(dispatch, getMockState, api)
         .then(() => {
           expect(dispatch).toHaveBeenCalledTimes(4);
           expect(dispatch).toHaveBeenNthCalledWith(3, {
             type: DataActionType.UPDATE_OFFER,
-            payload: {id: offerID, isFavorite: false},
+            payload: {id: offerID, is_favorite: false},
           });
           expect(dispatch).toHaveBeenNthCalledWith(4, handleLoadFavorites);
         });
@@ -306,7 +314,7 @@ describe(`Should make a correct API call to sign in`, () => {
         expect(dispatch).toHaveBeenCalledTimes(4);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: UserActionType.SET_USER,
-          payload: mockUserTransformed,
+          payload: mockUser,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: UserActionType.SET_AUTHORIZATION_REQUIRED,
@@ -348,7 +356,7 @@ describe(`Should make a correct API call to check authorization`, () => {
         expect(dispatch).toHaveBeenCalledTimes(4);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: UserActionType.SET_USER,
-          payload: mockUserTransformed,
+          payload: mockUser,
         });
         expect(dispatch).toHaveBeenNthCalledWith(2, handleLoadFavorites);
         expect(dispatch).toHaveBeenNthCalledWith(3, {
@@ -386,7 +394,7 @@ describe(`withAuthCheck`, () => {
     expect(history.push.mock.calls[0]).toEqual([Path.LOGIN]);
   });
 
-  it(`Cals callback if user is authorized`, () => {
+  it(`Calls callback if user is authorized`, () => {
     withAuthCheck(getMockState(), handleIsAuthorized);
     expect(handleIsAuthorized).toHaveBeenCalledTimes(1);
   });

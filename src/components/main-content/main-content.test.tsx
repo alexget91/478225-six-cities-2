@@ -19,7 +19,7 @@ it(`Main content correctly renders after relaunch`, () => {
       }}
       offers={[{
         id: 0,
-        priceByNight: 0,
+        price: 0,
         title: ``,
         type: PlaceType.APARTMENT,
         location: {

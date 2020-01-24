@@ -14,10 +14,10 @@ const id = 0;
 const placeCard = Enzyme.shallow(<PlaceCard
   offer={{
     id,
-    isPremium: false,
-    isFavorite: false,
-    previewImage: ``,
-    priceByNight: 0,
+    is_premium: false,
+    is_favorite: false,
+    preview_image: ``,
+    price: 0,
     rating: 0,
     title: ``,
     type: PlaceType.APARTMENT,
@@ -41,10 +41,10 @@ describe(`Mouse hover handler gets the correct information`, () => {
     expect(handleMouseHover).toHaveBeenCalledTimes(1);
     expect(handleMouseHover).toHaveBeenCalledWith({
       id,
-      isPremium: false,
-      isFavorite: false,
-      previewImage: ``,
-      priceByNight: 0,
+      is_premium: false,
+      is_favorite: false,
+      preview_image: ``,
+      price: 0,
       rating: 0,
       title: ``,
       type: PlaceType.APARTMENT,

@@ -1,4 +1,5 @@
-import {ActionCreator, ActionType, reducer} from "./reducer";
+import {ActionCreator, ActionType, reducer, State} from "./reducer";
+import {FormSendingStatus} from "../../../common/constants";
 
 describe(`App action creators works correctly`, () => {
   it(`App action creator for set "offers is loaded" returns correct action`, () => {
@@ -31,15 +32,18 @@ describe(`App action creators works correctly`, () => {
 });
 
 describe(`App reducer works correctly`, () => {
-  const mockInitialState = {
+  const mockInitialState: State = {
     isOffersLoaded: false,
     isFavoritesLoaded: false,
-    reviewSendingStatus: `status`,
+    reviewSendingStatus: FormSendingStatus.READY,
     errorMessage: null,
   };
 
   it(`App reducer without action should return current state`, () => {
-    expect(reducer(mockInitialState, {})).toEqual(mockInitialState);
+    expect(reducer(mockInitialState, {
+      type: null,
+      payload: null,
+    })).toEqual(mockInitialState);
   });
 
   it(`App reducer should set "offers is loaded" correctly`, () => {

@@ -4,7 +4,7 @@ import * as Adapter from "enzyme-adapter-react-16";
 import Path from "../../common/path";
 import {App} from "./app";
 import {MemoryRouter} from "react-router-dom";
-import {getMockOfferTransformed} from "../../common/test-stubs";
+import {getMockOffer} from "../../common/test-stubs";
 import Main from "../main/main";
 import SignIn from "../sign-in/sign-in";
 import Offer from "../offer/offer";
@@ -17,7 +17,7 @@ jest.mock(`../sign-in/sign-in`, () => ({'default': jest.fn().mockReturnValue(nul
 jest.mock(`../offer/offer`, () => ({'default': jest.fn().mockReturnValue(null)}));
 jest.mock(`../favorites/favorites`, () => ({'default': jest.fn().mockReturnValue(null)}));
 
-const mockOffers = [getMockOfferTransformed(0, `city1`)];
+const mockOffers = [getMockOffer(0, `city1`)];
 
 describe(`Routes works correctly`, () => {
   it(`To main page`, () => {

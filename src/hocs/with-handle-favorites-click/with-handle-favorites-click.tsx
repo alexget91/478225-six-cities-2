@@ -24,7 +24,7 @@ const withHandleFavoritesClick = (Component) => {
 
     _handleFavoritesClick() {
       const {offer, onFavoritesClick} = this.props;
-      onFavoritesClick(offer.id, offer.isFavorite);
+      onFavoritesClick(offer.id, offer.is_favorite);
     }
   }
 

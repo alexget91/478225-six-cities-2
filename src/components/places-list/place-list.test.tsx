@@ -9,7 +9,7 @@ it(`Place list correctly renders after relaunch`, () => {
     .create(<MemoryRouter><PlacesList
       offers={[{
         id: 0,
-        priceByNight: 0,
+        price: 0,
         title: ``,
         type: PlaceType.APARTMENT,
       }]}

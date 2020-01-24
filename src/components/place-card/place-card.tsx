@@ -7,10 +7,10 @@ import {PlaceCard as Offer} from "../../common/types";
 
 type CardInfo = {
   id: number,
-  isPremium: boolean,
-  isFavorite: boolean,
-  previewImage: string,
-  priceByNight: number,
+  is_premium: boolean,
+  is_favorite: boolean,
+  preview_image: string,
+  price: number,
   rating: number,
   title: string,
   type: PlaceType,
@@ -61,35 +61,35 @@ class PlaceCard extends React.PureComponent<Props, null> {
 
   render() {
     const {offer, cardType, onFavoritesClick} = this.props;
-    const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type} = offer;
+    const {id, is_premium, is_favorite, preview_image, price, rating, title, type} = offer;
     const detailURL = `${Path.OFFER}/${id}`;
 
     return <article key={id} data-id={id} className={`${CardSettings[cardType].cardClass} place-card`}
       onMouseEnter={this._handleMouseEnter} onMouseLeave={this._handleMouseLeave}
     >
-      {isPremium ? <div className="place-card__mark">
+      {is_premium ? <div className="place-card__mark">
         <span>Premium</span>
       </div> : ``}
       <div className={`${CardSettings[cardType].imageClass} place-card__image-wrapper`}>
         <Link className="js-detail-link" to={detailURL}>
-          <img className="place-card__image" src={previewImage}
+          <img className="place-card__image" src={preview_image}
             width={CardSettings[cardType].imageSizes[0]} height={CardSettings[cardType].imageSizes[1]} alt="Place image"/>
         </Link>
       </div>
       <div className={`${CardSettings[cardType].infoClass} place-card__info`}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{priceByNight}</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&nbsp;&#47;&nbsp;night</span>
           </div>
           <button type="button"
-            className={`place-card__bookmark-button${isFavorite ? ` place-card__bookmark-button--active` : ``} button js-favorites-link`}
+            className={`place-card__bookmark-button${is_favorite ? ` place-card__bookmark-button--active` : ``} button js-favorites-link`}
             onClick={onFavoritesClick}
           >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">{isFavorite ? `In bookmarks` : `To bookmarks`}</span>
+            <span className="visually-hidden">{is_favorite ? `In bookmarks` : `To bookmarks`}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -110,8 +110,8 @@ class PlaceCard extends React.PureComponent<Props, null> {
     const {offer, onMouseHover} = this.props;
 
     if (onMouseHover) {
-      const {id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type} = offer;
-      onMouseHover({id, isPremium, isFavorite, previewImage, priceByNight, rating, title, type});
+      const {id, is_premium, is_favorite, preview_image, price, rating, title, type} = offer;
+      onMouseHover({id, is_premium, is_favorite, preview_image, price, rating, title, type});
     }
   }
 

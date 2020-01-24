@@ -6,21 +6,21 @@ describe(`Offers are sorted correctly`, () => {
     {
       id: 1,
       rating: 4.6,
-      priceByNight: 120,
+      price: 120,
     },
     {
       id: 2,
-      priceByNight: 80,
+      price: 80,
       rating: 4,
     },
     {
       id: 3,
-      priceByNight: 132,
+      price: 132,
       rating: 4,
     },
     {
       id: 4,
-      priceByNight: 180,
+      price: 180,
       rating: 5,
     },
   ];
@@ -30,21 +30,21 @@ describe(`Offers are sorted correctly`, () => {
       {
         id: 1,
         rating: 4.6,
-        priceByNight: 120,
+        price: 120,
       },
       {
         id: 2,
-        priceByNight: 80,
+        price: 80,
         rating: 4,
       },
       {
         id: 3,
-        priceByNight: 132,
+        price: 132,
         rating: 4,
       },
       {
         id: 4,
-        priceByNight: 180,
+        price: 180,
         rating: 5,
       },
     ]);
@@ -54,22 +54,22 @@ describe(`Offers are sorted correctly`, () => {
     expect(getSortedOffers(SortingOption.TO_HIGH, mockOffers)).toEqual([
       {
         id: 2,
-        priceByNight: 80,
+        price: 80,
         rating: 4,
       },
       {
         id: 1,
         rating: 4.6,
-        priceByNight: 120,
+        price: 120,
       },
       {
         id: 3,
-        priceByNight: 132,
+        price: 132,
         rating: 4,
       },
       {
         id: 4,
-        priceByNight: 180,
+        price: 180,
         rating: 5,
       },
     ]);
@@ -79,22 +79,22 @@ describe(`Offers are sorted correctly`, () => {
     expect(getSortedOffers(SortingOption.TO_LOW, mockOffers)).toEqual([
       {
         id: 4,
-        priceByNight: 180,
+        price: 180,
         rating: 5,
       },
       {
         id: 3,
-        priceByNight: 132,
+        price: 132,
         rating: 4,
       },
       {
         id: 1,
         rating: 4.6,
-        priceByNight: 120,
+        price: 120,
       },
       {
         id: 2,
-        priceByNight: 80,
+        price: 80,
         rating: 4,
       },
     ]);
@@ -104,22 +104,22 @@ describe(`Offers are sorted correctly`, () => {
     expect(getSortedOffers(SortingOption.TOP_RATED, mockOffers)).toEqual([
       {
         id: 4,
-        priceByNight: 180,
+        price: 180,
         rating: 5,
       },
       {
         id: 1,
         rating: 4.6,
-        priceByNight: 120,
+        price: 120,
       },
       {
         id: 2,
-        priceByNight: 80,
+        price: 80,
         rating: 4,
       },
       {
         id: 3,
-        priceByNight: 132,
+        price: 132,
         rating: 4,
       },
     ]);

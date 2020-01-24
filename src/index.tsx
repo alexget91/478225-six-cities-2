@@ -2,8 +2,9 @@ import * as ReactDOM from "react-dom";
 import * as React from "react";
 import App from "./components/app/app";
 import {Provider} from "react-redux";
-import {createStore, applyMiddleware} from "redux";
+import {createStore, applyMiddleware, Store} from "redux";
 import thunk from "redux-thunk";
+import {AxiosInstance} from "axios";
 import reducer from "./reducer/reducer";
 import Operation from "./reducer/operation/operation";
 import configureAPI from "./api";
@@ -14,13 +15,13 @@ import {ActionCreator as AppActionCreator} from "./reducer/app/reducer/reducer";
 import {ActionCreator as UserActionCreator} from "./reducer/user/reducer/reducer";
 
 const init = () => {
-  const api = configureAPI(
+  const api: AxiosInstance = configureAPI(
     () => {
       store.dispatch(UserActionCreator.setAuthorizationRequired(true));
     },
     (error) => store.dispatch(AppActionCreator.setError(error))
   );
-  const store = createStore(
+  const store: Store = createStore(
     reducer,
     compose(
       applyMiddleware(thunk.withExtraArgument(api)),
@@ -28,7 +29,7 @@ const init = () => {
     )
   );
 
-  store.dispatch(Operation.getUser());
+  store.dispatch(Operation.getUser() as any);
 
   ReactDOM.render(
     <Provider store={store}>
