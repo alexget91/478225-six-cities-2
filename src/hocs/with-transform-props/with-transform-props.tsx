@@ -1,12 +1,18 @@
 import * as React from "react";
+import {AnyProps} from "../../common/types";
 
-const withTransformProps = (transformFunc) => (Component) => {
-  const WithTransformProps = (props) => {
-    const newProps = transformFunc(props);
-    return <Component {...newProps} />;
+interface TransformFunc {
+  (...props: any): AnyProps
+}
+
+const withTransformProps = (transformFunc: TransformFunc) =>
+  (Component: React.ComponentType<AnyProps>): React.FunctionComponent<AnyProps> => {
+    const WithTransformProps = (props: AnyProps) => {
+      const newProps = transformFunc(props);
+      return <Component {...newProps} />;
+    };
+
+    return WithTransformProps;
   };
-
-  return WithTransformProps;
-};
 
 export default withTransformProps;

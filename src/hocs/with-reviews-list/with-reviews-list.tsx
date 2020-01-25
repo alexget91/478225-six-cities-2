@@ -1,13 +1,17 @@
 import * as React from "react";
 import {PlaceCard, ReviewsList} from "../../common/types";
 
+interface ReviewsListProps {
+  reviews?: ReviewsList,
+}
+
 interface Props {
   offer?: PlaceCard,
   reviews?: ReviewsList,
-  loadReviews?: () => void,
+  loadReviews?: (offerID: number) => void,
 }
 
-const withReviewsList = (Component) => {
+const withReviewsList = (Component: React.FunctionComponent<ReviewsListProps>): React.ComponentType<Props> => {
   class WithReviewsList extends React.PureComponent<Props, null> {
     constructor(props) {
       super(props);

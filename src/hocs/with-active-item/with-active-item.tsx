@@ -1,4 +1,5 @@
 import * as React from "react";
+import {AnyProps} from "../../common/types";
 
 enum PropName {
   ACTIVE_ITEM = `activeItem`,
@@ -13,8 +14,9 @@ interface State {
   [PropName.ACTIVE_ITEM]: string,
 }
 
-const transformPropNames = (newItem, newCallback, props) => {
-  const newProps = Object.assign({}, props, {
+
+const transformPropNames = (newItem: string, newCallback: string, props: AnyProps): AnyProps => {
+  const newProps: AnyProps = Object.assign({}, props, {
     [newItem]: props[PropName.ACTIVE_ITEM],
     [newCallback]: props[PropName.ON_ACTIVE_ITEM_CHANGE],
   });
@@ -25,7 +27,7 @@ const transformPropNames = (newItem, newCallback, props) => {
   return newProps;
 };
 
-const withActiveItem = (Component, defaultActiveItem?) => {
+const withActiveItem = (Component: React.FunctionComponent, defaultActiveItem?): React.ComponentClass => {
   class WithActiveItem extends React.PureComponent<Props, State> {
     constructor(props) {
       super(props);

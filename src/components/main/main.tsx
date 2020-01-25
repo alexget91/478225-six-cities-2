@@ -12,23 +12,23 @@ interface Props {
   offers: PlaceList,
   cities: Array<string>,
   activeCity?: string,
-  onCityClick: () => void,
-  onFavoritesClick?: () => void,
+  onCityClick: (city: string) => void,
+  onFavoritesClick?: (offerID: number, isFavorite: boolean) => void,
 }
 
-const DEFAULT_SORT = SortingOption.POPULAR;
+const DEFAULT_SORT: SortingOption = SortingOption.POPULAR;
 
-const getComponentWithOffer = (Component) => withActiveItem(withTransformProps(
-  (props) => transformPropNames(`activeOffer`, `onActiveOfferChange`, props)
+const getComponentWithOffer = (Component: React.ComponentType): React.ComponentClass => withActiveItem(withTransformProps(
+  (props: Props) => transformPropNames(`activeOffer`, `onActiveOfferChange`, props)
 )(Component));
 
-const getComponentWithSort = (Component) => withActiveItem(withTransformProps(
-  (props) => transformPropNames(`sort`, `onSortChange`, props)
+const getComponentWithSort = (Component: React.ComponentType): React.ComponentClass => withActiveItem(withTransformProps(
+  (props: Props) => transformPropNames(`sort`, `onSortChange`, props)
 )(Component), DEFAULT_SORT);
 
 const MainContentWrapped = compose(getComponentWithOffer, getComponentWithSort)(MainContent);
 
-const Main = (props: Props) => {
+const Main = (props: Props): React.ReactElement => {
   const {offers, cities, activeCity, onCityClick, onFavoritesClick} = props;
 
   return <React.Fragment>

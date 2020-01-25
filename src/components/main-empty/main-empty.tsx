@@ -4,7 +4,7 @@ interface Props {
   cityName: string,
 }
 
-const MainEmpty = (props: Props) => {
+const MainEmpty = (props: Props): React.ReactElement => {
   const {cityName} = props;
 
   return <React.Fragment>

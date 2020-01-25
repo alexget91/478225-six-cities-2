@@ -1,32 +1,33 @@
 import * as React from "react";
 import withHandleFavoritesClick from "../../hocs/with-handle-favorites-click/with-handle-favorites-click";
 import PlaceCard from "../place-card/place-card";
+import {PlaceCard as PlaceCardType} from "../../common/types";
 import {PlacesListView} from "../../common/constants";
 import {PlaceList} from "../../common/types";
 
 interface Props {
   offers?: {[cityName: string]: PlaceList},
   isLoaded?: boolean,
-  onFavoritesClick?: () => void,
+  onFavoritesClick?: (offerID: number, isFavorite: boolean) => void,
 }
 
 const PlaceCardWrapped = withHandleFavoritesClick(PlaceCard);
 
-const Favorites = (props: Props) => {
+const Favorites = (props: Props): React.ReactElement => {
   const {offers, isLoaded, onFavoritesClick} = props;
 
   if (!isLoaded) {
     return <React.Fragment>Loading...</React.Fragment>;
   }
 
-  const cities = Object.keys(offers);
+  const cities: Array<string> = Object.keys(offers);
 
   return <div className="page__favorites-container container">
     {cities.length ?
       <section className="favorites">
         <h1 className="favorites__title">Saved listing</h1>
         <ul className="favorites__list">
-          {cities.map((city) => {
+          {cities.map((city: string): React.ReactElement => {
             return <li key={`favorites_${city}`} className="favorites__locations-items">
               <div className="favorites__locations locations locations--current">
                 <div className="locations__item">
@@ -36,7 +37,7 @@ const Favorites = (props: Props) => {
                 </div>
               </div>
               <div className="favorites__places">
-                {offers[city].map((offer) => {
+                {offers[city].map((offer: PlaceCardType): React.ReactElement => {
                   return <PlaceCardWrapped
                     key={offer.id}
                     offer={offer}

@@ -53,4 +53,15 @@ type ReviewItem = {
 
 type ReviewsList = Array<ReviewItem>;
 
-export {User, City, PlaceCard, PlaceList, ReviewItem, ReviewsList};
+type PinCoordinates = [number, number];
+
+type Pin = {
+  coords: PinCoordinates,
+  isActive?: boolean,
+}
+
+type AnyProps = {
+  [propName: string]: any
+};
+
+export {User, City, PlaceCard, PlaceList, ReviewItem, ReviewsList, PinCoordinates, Pin, AnyProps};

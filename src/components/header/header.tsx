@@ -7,7 +7,7 @@ interface Props {
   isAuthorizationRequired?: boolean,
 }
 
-const Header = (props: Props) => {
+const Header = (props: Props): React.ReactElement => {
   const {email, isAuthorizationRequired} = props;
 
   return <header className="header">

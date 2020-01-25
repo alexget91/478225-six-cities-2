@@ -9,6 +9,7 @@ import Main from "../main/main";
 import SignIn from "../sign-in/sign-in";
 import Offer from "../offer/offer";
 import Favorites from "../favorites/favorites";
+import {PlaceList} from "../../common/types";
 
 Enzyme.configure({adapter: new Adapter()});
 
@@ -17,7 +18,7 @@ jest.mock(`../sign-in/sign-in`, () => ({'default': jest.fn().mockReturnValue(nul
 jest.mock(`../offer/offer`, () => ({'default': jest.fn().mockReturnValue(null)}));
 jest.mock(`../favorites/favorites`, () => ({'default': jest.fn().mockReturnValue(null)}));
 
-const mockOffers = [getMockOffer(0, `city1`)];
+const mockOffers: PlaceList = [getMockOffer(0, `city1`)];
 
 describe(`Routes works correctly`, () => {
   it(`To main page`, () => {

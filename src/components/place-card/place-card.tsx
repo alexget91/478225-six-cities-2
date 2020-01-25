@@ -23,14 +23,28 @@ interface Props {
   onFavoritesClick?: () => void,
 }
 
-const TypeName = {
+type TypeName = {
+  [name in PlaceType]: string
+};
+
+type CardSettings = {
+  [name in PlacesListView]: {
+    cardClass: string,
+    imageClass: string,
+    infoClass: string,
+    imageSizes: [number, number],
+  }
+};
+
+
+const TypeName: TypeName = {
   [PlaceType.APARTMENT]: `Apartment`,
   [PlaceType.ROOM]: `Private room`,
   [PlaceType.HOUSE]: `House`,
   [PlaceType.HOTEL]: `Hotel`,
 };
 
-const CardSettings = {
+const CardSettings: CardSettings = {
   [PlacesListView.OFFER]: {
     cardClass: `near-places__card`,
     imageClass: `near-places__image-wrapper`,

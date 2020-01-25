@@ -8,10 +8,10 @@ Enzyme.configure({adapter: new Adapter()});
 describe(`HOC withActiveItem`, () => {
   const MockComponent = () => <div/>;
 
-  const MockComponentWrappedNoDefault = withActiveItem(MockComponent);
+  const MockComponentWrappedNoDefault: React.ComponentClass = withActiveItem(MockComponent);
   const wrapperNoDefault = Enzyme.shallow(<MockComponentWrappedNoDefault/>);
 
-  const MockComponentWrappedWithDefault = withActiveItem(MockComponent, `defaultActiveItem`);
+  const MockComponentWrappedWithDefault: React.ComponentClass = withActiveItem(MockComponent, `defaultActiveItem`);
   const wrapperWithDefault = Enzyme.shallow(<MockComponentWrappedWithDefault/>);
 
   it(`Correctly set default active item`, () => {

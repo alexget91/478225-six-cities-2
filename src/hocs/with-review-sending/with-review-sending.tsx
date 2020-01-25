@@ -6,20 +6,30 @@ enum CommentLength {
   MAX = 300,
 }
 
+interface ReviewSendingProps {
+  rating?: string,
+  review?: string,
+  isSubmitEnabled?: boolean,
+  isSubmitting?: boolean,
+  onChange: (evt) => void,
+  onSubmit: (offerID: number, rating: string, review: string) => void,
+}
+
 interface Props {
   offerID: number,
   sendingStatus?: FormSendingStatus,
-  onSubmit: (offerID: number, rating: number, review: string) => void,
+  onSubmit: (offerID: number, rating: string, review: string) => void,
   onSubmitSuccess: () => void,
 }
 
 interface State {
-  rating: number,
+  rating: string,
   review: string,
   isSubmitEnabled: boolean,
 }
 
-const withReviewSending = (Component) => {
+
+const withReviewSending = (Component: React.ComponentType<ReviewSendingProps>): React.ComponentType<Props> => {
   class WithReviewSending extends React.PureComponent<Props, State> {
     private readonly defaultState: Readonly<State>;
 

@@ -18,11 +18,17 @@ interface Props {
   offers?: PlaceList,
 }
 
+interface OfferProps {
+  offer?: PlaceCard,
+  neighbourhood?: PlaceList,
+}
+
 interface State {
   offer: PlaceCard,
 }
 
-const withCurrentOffer = (Component) => {
+
+const withCurrentOffer = (Component: React.FunctionComponent<OfferProps>): React.ComponentType<Props> => {
   class WithCurrentOffer extends React.PureComponent<Props, State> {
     constructor(props) {
       super(props);

@@ -12,7 +12,14 @@ interface Props {
   onErrorClose?: () => void,
 }
 
-const CSSclass = {
+type CSSclass = {
+  [name in PageType]: {
+    wrapper: string,
+    main: string,
+  }
+};
+
+const CSSclass: CSSclass = {
   [PageType.FAVORITES]: {
     wrapper: ``,
     main: ` page__main--favorites`,
@@ -39,7 +46,7 @@ const CSSclass = {
   },
 };
 
-const Page = (props: Props) => {
+const Page = (props: Props): React.ReactElement => {
   const {type, header, content, error, onErrorClose} = props;
 
   return <div className={`page${type ? CSSclass[type].wrapper : ``}`}>

@@ -20,7 +20,7 @@ interface Props {
 
 const IMAGES_COUNT = 6;
 
-const Offer = (props: Props) => {
+const Offer = (props: Props): React.ReactElement => {
   const {offer, reviews, reviewSendingStatus, neighbourhood = [], isAuthorizationRequired
     , onFavoritesClick, onNearPlaceFavoritesClick, onCommentSubmit, onCommentSubmitSuccess} = props;
 
@@ -32,7 +32,7 @@ const Offer = (props: Props) => {
     <section className="property">
       <div className="property__gallery-container container">
         <div className="property__gallery">
-          {offer.images.slice(0, IMAGES_COUNT).map((src, i) => {
+          {offer.images.slice(0, IMAGES_COUNT).map((src: string, i: number): React.ReactElement => {
             return <div key={offer.id + src + i} className="property__image-wrapper">
               <img className="property__image" src={src} alt="Photo studio"/>
             </div>;
@@ -81,7 +81,7 @@ const Offer = (props: Props) => {
           {offer.goods ? <div className="property__inside">
             <h2 className="property__inside-title">What&apos;s inside</h2>
             <ul className="property__inside-list">
-              {offer.goods.map((good, i) => {
+              {offer.goods.map((good: string, i: number): React.ReactElement => {
                 return <li key={offer.id + good + i} className="property__inside-item">{good}</li>;
               })}
             </ul>

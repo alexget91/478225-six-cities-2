@@ -34,8 +34,10 @@ import withReviewsList from "../../hocs/with-reviews-list/with-reviews-list";
 import Favorites from "../favorites/favorites";
 import PrivateRoute from "../../hocs/private-route/private-route";
 import {PlaceList, ReviewsList, User} from "../../common/types";
+import {GlobalState} from "../../reducer/reducer";
+import {Dispatch} from "redux";
 
-interface Props {
+interface StateProps {
   cities: Array<string>,
   activeCity?: string,
   offers?: PlaceList,
@@ -48,14 +50,19 @@ interface Props {
   reviewSendingStatus?: FormSendingStatus,
   isAuthorizationRequired?: boolean,
   error?: string,
-  loadReviews?: () => void,
-  onCityClick: () => void,
-  onSignIn: () => void,
-  onFavoritesClick?: () => void,
-  onCommentSubmit?: () => void,
+}
+
+interface DispatchProps {
+  loadReviews?: (offerID: number) => void,
+  onCityClick: (city: string) => void,
+  onSignIn: (email: string, password: string) => void,
+  onFavoritesClick?: (offerID: number, isFavorite: boolean) => void,
+  onCommentSubmit?: (offerID: number, rating: number, comment: string) => void,
   onCommentSubmitSuccess?: () => void,
   onErrorClose?: () => void,
 }
+
+type Props = StateProps & DispatchProps;
 
 const OfferWrapped = compose(
   withCurrentOffer,
@@ -64,7 +71,7 @@ const OfferWrapped = compose(
   withActiveItem
 )(Offer);
 
-const App = (props: Props) => {
+const App = (props: Props): React.ReactElement => {
   const {offers, reviews, favorites, cities, offersInCity, activeCity, user, isOffersLoaded, isFavoritesLoaded
     , reviewSendingStatus, isAuthorizationRequired, error, loadReviews, onCityClick, onSignIn, onFavoritesClick
     , onCommentSubmit, onCommentSubmitSuccess, onErrorClose} = props;
@@ -73,7 +80,7 @@ const App = (props: Props) => {
     return <React.Fragment>{error ? error : `Loading...`}</React.Fragment>;
   }
 
-  const getComponentWithLayout = (Component, type) => {
+  const getComponentWithLayout = (Component: React.ReactElement, type: PageType): React.ReactElement => {
     return <Page
       type={type}
       header={<Header
@@ -88,7 +95,7 @@ const App = (props: Props) => {
 
   return <Switch>
     <Route path={Path.INDEX} exact render={() => {
-      const pageType = offersInCity.length ? PageType.MAIN : PageType.MAIN_EMPTY;
+      const pageType: PageType = offersInCity.length ? PageType.MAIN : PageType.MAIN_EMPTY;
 
       return getComponentWithLayout(<Main
         offers={offersInCity}
@@ -125,7 +132,7 @@ const App = (props: Props) => {
     }}/>
 
     <PrivateRoute path={Path.FAVORITES} exact isAuthorizationRequired={isAuthorizationRequired} render={() => {
-      const pageType = favorites.length ? PageType.FAVORITES : PageType.FAVORITES_EMPTY;
+      const pageType: PageType = favorites.length ? PageType.FAVORITES : PageType.FAVORITES_EMPTY;
 
       return getComponentWithLayout(<Favorites
         offers={getOffersByCities(favorites)}
@@ -136,7 +143,7 @@ const App = (props: Props) => {
   </Switch>;
 };
 
-const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
+const mapStateToProps = (state: GlobalState, ownProps: Props): StateProps => Object.assign({}, ownProps, {
   cities: getCitiesSelector(state),
   activeCity: getCity(state),
   offers: getOffers(state),
@@ -151,7 +158,7 @@ const mapStateToProps = (state, ownProps) => Object.assign({}, ownProps, {
   error: getError(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Dispatch<any>): DispatchProps => ({
   loadReviews: (offerID) => dispatch(Operation.loadReviews(offerID)),
   onCityClick: (city) => dispatch(UserActionCreator.setCity(city)),
   onSignIn: (email, password) => dispatch(Operation.signIn(email, password)),

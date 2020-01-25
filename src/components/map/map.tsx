@@ -1,19 +1,16 @@
 import * as React from "react";
 import * as leaflet from "leaflet";
 import {PlacesListView} from "../../common/constants";
-import {City} from "../../common/types";
-
-type Coordinates = [number, number];
-
-type Pin = {
-  coords: Coordinates,
-  isActive?: boolean,
-}
+import {City, Pin, PinCoordinates} from "../../common/types";
 
 type Icon = {
   iconUrl: string,
   iconSize: [number, number]
 }
+
+type MapClass = {
+  [name in PlacesListView]?: string;
+};
 
 interface Props {
   city: City,
@@ -21,13 +18,14 @@ interface Props {
   mapType?: PlacesListView,
 }
 
-const MapClass = {
+
+const MapClass: MapClass = {
   [PlacesListView.OFFER]: `property__map`,
   [PlacesListView.LIST]: `cities__map`,
 };
 
 class Map extends React.PureComponent<Props, null> {
-  private cityCoords: Coordinates;
+  private cityCoords: PinCoordinates;
   private zoom: number;
   private map: typeof leaflet.map;
   private icon: Icon;
@@ -97,11 +95,10 @@ class Map extends React.PureComponent<Props, null> {
     this.map.setView(this.cityCoords, this.zoom);
     this.layerGroup.clearLayers();
 
-    offerPins.map((pin) => {
-      leaflet
-        .marker(pin.coords, {icon: pin.isActive ? this.iconActive : this.icon})
-        .addTo(this.layerGroup);
-    });
+    offerPins.map((pin: Pin): void => leaflet
+      .marker(pin.coords, {icon: pin.isActive ? this.iconActive : this.icon})
+      .addTo(this.layerGroup)
+    );
   }
 }
 

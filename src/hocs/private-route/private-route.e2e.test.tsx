@@ -15,7 +15,7 @@ describe(`HOC PrivateRoute`, () => {
   const MockComponent = () => <div/>;
   const MockLoginPage = () => <div/>;
 
-  const MockRouter = (props: Props) => <MemoryRouter>
+  const MockRouter = (props: Props): React.ReactElement => <MemoryRouter>
     <Switch>
       <Route exact path={Path.LOGIN} component={MockLoginPage}/>
       <PrivateRoute

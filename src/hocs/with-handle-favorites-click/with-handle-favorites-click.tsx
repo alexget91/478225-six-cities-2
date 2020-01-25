@@ -7,7 +7,7 @@ interface Props {
   [propName: string]: any,
 }
 
-const withHandleFavoritesClick = (Component) => {
+const withHandleFavoritesClick = (Component: React.ComponentType<Props>): React.ComponentType<Props> => {
   class WithHandleFavoritesClick extends React.PureComponent<Props, null> {
     constructor(props) {
       super(props);

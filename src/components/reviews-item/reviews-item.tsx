@@ -2,10 +2,10 @@ import * as React from "react";
 import {getRatingPercent} from "../../common/utils";
 import {ReviewItem} from "../../common/types";
 
-const ReviewsItem = (props: ReviewItem) => {
+const ReviewsItem = (props: ReviewItem): React.ReactElement => {
   const {user, rating, comment, date} = props;
 
-  const dateFormatter = new Intl.DateTimeFormat(`en`, {
+  const dateFormatter: Intl.DateTimeFormat = new Intl.DateTimeFormat(`en`, {
     month: `long`,
     year: `numeric`,
   });

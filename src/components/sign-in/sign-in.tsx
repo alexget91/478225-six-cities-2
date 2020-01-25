@@ -40,9 +40,9 @@ class SignIn extends React.PureComponent<Props, null> {
   _handleFormSubmit(evt) {
     evt.preventDefault();
 
-    const formData = new FormData(evt.target);
-    const email = formData.get(`email`).toString();
-    const password = formData.get(`password`).toString();
+    const formData: FormData = new FormData(evt.target);
+    const email: string = formData.get(`email`).toString();
+    const password: string = formData.get(`password`).toString();
 
     if (email && password) {
       this.props.onFormSubmit(email, password);

@@ -1,27 +1,36 @@
 import {getSortedOffers} from "./places-sorting";
-import {SortingOption} from "../../common/constants";
+import {PlaceType, SortingOption} from "../../common/constants";
+import {PlaceList} from "../../common/types";
 
 describe(`Offers are sorted correctly`, () => {
-  const mockOffers = [
+  const mockOffers: PlaceList = [
     {
       id: 1,
       rating: 4.6,
       price: 120,
+      title: ``,
+      type: PlaceType.APARTMENT,
     },
     {
       id: 2,
       price: 80,
       rating: 4,
+      title: ``,
+      type: PlaceType.APARTMENT,
     },
     {
       id: 3,
       price: 132,
       rating: 4,
+      title: ``,
+      type: PlaceType.APARTMENT,
     },
     {
       id: 4,
       price: 180,
       rating: 5,
+      title: ``,
+      type: PlaceType.APARTMENT,
     },
   ];
 
@@ -31,21 +40,29 @@ describe(`Offers are sorted correctly`, () => {
         id: 1,
         rating: 4.6,
         price: 120,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 2,
         price: 80,
         rating: 4,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 3,
         price: 132,
         rating: 4,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 4,
         price: 180,
         rating: 5,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
     ]);
   });
@@ -56,21 +73,29 @@ describe(`Offers are sorted correctly`, () => {
         id: 2,
         price: 80,
         rating: 4,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 1,
         rating: 4.6,
         price: 120,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 3,
         price: 132,
         rating: 4,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 4,
         price: 180,
         rating: 5,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
     ]);
   });
@@ -81,21 +106,29 @@ describe(`Offers are sorted correctly`, () => {
         id: 4,
         price: 180,
         rating: 5,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 3,
         price: 132,
         rating: 4,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 1,
         rating: 4.6,
         price: 120,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 2,
         price: 80,
         rating: 4,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
     ]);
   });
@@ -106,21 +139,29 @@ describe(`Offers are sorted correctly`, () => {
         id: 4,
         price: 180,
         rating: 5,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 1,
         rating: 4.6,
         price: 120,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 2,
         price: 80,
         rating: 4,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
       {
         id: 3,
         price: 132,
         rating: 4,
+        title: ``,
+        type: PlaceType.APARTMENT,
       },
     ]);
   });

@@ -9,7 +9,11 @@ interface Props {
   onSubmit: () => void,
 }
 
-const RatingText = {
+type RatingText = {
+  [id: number]: string
+}
+
+const RatingText: RatingText = {
   1: `terribly`,
   2: `badly`,
   3: `not bad`,
@@ -17,15 +21,15 @@ const RatingText = {
   5: `perfect`,
 };
 
-const ratingOrder = Object.keys(RatingText).sort((a, b) => parseInt(b) - parseInt(a));
+const ratingOrder = Object.keys(RatingText).sort((a: string, b: string): number => parseInt(b) - parseInt(a));
 
-const ReviewsForm = (props: Props) => {
+const ReviewsForm = (props: Props): React.ReactElement => {
   const {rating, review, isSubmitEnabled, isSubmitting, onChange, onSubmit} = props;
 
   return <form className="reviews__form form" method="post" onSubmit={onSubmit}>
     <label className="reviews__label form__label" htmlFor="review">Your review</label>
     <div className="reviews__rating-form form__rating">
-      {ratingOrder.map((value) => <React.Fragment key={value}>
+      {ratingOrder.map((value: string) => <React.Fragment key={value}>
         <input className="form__rating-input visually-hidden js-rating" name="rating" value={value} id={`${value}-stars`}
           type="radio" disabled={isSubmitting} checked={rating === value} onChange={onChange}/>
         <label htmlFor={`${value}-stars`} className="reviews__rating-label form__rating-label" title={RatingText[value]}>

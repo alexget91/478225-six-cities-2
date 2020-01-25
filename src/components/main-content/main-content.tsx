@@ -5,14 +5,14 @@ import {getPinsForMap} from "../../common/utils";
 import withOpenable from "../../hocs/with-openable/with-openable";
 import PlacesSortingForm from "../places-sorting-form/places-sorting-form";
 import {getSortedOffersSelector} from "../places-sorting/places-sorting";
-import {PlacesListView} from "../../common/constants";
+import {PlacesListView, SortingOption} from "../../common/constants";
 import {City, PlaceCard, PlaceList} from "../../common/types";
 
 interface Props {
   activeCity: City,
   activeOffer?: PlaceCard,
   offers?: PlaceList,
-  sort?: string,
+  sort?: SortingOption,
   onActiveOfferChange?: () => void,
   onSortChange: () => void,
   onFavoritesClick?: () => void,
@@ -20,7 +20,7 @@ interface Props {
 
 const PlacesSortingWrapped = withOpenable(PlacesSortingForm);
 
-const MainContent = (props: Props) => {
+const MainContent = (props: Props): React.ReactElement => {
   const {activeCity, offers, activeOffer, sort, onActiveOfferChange, onSortChange, onFavoritesClick} = props;
 
   return <React.Fragment>

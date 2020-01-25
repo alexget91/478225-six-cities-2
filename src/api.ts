@@ -1,21 +1,30 @@
-import axios from "axios";
+import axios, {AxiosInstance} from "axios";
 
-const HTTPstatus = {
-  BAD_REQUEST: 400,
-  UNAUTHORIZED: 401,
-  INTERNAL_SERVER_ERROR: 500,
-};
+enum HTTPstatus {
+  BAD_REQUEST = 400,
+  UNAUTHORIZED = 401,
+  INTERNAL_SERVER_ERROR = 500,
+}
 
-const configureAPI = (onLoginFail, onError) => {
-  const api = axios.create({
+interface HandleLoginFail {
+  (): void
+}
+
+interface HandleError {
+  (error: string): void
+}
+
+
+const configureAPI = (onLoginFail?: HandleLoginFail, onError?: HandleError): AxiosInstance => {
+  const api: AxiosInstance = axios.create({
     baseURL: `https://htmlacademy-react-2.appspot.com/six-cities`,
     timeout: 5000,
     withCredentials: true,
   });
 
-  const onSuccess = (response) => response;
+  const onSuccess = (response: any): any => response;
 
-  const onFail = (err) => {
+  const onFail = (err: any): any => {
     if (err.response) {
       switch (err.response.status) {
         case HTTPstatus.BAD_REQUEST:

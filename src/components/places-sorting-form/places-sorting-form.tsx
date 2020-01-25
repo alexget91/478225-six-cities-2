@@ -8,7 +8,12 @@ interface Props {
   onVisibilityChange: () => void,
 }
 
-const Option = {
+type Option = {
+  [name in SortingOption]: string
+};
+
+
+const Option: Option = {
   [SortingOption.POPULAR]: `Popular`,
   [SortingOption.TO_HIGH]: `Price: low to high`,
   [SortingOption.TO_LOW]: `Price: high to low`,
@@ -37,7 +42,7 @@ class PlacesSortingForm extends React.PureComponent<Props, null> {
         </svg>
       </span>
       <ul className={`places__options places__options--custom${isVisible ? ` places__options--opened` : ``}`}>
-        {sortKeys.map((key, i) => <li key={i} tabIndex={0} data-sort={key}
+        {sortKeys.map((key: string, i: number): React.ReactElement => <li key={i} tabIndex={0} data-sort={key}
           className={`places__option${key === sort ? ` places__option--active` : ``} js-sorting-option`}
           onClick={this._handleSortItemClick}>
           {Option[key]}
